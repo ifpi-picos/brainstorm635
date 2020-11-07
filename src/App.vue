@@ -1,13 +1,28 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <!-- <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link> -->
     </div>
+
     <router-view/>
+
+    <Footer></Footer>
   </div>
 </template>
 
+<script>
+
+import Footer from './components/footer'
+
+export default {
+  components: { Footer },
+  data () {
+    return {
+    }
+  }
+}
+</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
