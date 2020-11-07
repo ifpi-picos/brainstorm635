@@ -30,13 +30,12 @@
 </template>
 <style lang="css">
   .card-home {
-    margin-top: 10%;
-    position: relative !important;
+    margin-top: 10% !important;
+    position: absolute !important;
     display: inline-flex !important;
     height: 250px;
     width: 60%;
     box-shadow: 0 1px 1px 0 rgba(0,0,0,.1), 0 -1px 2px 0 rgba(0,0,0,.1);
-    /* display: -webkit-inline-flex; */
   }
 
   .inicial-buttons {

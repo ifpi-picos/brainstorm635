@@ -11,7 +11,7 @@
   background-color: #212529 !important;
   color: #c5c5c5;
   height: 150px;
-  padding-top: 2.5% !important;
+  padding-top: 1% !important;
   position: fixed !important;
   bottom: 0 !important;
   width: 100%;
