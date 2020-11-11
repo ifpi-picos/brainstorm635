@@ -26,8 +26,10 @@
               <b-input-group
                 class="d-flex justify-content-end">
                 <b-form-input
-                type="text"
-                placeholder="Entrar com o código"></b-form-input>
+                  disabled
+                  type="text"
+                  placeholder="Entrar com o código">
+                  </b-form-input>
                 <b-input-group-append>
                   <b-button size="lg" variant="outline-primary">Entrar</b-button>
                 </b-input-group-append>
@@ -46,6 +48,7 @@
   }
 
   .card-home {
+    font-family: Comfortaa !important;
     margin-top: 10%;
     position: relative !important;
     display: inline-flex !important;
