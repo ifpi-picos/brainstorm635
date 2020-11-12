@@ -6,9 +6,9 @@ node_modules
 /tests/e2e/screenshots/
 
 # Arquivo look de instalação
-yarn.look
+yarn.lock
 #Pasta pessoal usada por Edmarques
-.eu ignoro
+./eu ignoro
 
 # local env files
 .env.local

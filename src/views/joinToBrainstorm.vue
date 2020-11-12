@@ -72,6 +72,22 @@ export default {
       code: '',
       numberOFMembers: 0
     }
+  },
+
+  methods: {
+    getData () {
+      const db = this.$firebase.firestore()
+      db.collection('brainstorms').get().then(querySnapshot => {
+        const dados = querySnapshot.docs[0]
+        this.description = dados.data().description
+        this.numberOFMembers = dados.data().users.length + 1
+        this.code = dados.id
+      })
+    }
+  },
+
+  created: function () {
+    this.getData()
   }
 }
 </script>

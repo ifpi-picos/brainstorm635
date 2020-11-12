@@ -28,6 +28,7 @@
     </b-card>
   </div>
 </template>
+
 <style lang="css">
   .card-home1 {
     vertical-align: middle;

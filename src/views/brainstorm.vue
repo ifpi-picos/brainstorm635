@@ -12,6 +12,7 @@
           <b-col md="4">
             <router-link :to="{ name: 'joinToBrainstorm' }">
               <b-button
+                @click="createNewBrainstorming"
                 size="lg"
                 class="inicial-buttons"
                 pill
@@ -41,6 +42,25 @@
     </b-card>
   </div>
 </template>
+
+<script>
+export default {
+  methods: {
+    createNewBrainstorming () {
+      this.$firebase.firestore().collection('brainstorms').add({
+        leader: 'Edmarques',
+        users: ['Rafael', 'Jáder', 'Wisley', 'Pedro', 'Georgina'],
+        description: 'iBeer',
+        ideas: []
+      }).then(function (docRef) {
+        console.log('Document id: ', docRef.id)
+      }).catch(function (error) {
+        console.error(error)
+      })
+    }
+  }
+}
+</script>
 
 <style lang="css">
   * {

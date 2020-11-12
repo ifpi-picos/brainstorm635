@@ -4,7 +4,9 @@ import './registerServiceWorker'
 import router from './router'
 import '@fortawesome/fontawesome-free/css/all.css'
 import '@fortawesome/fontawesome-free/js/all.js'
+import FirebaseApp from './firebase'
 
+Vue.use(FirebaseApp)
 Vue.config.productionTip = false
 
 new Vue({
