@@ -2,7 +2,6 @@
   <div>
     <b-card
       class="text-center p-5 card-home1"
-      align-h="center"
     >
       <h1 class="mt-3"> Bem vindo o Brainstorm 635 online</h1>
         <b-row
@@ -31,16 +30,14 @@
 
 <style lang="css">
   .card-home1 {
-    vertical-align: middle;
     font-family: Comfortaa !important;
-    margin-top: 15% !important;
+    margin-top: 12.5% !important;
     /* align-content: center; */
-    position: relative !important;
+    /* position: relative !important; */
     display: inline-flex !important;
     height: 350px !important;
     padding: 15% !important;
     width: 50% !important;
-    box-shadow: 0 1px 1px 0 rgba(0,0,0,.1), 0 -1px 2px 0 rgba(0,0,0,.16);
   }
 
   .inicial-buttons {

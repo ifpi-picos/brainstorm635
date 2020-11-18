@@ -1,7 +1,21 @@
 <template>
   <div>
     <b-card class="footer">
-      <span class="text-footer text-center"> &copy; CopyRight, FastStorm 2020 - Todos os direitos reservados</span>
+      <b-row align-h="center">
+        <b-col md="3" align-self="end" class="pt-1">
+          <span >
+            &copy; CopyRight, Brainstorm635 2020
+          </span>
+        </b-col>
+        <b-col md="2" align-self="start">
+          <span class="sidebar-footer"></span>
+        </b-col>
+        <b-col md="3" align-self="center" class="pt-1">
+          <span>
+            Todos os direitos reservados
+          </span>
+        </b-col>
+      </b-row>
     </b-card>
   </div>
 </template>
@@ -9,16 +23,13 @@
 <style lang="css">
   .footer {
     background-color: #fff !important;
-    color: #000;
+    color: #2c3e50;
     height: 75px;
-    padding: 0.5rem !important;
+    padding: 0% !important;
     position: fixed !important;
     bottom: 0 !important;
     width: 100%;
-    box-shadow: 0 1px 1px 0 rgba(0,0,0,.1), 0 -1px 2px 0 rgba(0,0,0,.1);
-  }
-
-  .text-footer {
+    border-top: rgb(0, 0, 0, 0.125 ) 1px solid;
     font-size: 17px !important;
   }
 

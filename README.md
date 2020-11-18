@@ -32,3 +32,5 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+A aplicação consiste em uma forma virtual e simples, de realizar a técnica de geração de ideias Brainstorming 635, como a aplicação é feita em meio digital possibilita que o método seja feito por pessoas que não estão próximas quebrando assim a barreira espaço físico, o participante inicial que criará o brainstorming gera um convite e envia aos demais participantes ao final do processo a aplicação gera um arquivo de texto disponível para download pelos participantes.
