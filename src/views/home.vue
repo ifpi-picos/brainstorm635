@@ -3,7 +3,7 @@
     <b-card
       class="text-center p-5 card-home1"
     >
-      <h1 class="mt-3"> Bem vindo o Brainstorm 635 online</h1>
+      <h3 class="mt-3 page-tittle"> Bem vindo o Brainstorm 635 online</h3>
         <b-row
           class="mt-5"
           align-h="center">
@@ -43,9 +43,5 @@
   .inicial-buttons {
     padding-left: 1.5rem !important;
     padding-right: 1.5rem !important;
-  }
-
-  h1 {
-    font-family: Comfortaa !important;
   }
 </style>

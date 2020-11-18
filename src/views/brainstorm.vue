@@ -6,7 +6,7 @@
       class="text-center p-5 card-home"
       align-h="center"
     >
-      <h1>Brainstorm</h1>
+      <h3 class="page-tittle">Brainstorm</h3>
         <b-row
           class="mt-5 d-flex justify-content-begin">
           <b-col md="4">
