@@ -33,7 +33,9 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
- /*  background-color:#f0f2f5; */
+  /* background-color:#f0f2f5; */
+
+  /* f7 é o mais claro */
   background-color: #f7f7f7;
 }
 /*

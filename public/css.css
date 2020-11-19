@@ -48,13 +48,38 @@ html {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
   margin: auto;
-  background-color:#f0f2f5;
-  /* background-color: #f7f7f7; */
+  /* background-color:#f0f2f5 */;
+
+  /* f7 é o mais claro */
+  background-color: #f7f7f7;
 }
 
 /* Shadow para todos os cards */
 .card {
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 16px 0px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 6px 0px;
+}
+
+.card-home1 {
+  font-family: Comfortaa !important;
+  margin-top: 12.5% !important;
+  /* align-content: center; */
+  /* position: relative !important; */
+  display: inline-flex !important;
+  height: 350px !important;
+  padding: 15% !important;
+  width: 50% !important;
+}
+
+.card-brainstorm {
+  font-family: Comfortaa !important;
+  font-size: 16px !important;
+  margin-top: 14%;/* 
+  position: relative !important; */
+  display: inline-flex !important;
+  height: 300px !important;/* 
+  padding: 15% !important; */
+  width: 60%;
+  /* display: -webkit-inline-flex; */
 }
 /* Barra lateral Azul da navbar e footer */
 .sidebar-nav {
@@ -118,4 +143,31 @@ html {
   top: 0;
   right: -10px;
   margin-left: 2px;
+}
+
+.btn-outline-success {
+  color: #18d26e !important;
+  border-color: #18d26e !important;
+}
+
+.btn-outline-success:not(:disabled):not(.disabled):active, .btn-outline-success:not(:disabled):not(.disabled).active, .show > .btn-outline-success.dropdown-toggle {
+  background-color: #18d26e !important;
+  color: #fff !important;
+  border-color: #18d26e !important; 
+}
+
+.btn-outline-success:hover {
+  color: #fff !important;
+  background-color: #18d26e !important;
+  border-color: #18d26e !important;
+}
+
+.btn:hover {
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 6px 0px !important;
+}
+
+.btn-outline-success:focus, .btn-outline-success.focus {
+  background-color: #28a745 !important;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 6px 0px !important;
+  color: #fff !important;
 }

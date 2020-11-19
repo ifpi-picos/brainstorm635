@@ -60,6 +60,9 @@
             </b-row>
           </b-col>
         </b-row>
+        <b-row align-h="center">
+          <b-button class="pl-5 pr-5 mt-2 mr-5" size="lg" pill variant="outline-success">Criar</b-button>
+        </b-row>
       </b-form>
     </b-card>
   </div>

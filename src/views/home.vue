@@ -29,17 +29,6 @@
 </template>
 
 <style lang="css">
-  .card-home1 {
-    font-family: Comfortaa !important;
-    margin-top: 12.5% !important;
-    /* align-content: center; */
-    /* position: relative !important; */
-    display: inline-flex !important;
-    height: 350px !important;
-    padding: 15% !important;
-    width: 50% !important;
-  }
-
   .inicial-buttons {
     padding-left: 1.5rem !important;
     padding-right: 1.5rem !important;

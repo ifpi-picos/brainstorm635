@@ -2,9 +2,9 @@
 <template>
   <div>
     <b-card
-      no-body
-      class="text-center p-5 card-home"
+      class="text-center p-5 card-brainstorm"
       align-h="center"
+      align-v="end"
     >
       <h3 class="page-tittle">Brainstorm</h3>
         <b-row
@@ -67,16 +67,6 @@ export default {
     box-sizing: border-box
   }
 
-  .card-home {
-    font-family: Comfortaa !important;
-    margin-top: 10%;
-    position: relative !important;
-    display: inline-flex !important;
-    height: 250px;
-    width: 60%;
-    /* display: -webkit-inline-flex; */
-  }
-
 .inicial-buttons {
   padding-left: 1.5rem !important;
   padding-right: 1.5rem !important;
@@ -88,4 +78,24 @@ export default {
   padding: 1.5rem !important;
 }
 
+.btn-outline-primary {
+  color: #17a2b8 !important;
+  border-color: #17a2b8 !important;
+}
+
+.btn-outline-primary:hover {
+  color: #fff !important;
+  border-color: #17a2b8 !important;
+  background-color: #17a2b8 !important;
+}
+
+.btn-outline-primary:not(:disabled):not(.disabled):active, .btn-outline-primary:not(:disabled):not(.disabled).active, .show > .btn-outline-primary.dropdown-toggle {
+  color: #fff !important;
+  background-color: #17a2b8 !important;
+  border-color: #17a2b8 !important;
+}
+
+.btn-outline-primary:focus, .btn-outline-primary.focus {
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 6px 0px !important;
+}
 </style>
