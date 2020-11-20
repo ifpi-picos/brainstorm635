@@ -59,6 +59,7 @@ html {
 /* Shadow para todos os cards */
 .card {
   box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 6px 0px;
+  border-radius: 15px !important
 }
 
 .central-card {
@@ -137,7 +138,7 @@ html {
 
 .btn {
   padding: 0.4rem 0.9rem !important;
-  font-size: 1.1rem !important;
+  font-size: 1.1rem !important;;
 }
 
 /* Shadow for standard buttons */
@@ -193,8 +194,24 @@ html {
   box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 6px 0px !important;
 }
 
-/* .input-group > .form-control, .input-group > .form-control-plaintext, .input-group > .custom-select, .input-group > .custom-file {
-  flex: none !important;
-  width: 30% !important;
-  padding: 1.5rem !important;
-} */
+/* Style for inputs from newBrainstorm and waitForMembers scream */
+.create {
+  padding-top: 0.3rem !important;
+  padding-bottom: 0.3rem !important;
+  font-size: 1.2rem !important;
+}
+
+.line-button {
+  border: solid 1px #ced4da !important;
+}
+
+.input-with-prepend {
+  border-left: none !important;
+}
+
+.input-with-append {
+  border-right: none !important;
+}
+.input-code {
+  background-color: #fff !important;
+}

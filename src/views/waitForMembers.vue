@@ -1,8 +1,8 @@
 <template>
   <div>
-    <b-card class="card-new">
-      <h4 class="page-tittle mb-5 mt-4">Novo Brainstorm</h4>
-      <b-form @submit="newBrainstorm()">
+    <b-card class="card-wait">
+      <h4 class="page-tittle mb-5">Iniciar</h4>
+      <b-form>
         <b-row>
           <b-col md="4">
             <b-form-group
@@ -42,7 +42,7 @@
                   value="this.code">
                 </b-form-input>
                 <b-input-group-append>
-                  <b-button v-b-tooltip.hover.topleft title="Copiar código" class="line-button devsite-icon-copy" variant="light"><i class="fas fa-copy"></i></b-button>
+                  <b-button class="line-button" variant="light"><i class="fas fa-copy"/></b-button>
                 </b-input-group-append>
               </b-input-group>
             </b-form-group>
@@ -69,7 +69,7 @@
             </b-form-group>
           </b-col>
         </b-row>
-        <b-row align-h="center" class="pt-5 mt-4">
+        <b-row align-h="center" class="pt-5">
           <b-button
             type="submit"
             class="pl-5 pr-5 create"
@@ -93,54 +93,30 @@ export default {
     }
   },
 
-  created: function () {},
-
   methods: {
-
-    /* Register  */
-    newBrainstorm () {
+    getData () {
       const db = this.$firebase.firestore()
-      db.collection('brainstorm').doc('newBrainstorm').set({
-        dwescription: this.description,
-        code: this.code,
-        numberOfMembers: this.numberOFMembers
+      db.collection('brainstorms').get().then(querySnapshot => {
+        const dados = querySnapshot.docs[0]
+        this.description = dados.data().description
+        this.numberOFMembers = dados.data().users.length + 1
+        this.code = dados.id
       })
-        .then(function () {
-          console.log('Document successfully written!')
-        })
-        .catch(function (error) {
-          console.error('Error writing document: ', error)
-        })
-      this.$router.push({ name: 'waitForMembers' })
     }
+  },
+
+  created: function () {
+    this.getData()
   }
 }
 </script>
 
 <style lang="css">
-.card-new {
-  margin-top: 10%;
-  position: relative !important;
-  display: inline-flex !important;
-  height: 350px;
-  width: 80%;
-}
-
-.tooltip-inner {
-  /* max-width: 200px; */
-  padding: .25rem .5rem;
-  color: #fff !important;
-  text-align: center;
-  background-color: #17a2b8 !important;
-  border: #17a2b8 1px solid !important;
-  border-radius: .25rem;
-}
-
-.bs-tooltip-auto[x-placement^=top] .arrow:before, .bs-tooltip-top .arrow:befor {
-  top: 0;
-  border-width: .4rem .4rem 0;
-  border-top-color: #17a2b8 !important;
-
-}
-
+  .card-wait {
+    margin-top: 10%;
+    position: relative !important;
+    display: inline-flex !important;
+    height: 400px;
+    width: 80%;
+  }
 </style>

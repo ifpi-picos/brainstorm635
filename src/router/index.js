@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import home from '../views/home.vue'
 import brainstorm from '@/views/brainstorm'
 import newBrainstorm from '@/views/newBrainstorm'
+import waitForMembers from '@/views/waitForMembers'
 import { BootstrapVue } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -30,15 +31,19 @@ const routes = [
     path: 'novo brainstorm',
     name: 'newBrainstorm',
     component: newBrainstorm
+  },
+
+  {
+    path: 'espera por membros',
+    name: 'waitForMembers',
+    component: waitForMembers
   }
-  // {
-  //   path: '/about',
-  //   name: 'About',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  // }
+
+  /* {
+    path: '/about',
+    name: 'about',
+    component: () => import( '../views/about.vue')
+  } */
 ]
 
 const router = new VueRouter({
