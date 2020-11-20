@@ -1,24 +1,23 @@
 <template>
   <div>
     <b-card
-      class="text-center p-5 card-home1"
+      class="text-center pt-4 central-card"
     >
-      <h3 class="mt-3 page-tittle"> Bem vindo o Brainstorm 635 online</h3>
+      <h4 class="mt-1 page-tittle"> Bem vindo o Brainstorm 635 online</h4>
         <b-row
           class="mt-5"
           align-h="center">
           <!-- <router-link> -->
         <b-button
-          size="lg"
           class="mr-5 mt-5 inicial-buttons"
           pill
           variant="outline-info"
-        >Sobre
-      </b-button>
+          >Sobre
+        </b-button>
         <!-- </router-link> -->
         <router-link :to="{ name: 'brainstorm' }">
           <b-button
-            size="lg"
+
             class="ml-5 mt-5 inicial-buttons"
             pill
             variant="outline-success">Iniciar</b-button>

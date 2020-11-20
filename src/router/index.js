@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import home from '../views/home.vue'
-import brainstorming from '@/views/brainstorm'
-import joinToBrainstorm from '@/views/joinToBrainstorm'
+import brainstorm from '@/views/brainstorm'
+import newBrainstorm from '@/views/newBrainstorm'
 import { BootstrapVue } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -23,13 +23,13 @@ const routes = [
   {
     path: 'brainstorm',
     name: 'brainstorm',
-    component: brainstorming
+    component: brainstorm
   },
 
   {
-    path: 'juntar-se ao brainstorm',
-    name: 'joinToBrainstorm',
-    component: joinToBrainstorm
+    path: 'novo brainstorm',
+    name: 'newBrainstorm',
+    component: newBrainstorm
   }
   // {
   //   path: '/about',

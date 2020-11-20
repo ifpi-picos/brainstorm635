@@ -2,42 +2,39 @@
 <template>
   <div>
     <b-card
-      class="text-center p-5 card-brainstorm"
+      class="text-center central-card"
       align-h="center"
       align-v="end"
     >
-      <h3 class="page-tittle">Brainstorm</h3>
+      <h4 class="page-tittle mt-4 mb-3">Brainstorm</h4>
         <b-row
           class="mt-5 d-flex justify-content-begin">
-          <b-col md="4">
-            <router-link :to="{ name: 'joinToBrainstorm' }">
+          <b-col md="6">
+            <router-link :to="{ name: 'newBrainstorm' }">
               <b-button
                 @click="createNewBrainstorming"
-                size="lg"
-                class="inicial-buttons"
-                pill
+                class="new-brain-button mt-5"
                 variant="outline-secondary"
               >Novo Brainstorm
                 <i class="fas fa-plus"></i>
               </b-button>
             </router-link>
           </b-col>
-          <b-col md="8">
-            <form action="">
-              <b-input-group
-                class="d-flex justify-content-end">
+          <b-col md="5">
+            <form action="" >
+              <!-- <b-input-group
+                > -->
+                <b-input-group-append class="d-flex justify-content-end mt-5">
                 <b-form-input
-                  disabled
                   type="text"
                   placeholder="Entrar com o código">
-                  </b-form-input>
-                <b-input-group-append>
-                  <b-button size="lg" variant="outline-primary">Entrar</b-button>
+                </b-form-input>
+
+                  <b-button variant="outline-primary">Entrar</b-button>
                 </b-input-group-append>
-              </b-input-group>
+              <!-- </b-input-group> -->
             </form>
           </b-col>
-
       </b-row>
     </b-card>
   </div>
@@ -67,35 +64,7 @@ export default {
     box-sizing: border-box
   }
 
-.inicial-buttons {
-  padding-left: 1.5rem !important;
-  padding-right: 1.5rem !important;
-}
-
-.input-group > .form-control, .input-group > .form-control-plaintext, .input-group > .custom-select, .input-group > .custom-file {
-  flex: none !important;
-  width: 30% !important;
-  padding: 1.5rem !important;
-}
-
-.btn-outline-primary {
-  color: #17a2b8 !important;
-  border-color: #17a2b8 !important;
-}
-
-.btn-outline-primary:hover {
-  color: #fff !important;
-  border-color: #17a2b8 !important;
-  background-color: #17a2b8 !important;
-}
-
-.btn-outline-primary:not(:disabled):not(.disabled):active, .btn-outline-primary:not(:disabled):not(.disabled).active, .show > .btn-outline-primary.dropdown-toggle {
-  color: #fff !important;
-  background-color: #17a2b8 !important;
-  border-color: #17a2b8 !important;
-}
-
-.btn-outline-primary:focus, .btn-outline-primary.focus {
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 6px 0px !important;
+.form-control {
+  padding: 1.3rem 0.5rem !important;
 }
 </style>

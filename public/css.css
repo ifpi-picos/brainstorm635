@@ -51,7 +51,9 @@ html {
   /* background-color:#f0f2f5 */;
 
   /* f7 é o mais claro */
-  background-color: #f7f7f7;
+  /* background-color: #f7f7f7; */
+
+  background-color: #FAFAFA !important;
 }
 
 /* Shadow para todos os cards */
@@ -59,28 +61,16 @@ html {
   box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 6px 0px;
 }
 
-.card-home1 {
+.central-card {
   font-family: Comfortaa !important;
-  margin-top: 12.5% !important;
+  margin-top: 14.5% !important;
   /* align-content: center; */
   /* position: relative !important; */
   display: inline-flex !important;
-  height: 350px !important;
-  padding: 15% !important;
+  height: 300px !important;
   width: 50% !important;
 }
 
-.card-brainstorm {
-  font-family: Comfortaa !important;
-  font-size: 16px !important;
-  margin-top: 14%;/* 
-  position: relative !important; */
-  display: inline-flex !important;
-  height: 300px !important;/* 
-  padding: 15% !important; */
-  width: 60%;
-  /* display: -webkit-inline-flex; */
-}
 /* Barra lateral Azul da navbar e footer */
 .sidebar-nav {
   border-left: 4px solid #17a2b8;
@@ -106,7 +96,7 @@ html {
 }
 
 
-/* Underlined for h3 or title page */
+/* The next 2 selectors are for underlined for h3 or title page */
 .page-tittle {/* 
   font-size: 1.2em; */
   font-family: Comfortaa !important;
@@ -130,7 +120,7 @@ html {
   left: calc(50% - 20px);
 }
 
-.required {
+/* .required {
   position: relative;
   display: inline-block !important;
 }
@@ -143,8 +133,21 @@ html {
   top: 0;
   right: -10px;
   margin-left: 2px;
+} */
+
+.btn {
+  padding: 0.4rem 0.9rem !important;
+  font-size: 1.1rem !important;
 }
 
+/* Shadow for standard buttons */
+.btn:hover {
+  /* box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 6px 0px !important */
+  box-shadow: 0 1px 3px 0 rgba(60,64,67,0.302),
+  0 4px 8px 3px rgba(60,64,67,0.149) !important;
+}
+
+/* The next 4 selectors are changes to success buttons */
 .btn-outline-success {
   color: #18d26e !important;
   border-color: #18d26e !important;
@@ -162,12 +165,36 @@ html {
   border-color: #18d26e !important;
 }
 
-.btn:hover {
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 6px 0px !important;
-}
-
 .btn-outline-success:focus, .btn-outline-success.focus {
   background-color: #28a745 !important;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 6px 0px !important;
   color: #fff !important;
 }
+
+/* The next 4 selectors are changes for primary button */
+.btn-outline-primary {
+  color: #17a2b8 !important;
+  border-color: #17a2b8 !important;
+}
+
+.btn-outline-primary:hover {
+  color: #fff !important;
+  border-color: #17a2b8 !important;
+  background-color: #17a2b8 !important;
+}
+
+.btn-outline-primary:not(:disabled):not(.disabled):active, .btn-outline-primary:not(:disabled):not(.disabled).active, .show > .btn-outline-primary.dropdown-toggle {
+  color: #fff !important;
+  background-color: #17a2b8 !important;
+  border-color: #17a2b8 !important;
+}
+
+.btn-outline-primary:focus, .btn-outline-primary.focus {
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 6px 0px !important;
+}
+
+/* .input-group > .form-control, .input-group > .form-control-plaintext, .input-group > .custom-select, .input-group > .custom-file {
+  flex: none !important;
+  width: 30% !important;
+  padding: 1.5rem !important;
+} */

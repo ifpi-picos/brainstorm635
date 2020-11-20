@@ -36,7 +36,10 @@ export default {
   /* background-color:#f0f2f5; */
 
   /* f7 é o mais claro */
-  background-color: #f7f7f7;
+  /* background-color: #f7f7f7; */
+
+  background-color: #FAFAFA !important;
+  color: #2c3e50 !important;
 }
 /*
 #nav {
