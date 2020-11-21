@@ -29,8 +29,9 @@
     position: fixed !important;
     bottom: 0 !important;
     width: 100%;
-    border-top: rgb(0, 0, 0, 0.125 ) 1px solid;
+    border-top: rgb(0, 0, 0, 0.125 ) 0.6px solid !important;
     font-size: 17px !important;
+    border-radius: 0 !important;
   }
 
 </style>

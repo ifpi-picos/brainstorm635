@@ -53,13 +53,15 @@ html {
   /* f7 é o mais claro */
   /* background-color: #f7f7f7; */
 
-  background-color: #FAFAFA !important;
+  background-color: #f9f9f9  !important;
 }
 
 /* Shadow para todos os cards */
 .card {
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 6px 0px;
-  border-radius: 15px !important
+  /* box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 6px 0px; */
+  box-shadow: 0px 5px 10px 0px rgba(153, 153, 153, 0.3) !important;
+  border-radius: 15px !important;
+  border: 0.7px !important;
 }
 
 .central-card {
@@ -138,7 +140,8 @@ html {
 
 .btn {
   padding: 0.4rem 0.9rem !important;
-  font-size: 1.1rem !important;;
+  font-size: 1.1rem !important;
+  font-family: Comfortaa !important;
 }
 
 /* Shadow for standard buttons */
@@ -196,8 +199,8 @@ html {
 
 /* Style for inputs from newBrainstorm and waitForMembers scream */
 .create {
-  padding-top: 0.3rem !important;
-  padding-bottom: 0.3rem !important;
+  padding-top: 0.4rem !important;
+  padding-bottom: 0.4rem !important;
   font-size: 1.2rem !important;
 }
 
@@ -214,4 +217,10 @@ html {
 }
 .input-code {
   background-color: #fff !important;
+}
+
+/* Changing the background color of input appends */
+.input-group-text {
+  background-color: #17a2b8 !important;
+  opacity: 0.95;
 }

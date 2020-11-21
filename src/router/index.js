@@ -28,13 +28,13 @@ const routes = [
   },
 
   {
-    path: 'novo brainstorm',
+    path: 'novobrainstorm',
     name: 'newBrainstorm',
     component: newBrainstorm
   },
 
   {
-    path: 'espera por membros',
+    path: 'esperapormembros',
     name: 'waitForMembers',
     component: waitForMembers
   }
@@ -47,7 +47,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  mode: 'hash',
+  mode: 'history',
   base: process.env.BASE_URL,
   routes
 })
