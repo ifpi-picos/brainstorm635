@@ -34,7 +34,7 @@ const routes = [
   },
 
   {
-    path: 'espera por membros',
+    path: 'esperapormembros',
     name: 'waitForMembers',
     component: waitForMembers
   }

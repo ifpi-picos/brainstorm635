@@ -1,9 +1,9 @@
 <template>
   <div>
     <b-card class="card-wait">
-      <h4 class="page-tittle mb-5">Iniciar</h4>
+      <h4 class="page-tittle mb-5">Iniciar Brainstorm</h4>
       <b-form>
-        <b-row>
+        <b-row align-h="center" class="mb-5">
           <b-col md="4">
             <b-form-group
               class="text-left"
@@ -15,8 +15,9 @@
                   <span class="input-group-text"><i class="fas fa-file-signature fa-lg"></i></span>
                 </b-input-group-prepend>
                 <b-form-input
+                  disabled
                   type="text"
-                  class="input-with-prepend"
+                  class="input-with-prepend input-code"
                   id="input-1"
                   v-model="description"
                   placeholder="Descreva o brainstorm">
@@ -47,38 +48,114 @@
               </b-input-group>
             </b-form-group>
           </b-col>
-          <b-col md="4">
+          <b-col md="2">
             <b-form-group
               id="input-group-3"
-              label="Número de participantes"
+              label="Membros ativos"
               label-for="input-3"
-              class="text-left">
+              class="text-left ">
               <b-input-group>
                 <b-input-group-prepend>
                   <span class="input-group-text"><i class="fas fa-users fa-lg"></i></span>
                 </b-input-group-prepend>
                 <b-form-input
+                  disabled
                   type="number"
                   v-model="numberOFMembers"
                   value="this.numberOFMembers"
                   id="input-3"
-                  class="input-with-prepend"
+                  class="input-with-prepend input-code text-center"
                   placeholder="Defina o número de participantes">
                 </b-form-input>
               </b-input-group>
             </b-form-group>
           </b-col>
         </b-row>
-        <b-row align-h="center" class="pt-5">
-          <b-button
-            type="submit"
-            class="pl-5 pr-5 create"
-            pill
-            variant="outline-success">
-            Iniciar novo Brainstorm
-          </b-button>
-        </b-row>
       </b-form>
+      <b-row class="" align-h="center">
+        <b-col md="4">
+          <b-form-group
+            class="text-left"
+            id="input-name-1"
+            label-for="name-1">
+            <b-input-group>
+              <b-input-group-prepend>
+                <span class="input-group-text" variant="light"><i class="fas fa-user fa-lg"></i>1</span>
+              </b-input-group-prepend>
+              <b-form-input
+                disabled
+                class="input-code input-with-prepend"
+                placeholder="Participante 2"
+                id="name-1">
+              </b-form-input>
+            </b-input-group>
+          </b-form-group>
+          <b-form-group
+            class="text-left"
+            id="input-name-2"
+            label-for="name-2">
+            <b-input-group>
+              <b-input-group-prepend>
+                <span class="input-group-text" variant="light"><i class="fas fa-user fa-lg"></i>2</span>
+              </b-input-group-prepend>
+              <b-form-input
+                placeholder="Participante 2"
+                disabled
+                class="input-code input-with-prepend"
+                id="name-2">
+              </b-form-input>
+            </b-input-group>
+          </b-form-group>
+          <b-form-group
+            class="text-left"
+            id="input-name-3"
+            label-for="name-3">
+            <b-input-group>
+              <b-input-group-prepend>
+                <span class="input-group-text" variant="light"><i class="fas fa-user fa-lg"></i>3</span>
+              </b-input-group-prepend>
+              <b-form-input
+                placeholder="Participante 3"
+                disabled
+                class="input-code input-with-prepend"
+                id="name-3">
+              </b-form-input>
+            </b-input-group>
+          </b-form-group>
+          <b-form-group
+            class="text-left"
+            id="input-name-4"
+            label-for="name-4">
+            <b-input-group>
+              <b-input-group-prepend>
+                <span class="input-group-text" variant="light"><i class="fas fa-user fa-lg"></i>4</span>
+              </b-input-group-prepend>
+              <b-form-input
+                placeholder="Participante 4"
+                disabled
+                class="input-code input-with-prepend"
+                id="name-4">
+              </b-form-input>
+            </b-input-group>
+          </b-form-group>
+        </b-col>
+        <b-col md="4">
+          <b-spinner variant="info" label="Spinning"></b-spinner>
+          <span class="text-spinner text-flashes loading">Aguardando Membros...</span>
+          <br><br>
+          <span class="loading">Iniciar quando todos os participantes estiverem registrados</span>
+          <b-row align-h="center" class="pt-4">
+            <b-button
+              disabled
+              type="submit"
+              class="pl-3 pr-3"
+              pill
+              variant="outline-primary">
+              Iniciar
+            </b-button>
+          </b-row>
+        </b-col>
+      </b-row>
     </b-card>
   </div>
 </template>
@@ -112,11 +189,36 @@ export default {
 </script>
 
 <style lang="css">
-  .card-wait {
-    margin-top: 10%;
-    position: relative !important;
-    display: inline-flex !important;
-    height: 400px;
-    width: 80%;
-  }
+.card-wait {
+  margin-top: 9%;
+  position: relative !important;
+  display: inline-flex !important;
+  height: 450px;
+  width: 70%;
+}
+
+.loading {
+  font-family: comfortaa;
+}
+
+/* Efects for spinner and text spinner */
+.text-spinner {
+  margin-left: 7px;
+  color: #17a2b8;
+}
+
+@keyframes blink {
+  0% { color:#17a2b8; font-size: 16.5px; }
+  100% { color: black; }
+}
+@-webkit-keyframes blink {
+  0% { color: #17a2b8; font-size: 16.5px; }
+  100% { color: black; }
+}
+.text-flashes {
+  -webkit-animation: blink 1.3s linear infinite;
+  -moz-animation: blink 1.3s linear infinite;
+  animation: blink 1.3s linear infinite;
+}
+
 </style>
