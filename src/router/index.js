@@ -28,7 +28,7 @@ const routes = [
   },
 
   {
-    path: 'novo brainstorm',
+    path: 'novobrainstorm',
     name: 'newBrainstorm',
     component: newBrainstorm
   },
@@ -47,7 +47,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  mode: 'hash',
+  mode: 'history',
   base: process.env.BASE_URL,
   routes
 })

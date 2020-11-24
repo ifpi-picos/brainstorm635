@@ -1,12 +1,11 @@
 .DS_Store
 node_modules
 /dist
+/.firebase
 
 /tests/e2e/videos/
 /tests/e2e/screenshots/
 
-# Arquivo look de instalação
-yarn.lock
 #Pasta pessoal usada por Edmarques
 ./eu ignoro
 
