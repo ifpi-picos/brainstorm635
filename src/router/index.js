@@ -22,19 +22,19 @@ const routes = [
   },
 
   {
-    path: 'brainstorm',
+    path: '/brainstorm',
     name: 'brainstorm',
     component: brainstorm
   },
 
   {
-    path: 'novobrainstorm',
+    path: '/novobrainstorm',
     name: 'newBrainstorm',
     component: newBrainstorm
   },
 
   {
-    path: 'esperapormembros',
+    path: '/esperapormembros',
     name: 'waitForMembers',
     component: waitForMembers
   }
