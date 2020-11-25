@@ -1,11 +1,11 @@
 <template>
   <div class="container-fluid container-central-card">
-    <b-row align-h="center" align-v="end">
-      <b-col md="7">
+    <b-row>
+      <b-col class="home-card">
         <b-card
-          class="text-center pt-4 central-card">
+          class="text-center pt-4 ">
           <b-row>
-            <b-col md="12">
+            <b-col>
               <h4 class="mt-1 page-tittle md"> Bem vindo o Brainstorm 635 online</h4>
             </b-col>
           </b-row>
@@ -45,5 +45,10 @@
   padding-left: 1.5rem !important;
   padding-right: 1.5rem !important;
 }
-
+.home-card{
+  height: calc(100vh - 150px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>

@@ -42,7 +42,7 @@ export default {
 }
 
 .nav {
-  margin-bottom: 100px !important;
+  /* margin-bottom: 100px !important; */
   display: inline-block !important;
 }
 
