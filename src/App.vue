@@ -1,11 +1,7 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <!-- <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> -->
-    </div>
 
-    <Navbar></Navbar>
+    <Navbar class="nav"></Navbar>
 
     <router-view />
 
@@ -36,7 +32,6 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
   /* background-color:#f0f2f5; */
 
   /* f7 é o mais claro */
@@ -45,10 +40,11 @@ export default {
   background-color: #FAFAFA !important;
   color: #2c3e50 !important;
 }
-/*
-#nav {
-  padding: 30px;
-} */
+
+.nav {
+  margin-bottom: 100px !important;
+  display: inline-block !important;
+}
 
 /* #nav a {
   font-weight: bold;

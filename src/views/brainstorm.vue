@@ -1,42 +1,45 @@
 
 <template>
-  <div>
-    <b-card
-      class="text-center central-card"
-      align-h="center"
-      align-v="end"
-    >
-      <h4 class="page-tittle mt-4 mb-3">Brainstorm</h4>
-        <b-row
-          class="mt-5 d-flex justify-content-begin">
-          <b-col md="6">
-            <router-link :to="{ name: 'newBrainstorm' }">
-              <b-button
-                @click="createNewBrainstorming"
-                class="new-brain-button mt-5"
-                variant="outline-secondary"
-              >Novo Brainstorm
-                <i class="fas fa-plus"></i>
-              </b-button>
-            </router-link>
-          </b-col>
-          <b-col md="5">
-            <form action="" >
-              <!-- <b-input-group
-                > -->
-                <b-input-group-append class="d-flex justify-content-end mt-5">
-                <b-form-input
-                  type="text"
-                  placeholder="Entrar com o código">
-                </b-form-input>
+   <div class="container-fluid container-central-card">
+    <b-row align-h="center" align-v="end">
+      <b-col md="7">
+        <b-card
+          class="text-center central-card"
+          align-h="center"
+          align-v="end">
+          <h4 class="page-tittle mt-4 mb-3">Brainstorm</h4>
+            <b-row
+              class="mt-5 d-flex justify-content-begin">
+              <b-col md="6">
+                <router-link :to="{ name: 'newBrainstorm' }">
+                  <b-button
+                    @click="createNewBrainstorming"
+                    class="new-brain-button mt-5"
+                    variant="outline-secondary"
+                  >Novo Brainstorm
+                    <i class="fas fa-plus"></i>
+                  </b-button>
+                </router-link>
+              </b-col>
+              <b-col md="5">
+                <form action="" >
+                  <!-- <b-input-group
+                    > -->
+                    <b-input-group-append class="d-flex justify-content-end mt-5">
+                    <b-form-input
+                      type="text"
+                      placeholder="Entrar com o código">
+                    </b-form-input>
 
-                  <b-button variant="outline-primary">Entrar</b-button>
-                </b-input-group-append>
-              <!-- </b-input-group> -->
-            </form>
-          </b-col>
-      </b-row>
-    </b-card>
+                      <b-button variant="outline-primary">Entrar</b-button>
+                    </b-input-group-append>
+                  <!-- </b-input-group> -->
+                </form>
+              </b-col>
+          </b-row>
+        </b-card>
+      </b-col>
+    </b-row>
   </div>
 </template>
 

@@ -85,7 +85,7 @@
     /* padding: 1rem 1rem !important; */
     border-bottom: 1px solid rgb(0, 0, 0, 0.125 );
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 5px 0px;
-    position: fixed !important;
+    /* top: 0 !important; */
     width: 100%;
     height: 75px !important;
   }

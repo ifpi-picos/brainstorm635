@@ -190,7 +190,7 @@ export default {
 
 <style lang="css">
 .card-wait {
-  margin-top: 9%;
+  margin-top: 15px;
   position: relative !important;
   display: inline-flex !important;
   height: 450px;

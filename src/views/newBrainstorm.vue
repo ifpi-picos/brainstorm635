@@ -119,7 +119,7 @@ export default {
 
 <style lang="css">
 .card-new {
-  margin-top: 10%;
+  margin-top: 65px;
   position: relative !important;
   display: inline-flex !important;
   height: 350px;
