@@ -1,9 +1,9 @@
 <template>
-  <div class="container-fluid container-central-card">
+  <div class="container-fluid ">
     <b-row>
-      <b-col class="home-card">
+      <b-col class="home-card align-items-center justify-content-center ml-auto mr-auto" md="7">
         <b-card
-          class="text-center pt-4 ">
+          class="text-center p-5">
           <b-row>
             <b-col>
               <h4 class="mt-1 page-tittle md"> Bem vindo o Brainstorm 635 online</h4>
@@ -45,10 +45,9 @@
   padding-left: 1.5rem !important;
   padding-right: 1.5rem !important;
 }
-.home-card{
-  height: calc(100vh - 150px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
+.home-card {
+  height: calc(100vh - 0px);
 }
+
 </style>

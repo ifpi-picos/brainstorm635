@@ -1,15 +1,13 @@
 
 <template>
-   <div class="container-fluid container-central-card">
-    <b-row align-h="center" align-v="end">
-      <b-col md="7">
+   <b-container>
+    <b-row>
+      <b-col class=" d-flex brain-card align-items-center justify-content-center" md="12">
         <b-card
-          class="text-center central-card"
-          align-h="center"
-          align-v="end">
+          class="text-center">
           <h4 class="page-tittle mt-4 mb-3">Brainstorm</h4>
             <b-row
-              class="mt-5 d-flex justify-content-begin">
+              class="mt-5">
               <b-col md="6">
                 <router-link :to="{ name: 'newBrainstorm' }">
                   <b-button
@@ -21,11 +19,11 @@
                   </b-button>
                 </router-link>
               </b-col>
-              <b-col md="5">
+              <b-col md="6">
                 <form action="" >
                   <!-- <b-input-group
                     > -->
-                    <b-input-group-append class="d-flex justify-content-end mt-5">
+                    <b-input-group-append class="justify-content-end mt-5">
                     <b-form-input
                       type="text"
                       placeholder="Entrar com o código">
@@ -40,7 +38,7 @@
         </b-card>
       </b-col>
     </b-row>
-  </div>
+   </b-container>
 </template>
 
 <script>
@@ -69,5 +67,9 @@ export default {
 
 .form-control {
   padding: 1.3rem 0.5rem !important;
+}
+
+.brain-card {
+  height: calc(100vh - 150px);
 }
 </style>

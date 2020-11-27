@@ -1,21 +1,12 @@
+
 <template>
-  <div id="app">
-
-    <Navbar class="nav"></Navbar>
-
-    <router-view />
-
-    <Footer></Footer>
+  <div class="app">
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-
-import Footer from './components/footer'
-import Navbar from './components/navbar'
-
 export default {
-  components: { Footer, Navbar },
   data () {
     return {
     }
@@ -26,30 +17,24 @@ export default {
   } */
 }
 </script>
-<style>
+
+<style lang="css">
+/* @import '../node_modules/font-awesome/css/font-awesome.css';
+@import './assets/main.scss';
+@import '../node_modules/bootstrap/scss/bootstrap';
+@import '../node_modules/bootstrap-vue/src/index.scss'; */
+
+body {
+  padding: 75 0 75px 0px !important;
+  height: 100vh !important;
+}
+
 #app {
-  /* font-family: Avenir, Helvetica, Arial, sans-serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  /* background-color:#f0f2f5; */
-
-  /* f7 é o mais claro */
-  /* background-color: #f7f7f7; */
-
-  background-color: #FAFAFA !important;
   color: #2c3e50 !important;
 }
-
-.nav {
-  /* margin-bottom: 100px !important; */
-  display: inline-block !important;
-}
-
-/* #nav a {
-  font-weight: bold;
-  color: #2c3e50;
-} */
 
 #nav a.router-link-exact-active {
   color: #42b983;

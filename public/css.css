@@ -44,7 +44,7 @@ $success: #18d26e;
   box-sizing: border-box;
 }
 
-html {
+html, body {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
   margin: auto;
@@ -53,7 +53,7 @@ html {
   /* f7 é o mais claro */
   /* background-color: #f7f7f7; */
 
-  background-color: #f9f9f9  !important;
+  background-color: #fAfAfA  !important;
 }
 
 /* Shadow para todos os cards */
@@ -62,20 +62,8 @@ html {
   box-shadow: 0px 5px 10px 0px rgba(153, 153, 153, 0.3) !important;
   border-radius: 15px !important;
   border: 0.8px !important;
-}
-
-.central-card {
   font-family: Comfortaa !important;
-  /* margin-top: 14.5% !important; 
-  display: inline-flex !important;*/
-  height: 300px !important;/* 
-  width: 50% !important; */
 }
-
-/* Adding margin to the central card */
-/* .container-central-card {
-  margin-top: 90px;
-} */
 
 /* Barra lateral Azul da navbar e footer */
 .sidebar-nav {
