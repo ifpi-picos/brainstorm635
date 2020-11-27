@@ -4,6 +4,7 @@ import home from '../views/home.vue'
 import brainstorm from '@/views/brainstorm'
 import newBrainstorm from '@/views/newBrainstorm'
 import waitForMembers from '@/views/waitForMembers'
+import startBrainstorm from '@/views/startBrainstorm'
 import { BootstrapVue } from 'bootstrap-vue'
 import defaultTemplate from '@/templates/default.vue'
 import 'bootstrap/dist/css/bootstrap.css'
@@ -44,6 +45,12 @@ const routes = [{
       path: '/esperapormembros',
       name: 'waitForMembers',
       component: waitForMembers
+    },
+
+    {
+      path: '/startBrainstorm',
+      name: 'startBrainstorm',
+      component: startBrainstorm
     }
 
     /* {

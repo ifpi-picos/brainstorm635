@@ -17,18 +17,11 @@ export default {
   } */
 }
 </script>
-
-<style lang="css">
-/* @import '../node_modules/font-awesome/css/font-awesome.css';
-@import './assets/main.scss';
-@import '../node_modules/bootstrap/scss/bootstrap';
-@import '../node_modules/bootstrap-vue/src/index.scss'; */
-
+<style>
 body {
-  padding: 75 0 75px 0px !important;
-  height: 100vh !important;
+  padding: 75px 0 75px 0;
+  height: 100vh;
 }
-
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
