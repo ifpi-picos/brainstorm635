@@ -1,37 +1,46 @@
 <template>
-  <div>
-    <b-card class="footer">
-      <b-row align-h="center">
-        <b-col md="3" align-self="end" class="pt-1">
-          <span >
-            &copy; CopyRight, Brainstorm635 2020
-          </span>
-        </b-col>
-        <b-col md="2" align-self="start">
-          <span class="sidebar-footer"></span>
-        </b-col>
-        <b-col md="3" align-self="center" class="pt-1">
-          <span>
-            Todos os direitos reservados
-          </span>
-        </b-col>
-      </b-row>
-    </b-card>
-  </div>
+  <b-container class=" footer" >
+    <b-row class="text-center" no-gutters  >
+      <b-col class="ml-auto mr-auto" md="8" sm="12" align-self="center">
+        <b-row class="mt-4" no-gutters>
+          <b-col sm="4">
+            <span >
+              &copy; CopyRight, Brainstorm635 2020
+            </span>
+          </b-col>
+          <b-col sm="4">
+            <span class="sidebar-footer"></span>
+          </b-col>
+          <b-col sm="4">
+            <span>
+              Todos os direitos reservados
+            </span>
+          </b-col>
+        </b-row>
+      </b-col>
+    </b-row>
+  </b-container >
 </template>
 
 <style lang="css">
-  .footer {
-    background-color: #fff !important;
-    color: #2c3e50;
-    height: 75px;
-    padding: 0% !important;
-    position: fixed !important;
-    bottom: 0 !important;
-    width: 100%;
-    border-top: rgb(0, 0, 0, 0.125 ) 0.6px solid !important;
-    font-size: 17px !important;
-    border-radius: 0 !important;
-  }
+.footer {
+  min-width: 100% !important;
+  max-width: 100% !important;
+  box-shadow: 0px 5px 10px 0px rgba(153, 153, 153, 0.3) !important;
+  bottom: 0px !important;
+  position: fixed !important;
+  height: 75px !important;
+  border-radius: 0 !important;
+  background-color: #fff !important;
+  color: #2c3e50;
+  border-top: rgb(0, 0, 0, 0.125 ) 0.2px solid !important;
+  font-size: 17px !important;
+}
 
+.sidebar-footer {
+  position: absolute;
+  height: 55px;
+  border-left: 4px solid #17a2b8;
+  margin-top: -10px !important;
+}
 </style>

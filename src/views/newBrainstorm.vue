@@ -1,8 +1,8 @@
 <template>
-  <b-container>
-    <b-row>
-      <b-col class="align-items-center justify-content-center d-fle" style="height: calc(100vh - 0px);">
-        <b-card class="card-new">
+  <b-container fluid>
+    <b-row align-v="center">
+      <b-col class="align-items-center justify-content-center ml-auto mr-auto" md="10">
+        <b-card class="text-center pr-5 pl-5 pb-5 pt-0">
           <h4 class="page-tittle mb-5 mt-4">Novo Brainstorm</h4>
           <b-form @submit="newBrainstorm()">
             <b-row>
@@ -122,13 +122,6 @@ export default {
 </script>
 
 <style lang="css">
-.card-new {
-  margin-top: 65px;
-  position: relative !important;
- /*  display: inline-flex !important; */
-  /* height: 350px;
-  width: 80%; */
-}
 
 .tooltip-inner {
   /* max-width: 200px; */

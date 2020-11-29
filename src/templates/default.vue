@@ -1,6 +1,6 @@
 <template>
   <div class="template">
-    <NavBar/>
+    <NavBar />
       <router-view></router-view>
     <Footer />
   </div>
@@ -24,6 +24,7 @@ export default {
 <style lang="css">
 .template {
   background-color: #fafafa !important;
+  width: 100% !important;
+  height: 100% !important;
 }
-
 </style>

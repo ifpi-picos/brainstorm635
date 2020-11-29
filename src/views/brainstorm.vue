@@ -1,39 +1,43 @@
 
 <template>
-   <b-container>
-    <b-row>
-      <b-col class=" d-flex brain-card align-items-center justify-content-center" md="12">
+   <b-container fluid>
+    <b-row align-v="end">
+      <b-col class="brain-card align-items-center justify-content-center ml-auto mr-auto" md="7">
         <b-card
-          class="text-center">
-          <h4 class="page-tittle mt-4 mb-3">Brainstorm</h4>
-            <b-row
-              class="mt-5">
-              <b-col md="6">
-                <router-link :to="{ name: 'newBrainstorm' }">
-                  <b-button
-                    @click="createNewBrainstorming"
-                    class="new-brain-button mt-5"
-                    variant="outline-secondary"
-                  >Novo Brainstorm
-                    <i class="fas fa-plus"></i>
-                  </b-button>
-                </router-link>
-              </b-col>
-              <b-col md="6">
-                <form action="" >
-                  <!-- <b-input-group
-                    > -->
-                    <b-input-group-append class="justify-content-end mt-5">
-                    <b-form-input
-                      type="text"
-                      placeholder="Entrar com o código">
-                    </b-form-input>
+          class="text-center pr-5 pl-5 pb-5 pt-0">
+          <b-row>
+            <b-col>
+              <h4 class="page-tittle mb-5 mt-4">Brainstorm</h4>
+            </b-col>
+          </b-row>
+          <b-row
+            class="text-center mt-5">
+            <b-col md="6">
+              <router-link :to="{ name: 'newBrainstorm' }">
+                <b-button
+                  @click="createNewBrainstorming"
+                  class="new-brain-button mt-5"
+                  variant="outline-secondary"
+                >Novo Brainstorm
+                  <i class="fas fa-plus"></i>
+                </b-button>
+              </router-link>
+            </b-col>
+            <b-col md="6">
+              <form action="" >
+                <!-- <b-input-group
+                  > -->
+                  <b-input-group-append class="justify-content-end mt-5">
+                  <b-form-input
+                    type="text"
+                    placeholder="Entrar com o código">
+                  </b-form-input>
 
-                      <b-button variant="outline-primary">Entrar</b-button>
-                    </b-input-group-append>
-                  <!-- </b-input-group> -->
-                </form>
-              </b-col>
+                    <b-button variant="outline-primary">Entrar</b-button>
+                  </b-input-group-append>
+                <!-- </b-input-group> -->
+              </form>
+            </b-col>
           </b-row>
         </b-card>
       </b-col>
@@ -69,7 +73,7 @@ export default {
   padding: 1.3rem 0.5rem !important;
 }
 
-.brain-card {
+/* .brain-card {
   height: calc(100vh - 150px);
-}
+} */
 </style>

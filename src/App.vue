@@ -1,12 +1,24 @@
-
 <template>
-  <div class="app">
+<div id="app">
+  <NavBar />
+  <div>
     <router-view></router-view>
+     <Footer />
   </div>
+</div>
 </template>
 
 <script>
+
+import NavBar from '@/components/navbar.vue'
+import Footer from '@/components/footer.vue'
+
 export default {
+  name: 'default',
+  components: {
+    NavBar,
+    Footer
+  },
   data () {
     return {
     }
@@ -18,10 +30,7 @@ export default {
 }
 </script>
 <style>
-body {
-  padding: 75px 0 75px 0;
-  height: 100vh;
-}
+
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

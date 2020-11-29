@@ -6,8 +6,8 @@ import newBrainstorm from '@/views/newBrainstorm'
 import waitForMembers from '@/views/waitForMembers'
 import startBrainstorm from '@/views/startBrainstorm'
 import { BootstrapVue } from 'bootstrap-vue'
-import defaultTemplate from '@/templates/default.vue'
-import 'bootstrap/dist/css/bootstrap.css'
+/* import defaultTemplate from '@/templates/default.vue'
+ */import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 Vue.config.productionTip = false
@@ -16,50 +16,42 @@ Vue.use(VueRouter)
 Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 
-const routes = [{
-  path: '/',
-  redirect: '/',
-  name: 'default',
-  component: defaultTemplate,
-  children: [
+const routes = [
+  {
+    path: '/',
+    name: 'home',
+    component: home
+  },
 
-    {
-      path: '/',
-      name: 'home',
-      component: home
-    },
+  {
+    path: '/brainstorm',
+    name: 'brainstorm',
+    component: brainstorm
+  },
 
-    {
-      path: '/brainstorm',
-      name: 'brainstorm',
-      component: brainstorm
-    },
+  {
+    path: '/novobrainstorm',
+    name: 'newBrainstorm',
+    component: newBrainstorm
+  },
 
-    {
-      path: '/novobrainstorm',
-      name: 'newBrainstorm',
-      component: newBrainstorm
-    },
+  {
+    path: '/esperapormembros',
+    name: 'waitForMembers',
+    component: waitForMembers
+  },
 
-    {
-      path: '/esperapormembros',
-      name: 'waitForMembers',
-      component: waitForMembers
-    },
+  {
+    path: '/startBrainstorm',
+    name: 'startBrainstorm',
+    component: startBrainstorm
+  }
 
-    {
-      path: '/startBrainstorm',
-      name: 'startBrainstorm',
-      component: startBrainstorm
-    }
-
-    /* {
-      path: '/about',
-      name: 'about',
-      component: () => import( '../views/about.vue')
-    } */
-  ]
-}
+  /* {
+    path: '/about',
+    name: 'about',
+    component: () => import( '../views/about.vue')
+  } */
 ]
 
 const router = new VueRouter({
