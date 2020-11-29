@@ -11,11 +11,10 @@
             </b-col>
           </b-row>
           <b-row
-            class="text-center mt-5">
+            class="text-center mt-4">
             <b-col md="6">
               <router-link :to="{ name: 'newBrainstorm' }">
                 <b-button
-                  @click="createNewBrainstorming"
                   class="new-brain-button mt-5"
                   variant="outline-secondary"
                 >Novo Brainstorm
