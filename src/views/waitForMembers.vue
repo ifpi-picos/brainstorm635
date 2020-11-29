@@ -15,7 +15,8 @@
                   class="text-left"
                   id="input-group-1"
                   label="Descrição"
-                  label-for="input-1">
+                  label-for="input-1"
+                  label-class="required">
                   <b-input-group>
                     <b-input-group-prepend>
                       <span class="input-group-text"><i class="fas fa-file-signature fa-lg"></i></span>
@@ -59,6 +60,7 @@
                   id="input-group-3"
                   label="Membros ativos"
                   label-for="input-3"
+                  label-class="required"
                   class="text-left ">
                   <b-input-group>
                     <b-input-group-prepend>

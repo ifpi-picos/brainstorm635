@@ -11,7 +11,8 @@
                   class="text-left"
                   id="input-group-1"
                   label="Descrição"
-                  label-for="input-1">
+                  label-for="input-1"
+                  label-class="required">
                   <b-input-group>
                     <b-input-group-prepend>
                       <span class="input-group-text"><i class="fas fa-file-signature fa-lg"></i></span>
@@ -44,7 +45,13 @@
                       value="this.code">
                     </b-form-input>
                     <b-input-group-append>
-                      <b-button v-b-tooltip.hover.topleft title="Copiar código" class="line-button devsite-icon-copy" variant="light"><i class="fas fa-copy"></i></b-button>
+                      <b-button
+                        v-b-tooltip.hover.topleft
+                        title="Copiar código"
+                        class="line-button"
+                        variant="light">
+                        <i class="far fa-copy fa-lg"></i>
+                      </b-button>
                     </b-input-group-append>
                   </b-input-group>
                 </b-form-group>
@@ -54,6 +61,7 @@
                   id="input-group-3"
                   label="Número de participantes"
                   label-for="input-3"
+                  label-class="required"
                   class="text-left">
                   <b-input-group>
                     <b-input-group-prepend>
@@ -133,7 +141,7 @@ export default {
   border-radius: .25rem;
 }
 
-.bs-tooltip-auto[x-placement^=top] .arrow:before, .bs-tooltip-top .arrow:befor {
+.bs-tooltip-auto[x-placement^=top] .arrow:before, .bs-tooltip-top .arrow:before {
   top: 0;
   border-width: .4rem .4rem 0;
   border-top-color: #17a2b8 !important;

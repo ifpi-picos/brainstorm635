@@ -32,13 +32,37 @@
                     placeholder="Entrar com o código">
                   </b-form-input>
 
-                    <b-button variant="outline-primary">Entrar</b-button>
+                    <b-button variant="outline-primary" v-b-modal.modal-prevent-closing>Entrar</b-button>
                   </b-input-group-append>
                 <!-- </b-input-group> -->
               </form>
             </b-col>
           </b-row>
         </b-card>
+        <b-modal
+          id="modal-prevent-closing"
+          ref="modal"
+          title="Informe seu nome"
+          @show="resetModal"
+          @hidden="resetModal"
+          @ok="handleOk">
+          <form ref="form" @submit.stop.prevent="handleSubmit">
+            <b-form-group
+              :state="nameState"
+              label="Nome"
+              label-for="name-input"
+              label-class="required"
+              invalid-feedback="Name is required">
+              <b-form-input
+                placeholder="Informe seu nome"
+                id="name-input"
+                v-model="name"
+                :state="nameState"
+                required>
+              </b-form-input>
+            </b-form-group>
+          </form>
+        </b-modal>
       </b-col>
     </b-row>
    </b-container>
@@ -64,15 +88,54 @@ export default {
 </script>
 
 <style lang="css">
-  * {
-    box-sizing: border-box
-  }
-
-.form-control {
-  padding: 1.3rem 0.5rem !important;
+* {
+  box-sizing: border-box
 }
 
-/* .brain-card {
-  height: calc(100vh - 150px);
-} */
+.form-control {
+padding: 1.3rem 0.5rem !important;
+}
+
+/* Changes for Modal */
+.modal-title {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.modal-footer {
+margin-left: auto !important;
+margin-right: auto !important;
+border-top: none !important;
+}
+
+.modal-footer > * {
+margin: 1rem 1.5rem !important;
+}
+
+.modal-content {
+box-shadow: 0px 5px 10px 0px rgba(230, 230, 230, 0.2) !important;
+}
+
+.modal {
+top: 120px !important;
+}
+
+/* Chancge colors for class button .btn-secondary */
+.btn-secondary {
+  background-color: transparent !important;
+  border-color: #ce242a !important;
+  color: #bd2130 !important;
+}
+
+.btn-secondary:hover {
+  color: #fff !important;
+  background-color: #bd2130 !important;
+  border-color: #a94442 !important;
+}
+
+.btn-secondary:focus {
+  color: #fff !important;
+  background-color: #a94442 !important;
+  border-color: #a94442 !important;
+  box-shadow: 0 0 0 0.2rem rgba(225,83,97,.5) !important;
+}
 </style>

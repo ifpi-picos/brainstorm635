@@ -69,7 +69,7 @@ html {
 }
 
 /* Shadow para todos os cards */
-.card {
+.card, .modal-content {
   /* box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 6px 0px; */
   box-shadow: 0px 5px 10px 0px rgba(153, 153, 153, 0.3) !important;
   border-radius: 15px !important;
@@ -90,8 +90,7 @@ html {
 
 
 /* The next 2 selectors are for underlined for h3 or title page */
-.page-tittle {/* 
-  font-size: 1.2em; */
+.page-tittle {
   font-family: Comfortaa !important;
   color: #111;
   text-transform: uppercase;
@@ -113,21 +112,6 @@ html {
   left: calc(50% - 20px);
 }
 
-/* .required {
-  position: relative;
-  display: inline-block !important;
-}
-.required::after {
-  content: "*";
-  font-weight: bold;
-  position: absolute;
-  display: inline-block;
-  color: #ce242a;
-  top: 0;
-  right: -10px;
-  margin-left: 2px;
-} */
-
 .btn {
   padding: 0.4rem 0.9rem !important;
   font-size: 1.1rem !important;
@@ -136,13 +120,13 @@ html {
 
 /* Shadow for standard buttons */
 .btn:hover {
-  /* box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 6px 0px !important */
   box-shadow: 0 1px 3px 0 rgba(60,64,67,0.302),
   0 4px 8px 3px rgba(60,64,67,0.149) !important;
 }
 
 /* The next 4 selectors are changes to success buttons */
-.btn-outline-success {
+.btn-outline-success, .btn-primary {
+  background-color: transparent !important;
   color: #18d26e !important;
   border-color: #18d26e !important;
 }
@@ -153,13 +137,13 @@ html {
   border-color: #18d26e !important; 
 }
 
-.btn-outline-success:hover {
+.btn-outline-success:hover, .btn-primary:hover {
   color: #fff !important;
   background-color: #18d26e !important;
   border-color: #18d26e !important;
 }
 
-.btn-outline-success:focus, .btn-outline-success.focus {
+.btn-outline-success:focus, .btn-outline-success.focus, .btn-primary:focus {
   background-color: #28a745 !important;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 6px 0px !important;
   color: #fff !important;
@@ -183,10 +167,6 @@ html {
   border-color: #17a2b8 !important;
 }
 
-.btn-outline-primary:focus, .btn-outline-primary.focus {
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 6px 0px !important;
-}
-
 /* Style for inputs from newBrainstorm and waitForMembers scream */
 .create {
   padding-top: 0.4rem !important;
@@ -195,7 +175,21 @@ html {
 }
 
 .line-button {
-  border: solid 1px #ced4da !important;
+  border: 1px #ced4da solid  !important;
+  border-left: none !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  background-color: #fff !important;
+}
+
+.line-button:hover {
+  background-color: #fff !important;
+  box-shadow: none !important;
+}
+
+.line-button:focus {
+  background-color: #fff !important;
+  box-shadow: none !important;
 }
 
 .input-with-prepend {
@@ -205,6 +199,7 @@ html {
 .input-with-append {
   border-right: none !important;
 }
+
 .input-code {
   background-color: #fff !important;
 }
@@ -213,4 +208,20 @@ html {
 .input-group-text {
   background-color: #17a2b8 !important;
   opacity: 0.95;
+}
+
+/* Asterisk for required inputs */
+.required {
+  position: relative;
+  display: inline-block !important;
+}
+.required::after {
+  content: "*";
+  font-weight: bold;/* 
+  // position: absolute; */
+  display: inline-block;
+  color: #ce242a;
+ /*  // top: 0;
+  // right: -10px */;
+  margin-left: 2px;
 }
