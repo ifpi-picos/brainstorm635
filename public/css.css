@@ -225,3 +225,11 @@ html {
   // right: -10px */;
   margin-left: 2px;
 }
+
+/* Warnigs for incorrect inputs */
+.warning-input-forms {
+  color: #ce242a;
+  margin-bottom: -5px;
+  font-size: 14px;
+}
+

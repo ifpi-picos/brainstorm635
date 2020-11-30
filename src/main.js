@@ -1,6 +1,7 @@
 
 import Vue from 'vue'
 import BootstrapVue from 'bootstrap-vue'
+import Vuelidate from 'vuelidate'
 
 import App from './App.vue'
 import './registerServiceWorker'
@@ -11,6 +12,7 @@ import FirebaseApp from './firebase'
 
 Vue.use(BootstrapVue)
 Vue.use(FirebaseApp)
+Vue.use(Vuelidate)
 Vue.config.productionTip = false
 
 new Vue({

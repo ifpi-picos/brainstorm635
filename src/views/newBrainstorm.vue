@@ -46,6 +46,7 @@
                     </b-form-input>
                     <b-input-group-append>
                       <b-button
+                        @click="copyCode()"
                         v-b-tooltip.hover.topleft
                         title="Copiar código"
                         class="line-button"
@@ -96,6 +97,8 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2'
+
 export default {
   data () {
     return {
@@ -108,7 +111,6 @@ export default {
   created: function () {},
 
   methods: {
-
     /* Register  */
     newBrainstorm () {
       const db = this.$firebase.firestore()
@@ -124,6 +126,15 @@ export default {
           console.error('Error writing document: ', error)
         })
       this.$router.push({ name: 'waitForMembers' })
+    },
+    copyCode () {
+      Swal.fire({
+        title: 'Código copiado',
+        text: 'Você já pode enviá-lo aos seus amigos',
+        icon: 'success',
+        confirmButtonText: 'OK',
+        timer: 1200
+      })
     }
   }
 }

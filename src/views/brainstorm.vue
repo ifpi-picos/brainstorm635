@@ -31,8 +31,11 @@
                     type="text"
                     placeholder="Entrar com o código">
                   </b-form-input>
-
-                    <b-button variant="outline-primary" v-b-modal.modal-prevent-closing>Entrar</b-button>
+                    <b-button
+                      variant="outline-primary"
+                      v-b-modal.modal-1>
+                      Entrar
+                    </b-button>
                   </b-input-group-append>
                 <!-- </b-input-group> -->
               </form>
@@ -40,15 +43,10 @@
           </b-row>
         </b-card>
         <b-modal
-          id="modal-prevent-closing"
-          ref="modal"
-          title="Informe seu nome"
-          @show="resetModal"
-          @hidden="resetModal"
-          @ok="handleOk">
-          <form ref="form" @submit.stop.prevent="handleSubmit">
+          id="modal-1"
+          title="Informe seu nome">
+          <form  @submit="nextPage()">
             <b-form-group
-              :state="nameState"
               label="Nome"
               label-for="name-input"
               label-class="required"
@@ -57,10 +55,16 @@
                 placeholder="Informe seu nome"
                 id="name-input"
                 v-model="name"
-                :state="nameState"
+                @change="$v.name.$touch()"
                 required>
               </b-form-input>
+              <span
+                class="warning-input-forms"
+                v-if="$v.name.$error">
+                O campo nome é obrigatório ter no mínimo 4 caracteres.
+              </span>
             </b-form-group>
+            <b-button variant="danger"></b-button>
           </form>
         </b-modal>
       </b-col>
@@ -69,7 +73,22 @@
 </template>
 
 <script>
+import { required, minLength } from 'vuelidate/lib/validators'
+import Swal from 'sweetalert2'
+
 export default {
+  data () {
+    return {
+      name: '',
+      nameState: null
+    }
+  },
+  validations: {
+    name: {
+      required,
+      minLength: minLength(4)
+    }
+  },
   methods: {
     createNewBrainstorming () {
       this.$firebase.firestore().collection('brainstorms').add({
@@ -82,9 +101,35 @@ export default {
       }).catch(function (error) {
         console.error(error)
       })
+    },
+
+    checkFormValidity () {
+      const valid = this.$refs.form.checkValidity()
+      this.nameState = valid
+      return valid
+    },
+
+    netxPage () {
+      this.checkFormValidity()
+      this.checkForm()
+      this.$router.push({ name: 'newBrainstorm' })
+    },
+
+    checkForm () {
+      this.$v.$touch()
+      if (!this.$v.name.$error) {
+        Swal.fire({
+          title: 'Código copiado',
+          text: 'Você já pode enviá-lo aos seus amigos',
+          icon: 'success',
+          confirmButtonText: 'OK',
+          timer: 1200
+        })
+      }
     }
   }
 }
+
 </script>
 
 <style lang="css">
