@@ -109,7 +109,7 @@ export default {
   },
 
   created: function () {
-    this.codeGerator()
+    this.codeGenerator()
   },
 
   methods: {
@@ -140,7 +140,7 @@ export default {
       })
     },
 
-    codeGerator () {
+    codeGenerator () {
       function makeid (length) {
         let result = ''
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
