@@ -108,9 +108,12 @@ export default {
     }
   },
 
-  created: function () {},
+  created: function () {
+    this.codeGerator()
+  },
 
   methods: {
+
     /* Register  */
     newBrainstorm () {
       const db = this.$firebase.firestore()
@@ -135,6 +138,19 @@ export default {
         confirmButtonText: 'OK',
         timer: 1200
       })
+    },
+
+    codeGerator () {
+      function makeid (length) {
+        let result = ''
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+        const charactersLength = characters.length
+        for (let i = 0; i < length; i++) {
+          result += characters.charAt(Math.floor(Math.random() * charactersLength))
+        }
+        return result
+      }
+      this.code = makeid(5)
     }
   }
 }

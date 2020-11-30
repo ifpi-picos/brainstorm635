@@ -4,7 +4,7 @@
     <b-row align-v="end">
       <b-col class="brain-card align-items-center justify-content-center ml-auto mr-auto" md="7">
         <b-card
-          class="text-center pr-5 pl-5 pb-5 pt-0">
+          class="text-center pr-5 pl-5 pb-5 pt-0 mt-5">
           <b-row>
             <b-col>
               <h4 class="page-tittle mb-5 mt-4">Brainstorm</h4>
@@ -33,7 +33,7 @@
                   </b-form-input>
                     <b-button
                       variant="outline-primary"
-                      v-b-modal.modal-1>
+                      v-b-modal.modal>
                       Entrar
                     </b-button>
                   </b-input-group-append>
@@ -43,29 +43,38 @@
           </b-row>
         </b-card>
         <b-modal
-          id="modal-1"
+          centered
+          id="modal"
           title="Informe seu nome">
-          <form  @submit="nextPage()">
-            <b-form-group
-              label="Nome"
-              label-for="name-input"
-              label-class="required"
-              invalid-feedback="Name is required">
-              <b-form-input
-                placeholder="Informe seu nome"
-                id="name-input"
-                v-model="name"
-                @change="$v.name.$touch()"
-                required>
-              </b-form-input>
-              <span
-                class="warning-input-forms"
-                v-if="$v.name.$error">
-                O campo nome é obrigatório ter no mínimo 4 caracteres.
-              </span>
-            </b-form-group>
-            <b-button variant="danger"></b-button>
-          </form>
+          <template v-slot:modal-footer="{ hide }">
+            <form  @submit.prevent="checkForm()">
+              <b-form-group
+                label="Nome"
+                label-for="name-input"
+                label-class="required"
+                invalid-feedback="Name is required">
+                <b-form-input
+                  placeholder="Informe seu nome"
+                  id="name-input"
+                  v-model="name"
+                  @change="$v.name.$touch()"
+                  required>
+                </b-form-input>
+                <span
+                  class="warning-input-forms"
+                  v-if="$v.name.$error">
+                  O campo nome é obrigatório ter no mínimo 4 caracteres.
+                </span>
+              </b-form-group>
+              <br>
+              <b-row>
+                <b-col class="ml-auto mr-auto" sm="6">
+                  <b-button size="sm" variant="outline-danger" @click="hide()">Cancelar</b-button>
+                  <b-button class="ml-4 pl-4 pr-4" type="submit" size="sm" variant="outline-success">Ok</b-button>
+                </b-col>
+              </b-row>
+             </form>
+          </template>
         </b-modal>
       </b-col>
     </b-row>
@@ -83,12 +92,18 @@ export default {
       nameState: null
     }
   },
+
+  props: {
+
+  },
+
   validations: {
     name: {
       required,
       minLength: minLength(4)
     }
   },
+
   methods: {
     createNewBrainstorming () {
       this.$firebase.firestore().collection('brainstorms').add({
@@ -103,12 +118,6 @@ export default {
       })
     },
 
-    checkFormValidity () {
-      const valid = this.$refs.form.checkValidity()
-      this.nameState = valid
-      return valid
-    },
-
     netxPage () {
       this.checkFormValidity()
       this.checkForm()
@@ -119,12 +128,14 @@ export default {
       this.$v.$touch()
       if (!this.$v.name.$error) {
         Swal.fire({
-          title: 'Código copiado',
-          text: 'Você já pode enviá-lo aos seus amigos',
+          title: 'Parabéns, vc foi registrado!',
+          text: 'Agora você já pode participar de uma sessão no Brainstorm',
           icon: 'success',
           confirmButtonText: 'OK',
-          timer: 1200
+          confirmButtonColor: '#18d26e',
+          timer: 1300
         })
+        this.$router.push('/waitForMembers')
       }
     }
   }
@@ -146,41 +157,43 @@ padding: 1.3rem 0.5rem !important;
   font-weight: bold;
   text-transform: uppercase;
 }
+
+.modal-body {
+  padding: 0 !important;
+}
+
 .modal-footer {
-margin-left: auto !important;
-margin-right: auto !important;
-border-top: none !important;
+  border-top: none !important;
+  display: inline-block !important;
+  padding: 0 0 0.75rem 0 !important;
 }
 
 .modal-footer > * {
-margin: 1rem 1.5rem !important;
+  margin: 1rem 1.5rem !important;
 }
 
 .modal-content {
-box-shadow: 0px 5px 10px 0px rgba(230, 230, 230, 0.2) !important;
-}
-
-.modal {
-top: 120px !important;
-}
+  box-shadow: 0px 5px 10px 0px rgba(230, 230, 230, 0.2) !important;
+} */
 
 /* Chancge colors for class button .btn-secondary */
-.btn-secondary {
+.btn-outline-danger {
   background-color: transparent !important;
   border-color: #ce242a !important;
   color: #bd2130 !important;
 }
 
-.btn-secondary:hover {
+.btn-outline-danger:hover {
   color: #fff !important;
   background-color: #bd2130 !important;
   border-color: #a94442 !important;
 }
 
-.btn-secondary:focus {
+.btn-outline-danger:focus {
   color: #fff !important;
   background-color: #a94442 !important;
   border-color: #a94442 !important;
   box-shadow: 0 0 0 0.2rem rgba(225,83,97,.5) !important;
 }
+
 </style>

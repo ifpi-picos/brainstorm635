@@ -3,7 +3,7 @@
     <b-row align-v="center">
       <b-col class="align-items-center justify-content-center ml-auto mr-auto" md="7">
         <b-card
-          class="text-center pr-5 pl-5 pb-5 pt-0">
+          class="text-center pr-5 pl-5 pb-5 pt-0 mt-5">
           <b-row>
             <b-col>
               <h4 class="page-tittle mb-5 mt-4"> Bem vindo o Brainstorm 635 online</h4>
