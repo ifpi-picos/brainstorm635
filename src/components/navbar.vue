@@ -7,7 +7,7 @@
       <b-navbar-brand>
         <b-link
           class="sidebar-nav
-          navbar-brand  "
+          navbar-brand "
           to="/">
           <b-img class="ml-3 mt-4" width="190" height="20" :src="require('../../public/img/brainstorm635.png')" />
         </b-link>
@@ -59,19 +59,41 @@
                 </b-dropdown-item>
               </b-nav-item-dropdown>
 
-              <!-- <b-nav-item-dropdown right>
-                //Using 'button-content' slot
+              <b-nav-item-dropdown right>
+                <!-- //Using 'button-content' slot -->
                 <template #button-content>
-                  <em>User</em>
+                  <span class="user">User</span>
                 </template>
                 <b-dropdown-item href="#">Profile</b-dropdown-item>
-                <b-dropdown-item href="#">Sign Out</b-dropdown-item>
-              </b-nav-item-dropdown> -->
+                <b-dropdown-item @click="logout()">Sign Out</b-dropdown-item>
+              </b-nav-item-dropdown>
             </b-navbar-nav>
           </b-collapse>
     </b-navbar>
   </div>
 </template>
+
+<script>
+export default {
+  data () {
+    return {}
+  },
+
+  methods: {
+    logout () {
+      this.$firebase
+        .auth()
+        .signOut()
+        .then(function () {
+          this.$router.push({ name: 'login' })
+          console.log('Deu certo!')
+        }).catch(function (error) {
+          console.log(error)
+        })
+    }
+  }
+}
+</script>
 
 <style lang="css">
 
@@ -94,15 +116,11 @@
   padding: 0 7rem 0 7rem !important;
 }
 
-.navbar-light .navbar-brand {
-  color: #2c3e50 !important;
-}
-
 .usa {
   margin-left: 1px;
 }
 
-span {
+span, .user {
   font-size: 1.2rem;
 }
 

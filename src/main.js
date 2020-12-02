@@ -2,6 +2,7 @@
 import Vue from 'vue'
 import BootstrapVue from 'bootstrap-vue'
 import Vuelidate from 'vuelidate'
+import { clipboard } from 'vue-clipboards'
 
 import App from './App.vue'
 import './registerServiceWorker'
@@ -15,7 +16,15 @@ Vue.use(FirebaseApp)
 Vue.use(Vuelidate)
 Vue.config.productionTip = false
 
+/* Vue.use(VueClipboards) */
+
 new Vue({
+  directives: { clipboard },
+  data () {
+    return {
+      copyData: 'copy data'
+    }
+  },
   router,
   render: h => h(App)
 }).$mount('#app')

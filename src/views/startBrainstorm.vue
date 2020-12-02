@@ -1,49 +1,42 @@
 <template>
-  <b-container class="mt-5">
-    <b-row class="mb-5">
+  <b-container align-v="center">
+    <b-row class="align-items-center justify-content-center ml-auto mr-auto">
       <b-col>
         <b-card>
           <b-card-body class="d-flex justify-content-between">
-            <span><i class="fas fa-file-signature fa-lg"></i>Descrição</span>
-            <span
-              ><i class="fas fa-circle-notch fa-lg mr-auto ml-auto"></i
-              >Round</span
-            >
-            <span><i class="far fa-clock fa-lg"></i>Tempo restante</span>
+            <span><i class="fas fa-file-signature fa-lg"></i>Description</span>
+            <span><i class="fas fa-circle-notch fa-lg mr-auto ml-auto"></i>Round</span>
+            <span><i class="far fa-clock fa-lg"></i>Restant Time</span>
           </b-card-body>
         </b-card>
       </b-col>
     </b-row>
-
     <b-row align-v="center">
       <b-col
-        class="align-items-center justify-content-center ml-auto mr-auto mb-2 h-100"
-      >
+        class="align-items-center justify-content-center ml-auto mr-auto mb-2 h-100">
         <b-card class="text-center pr-0 pl-0 pb-0 pt-0">
           <b-card-body>
             <b-form-group>
-              <label for="ideia1">Ideia 1</label>
+              <label for="ideia1">Idea #1</label>
               <b-form-textarea
                 id="ideia1"
-                placeholder="Digite sua ideia..."
-                class="entradaTexto"
-              ></b-form-textarea>
+                placeholder="Write your idea..."
+                class="entradaTexto">
+              </b-form-textarea>
             </b-form-group>
             <div class="cor"></div>
           </b-card-body>
         </b-card>
       </b-col>
-
       <b-col
-        class="align-items-center justify-content-center ml-auto mr-auto mb-2 h-100"
-      >
+        class="align-items-center justify-content-center ml-auto mr-auto mb-2 h-100">
         <b-card class="text-center pr-0 pl-0 pb-0 pt-0">
           <b-card-body>
             <b-form-group>
-              <label for="ideia2">Ideia 2</label>
+              <label for="ideia2">Idea #2</label>
               <b-form-textarea
                 id="ideia2"
-                placeholder="Digite sua ideia..."
+                placeholder="Write your idea..."
                 class="entradaTexto"
               ></b-form-textarea>
             </b-form-group>
@@ -51,20 +44,18 @@
           </b-card-body>
         </b-card>
       </b-col>
-
       <b-col
-        class="align-items-center justify-content-center ml-auto mr-auto mb-2 h-100"
-      >
+        class="align-items-center justify-content-center ml-auto mr-auto mb-2 h-100">
         <b-card class="text-center pr-0 pl-0 pb-0 pt-0">
           <b-card-body>
             <b-form-group>
-              <label for="ideia3">Ideia 3</label>
+              <label for="ideia3">Idea #3</label>
               <b-form-textarea
                 id="ideia3"
-                placeholder="Digite sua ideia..."
+                placeholder="Write your idea..."
                 class="entradaTexto"
-                wrap="hard"
-              ></b-form-textarea>
+                wrap="hard">
+              </b-form-textarea>
             </b-form-group>
             <div class="cor"></div>
           </b-card-body>

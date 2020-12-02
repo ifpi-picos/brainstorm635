@@ -1,13 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import home from '../views/home.vue'
-import brainstorm from '@/views/brainstorm'
-import newBrainstorm from '@/views/newBrainstorm'
-import waitForMembers from '@/views/waitForMembers'
-import startBrainstorm from '@/views/startBrainstorm'
 import { BootstrapVue } from 'bootstrap-vue'
-/* import defaultTemplate from '@/templates/default.vue'
- */import 'bootstrap/dist/css/bootstrap.css'
+import defaultTemplate from '@/templates/default.vue'
+
+import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 Vue.config.productionTip = false
@@ -18,33 +14,46 @@ Vue.use(BootstrapVue)
 
 const routes = [
   {
+    path: '/login',
+    name: 'login',
+    component: () => import('@/views/login')
+  },
+
+  {
     path: '/',
-    name: 'home',
-    component: home
+    name: 'home ',
+    component: defaultTemplate,
+    children: [
+      {
+        path: '/',
+        name: 'home',
+        component: () => import('@/views/home')
+      },
+
+      {
+        path: '/brainstorm',
+        name: 'brainstorm',
+        component: () => import('@/views/brainstorm')
+      },
+
+      {
+        path: '/novobrainstorm',
+        name: 'newBrainstorm',
+        component: () => import('@/views/newBrainstorm')
+      },
+
+      {
+        path: '/startBrainstorm',
+        name: 'startBrainstorm',
+        component: () => import('@/views/startBrainstorm')
+      }
+    ]
   },
 
   {
-    path: '/brainstorm',
-    name: 'brainstorm',
-    component: brainstorm
-  },
-
-  {
-    path: '/novobrainstorm',
-    name: 'newBrainstorm',
-    component: newBrainstorm
-  },
-
-  {
-    path: '/esperapormembros',
-    name: 'waitForMembers',
-    component: waitForMembers
-  },
-
-  {
-    path: '/startBrainstorm',
-    name: 'startBrainstorm',
-    component: startBrainstorm
+    path: '*',
+    name: '404',
+    component: () => import('@/views/404.vue')
   }
 
   /* {

@@ -14,31 +14,7 @@ $success: #18d26e;
 // $dodger-blue: #53A0FD;
 // $red-violet: #CC19BF;
 // $mariner: #405CD2;
-// $seance: #7623A2;
-
-// background-color: #fafafa !important;
-  // background-color: #DfDCE3 !important;
-  // background-color: #DCD0C0 !important;
-  // background-color: #f4f4f4 !important;
-  // background-color: #E7DFDD !important;
-  // background-color: #A5D5D5 !important;
-  // background-color: #96858F !important;
-  // background-color: #EFEFEF !important;
-  // background-color: #8FD8D2 !important;
-  // background-color: #F8EEE7 !important;
-  // background-color: #D9D9D9 !important;
-  // background-color: #C5C1C0 !important;
-  // background-color: #A5A5AF !important;
-  // background-color: #A7B3A5 !important;
-  // background-color: #F2eee2 !important;
-  // background-color: #EAE3EA !important;
-  // background-color: #393939 !important;
-  // background-color: #E9E9E9 !important;
-  // background-color: #CDCDCD !important;
-  // background-color: #DCDCDC !important;
-  // background-color: #E9e7d4 !important;
-
- */
+// $seance: #7623A2; */
 
 * {
   box-sizing: border-box;
@@ -54,13 +30,11 @@ html {
   padding: 75px 0px 0 !important;
 }
  body {
-  /* padding: 75px 0 75px 0 !important; */
   /* background-color:#f0f2f5 */
-
-  /* f7 é o mais claro */
   /* background-color: #f7f7f7; */
 
-  background-color: #fAfAfA  !important;
+  /* background-color: #fAfAfA  !important; */
+  background-color: #fff;
 }
 
 .container-fluid {
@@ -71,9 +45,9 @@ html {
 /* Shadow para todos os cards */
 .card, .modal-content {
   /* box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 6px 0px; */
-  box-shadow: 0px 5px 10px 0px rgba(153, 153, 153, 0.3) !important;
+  /* box-shadow: 0px 5px 10px 0px rgba(153, 153, 153, 0.3) !important; */
   border-radius: 15px !important;
-  border: 0.8px !important;
+  border: 0px #dee2e6 solid !important;
   font-family: Comfortaa !important;
 }
 

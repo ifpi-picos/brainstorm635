@@ -6,7 +6,7 @@
           class="text-center pr-5 pl-5 pb-5 pt-0 mt-5">
           <b-row>
             <b-col>
-              <h4 class="page-tittle mb-5 mt-4"> Bem vindo o Brainstorm 635 online</h4>
+              <h4 class="page-tittle mb-5 mt-4"> Welcome to Brainstorm 635 online</h4>
             </b-col>
           </b-row>
           <b-row
@@ -19,7 +19,7 @@
                 class="inicial-buttons"
                 pill
                 variant="outline-info">
-                Sobre
+                About
               </b-button>
             </b-col>
             <b-col md="3">
@@ -29,7 +29,7 @@
                   class="inicial-buttons"
                   pill
                   variant="outline-success">
-                  Iniciar
+                  Start
                 </b-button>
               </router-link>
             </b-col>

@@ -13,7 +13,7 @@
           </b-col>
           <b-col sm="4">
             <span>
-              Todos os direitos reservados
+              All Rights Reserved
             </span>
           </b-col>
         </b-row>

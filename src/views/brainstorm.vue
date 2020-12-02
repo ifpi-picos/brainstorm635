@@ -17,32 +17,28 @@
                 <b-button
                   class="new-brain-button mt-5"
                   variant="outline-secondary"
-                >Novo Brainstorm
+                >New Brainstorm
                   <i class="fas fa-plus"></i>
                 </b-button>
               </router-link>
             </b-col>
             <b-col md="6">
               <form action="" >
-                <!-- <b-input-group
-                  > -->
-                  <b-input-group-append class="justify-content-end mt-5">
-                  <b-form-input
-                    type="text"
-                    placeholder="Entrar com o código">
-                  </b-form-input>
-                    <b-button
-                      variant="outline-primary"
-                      v-b-modal.modal>
-                      Entrar
-                    </b-button>
-                  </b-input-group-append>
-                <!-- </b-input-group> -->
+                <b-input-group-append class="justify-content-end mt-5">
+                <b-form-input
+                  type="text"
+                  placeholder="Entrar com o código">
+                </b-form-input>
+                  <b-button
+                    variant="outline-primary">
+                    Join
+                  </b-button>
+                </b-input-group-append>
               </form>
             </b-col>
           </b-row>
         </b-card>
-        <b-modal
+<!--         <b-modal
           centered
           id="modal"
           title="Informe seu nome">
@@ -75,33 +71,21 @@
               </b-row>
              </form>
           </template>
-        </b-modal>
+        </b-modal> -->
       </b-col>
     </b-row>
    </b-container>
 </template>
 
 <script>
-import { required, minLength } from 'vuelidate/lib/validators'
-import Swal from 'sweetalert2'
 
 export default {
   data () {
     return {
-      name: '',
-      nameState: null
     }
   },
 
   props: {
-
-  },
-
-  validations: {
-    name: {
-      required,
-      minLength: minLength(4)
-    }
   },
 
   methods: {
@@ -116,27 +100,6 @@ export default {
       }).catch(function (error) {
         console.error(error)
       })
-    },
-
-    netxPage () {
-      this.checkFormValidity()
-      this.checkForm()
-      this.$router.push({ name: 'newBrainstorm' })
-    },
-
-    checkForm () {
-      this.$v.$touch()
-      if (!this.$v.name.$error) {
-        Swal.fire({
-          title: 'Parabéns, vc foi registrado!',
-          text: 'Agora você já pode participar de uma sessão no Brainstorm',
-          icon: 'success',
-          confirmButtonText: 'OK',
-          confirmButtonColor: '#18d26e',
-          timer: 1300
-        })
-        this.$router.push('/waitForMembers')
-      }
     }
   }
 }

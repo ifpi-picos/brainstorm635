@@ -22,9 +22,9 @@ export default {
 </script>
 
 <style lang="css">
-.template {
+/* .template {
   background-color: #fafafa !important;
   width: 100% !important;
   height: 100% !important;
-}
+} */
 </style>
