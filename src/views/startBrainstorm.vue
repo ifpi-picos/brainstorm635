@@ -4,9 +4,21 @@
       <b-col>
         <b-card>
           <b-card-body class="d-flex justify-content-between">
-            <span><i class="fas fa-file-signature fa-lg"></i>Description</span>
-            <span><i class="fas fa-circle-notch fa-lg mr-auto ml-auto"></i>Round</span>
-            <span><i class="far fa-clock fa-lg"></i>Restant Time</span>
+              <span class="corpoInfo">
+                <span class="icone">
+                  <i class="fa fa-file-signature fa-lg"></i>
+                </span>Description
+              </span>
+              <span class="corpoInfo">
+                <span class="icone">
+                  <i class="fa fa-circle-notch fa-lg mr-auto ml-auto"></i>
+                </span>Round
+              </span>
+              <span class="corpoInfo">
+                <span class="icone">
+                  <i class="fa fa-clock fa-lg"></i>
+                </span>Restant Time
+              </span>
           </b-card-body>
         </b-card>
       </b-col>
@@ -14,7 +26,7 @@
     <b-row align-v="center">
       <b-col
         class="align-items-center justify-content-center ml-auto mr-auto mb-2 h-100">
-        <b-card class="text-center pr-0 pl-0 pb-0 pt-0">
+        <b-card class="cartao text-center pr-0 pl-0 pb-0 pt-0">
           <b-card-body>
             <b-form-group>
               <label for="ideia1">Idea #1</label>
@@ -30,7 +42,7 @@
       </b-col>
       <b-col
         class="align-items-center justify-content-center ml-auto mr-auto mb-2 h-100">
-        <b-card class="text-center pr-0 pl-0 pb-0 pt-0">
+        <b-card class="cartao text-center pr-0 pl-0 pb-0 pt-0">
           <b-card-body>
             <b-form-group>
               <label for="ideia2">Idea #2</label>
@@ -46,7 +58,7 @@
       </b-col>
       <b-col
         class="align-items-center justify-content-center ml-auto mr-auto mb-2 h-100">
-        <b-card class="text-center pr-0 pl-0 pb-0 pt-0">
+        <b-card class="cartao text-center pr-0 pl-0 pb-0 pt-0">
           <b-card-body>
             <b-form-group>
               <label for="ideia3">Idea #3</label>
@@ -80,6 +92,7 @@ export default {}
 .entradaTexto {
   display: flex;
   height: 200px !important;
+  min-width: 200px !important;
   border: none !important;
   flex-wrap: wrap;
 }
@@ -108,5 +121,24 @@ export default {}
   height: 10px;
   border-radius: 50%;
   background: blue;
+}
+
+.cartao {
+  border: solid 1px blue !important;
+}
+
+.icone {
+  background: #17a2b8 !important;
+  opacity: 0.95;
+  height: 43.98px !important;
+  width: 38.38px !important;
+  padding: 5.25px 7.5px;
+  border-radius: 0.25rem 0 0 0.25rem !important;
+}
+
+.corpoInfo {
+  padding: 2px 0 !important;
+  border-radius: 0.25rem !important;
+  border: solid 1px #ced4da;
 }
 </style>
