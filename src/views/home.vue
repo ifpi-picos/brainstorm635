@@ -18,17 +18,18 @@
               <b-button
                 class="inicial-buttons"
                 pill
-                variant="outline-info">
+                variant="outline-secondary">
                 About
               </b-button>
             </b-col>
             <b-col md="3">
               <!-- </router-link> -->
-              <router-link :to="{ name: 'brainstorm' }">
+              <Login> </Login>
+              <router-link to="/brainstorm">
                 <b-button
                   class="inicial-buttons"
                   pill
-                  variant="outline-success">
+                  variant="outline-info">
                   Start
                 </b-button>
               </router-link>
@@ -40,6 +41,12 @@
   </b-container>
 </template>
 
+<script>
+import Login from '../components/login'
+export default {
+  components: { Login }
+}
+</script>
 <style lang="css">
 .inicial-buttons {
   padding-left: 1.5rem !important;

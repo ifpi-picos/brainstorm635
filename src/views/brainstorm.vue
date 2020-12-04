@@ -16,7 +16,7 @@
               <router-link :to="{ name: 'newBrainstorm' }">
                 <b-button
                   class="new-brain-button mt-5"
-                  variant="outline-secondary"
+                  variant="outline-info"
                 >New Brainstorm
                   <i class="fas fa-plus"></i>
                 </b-button>
@@ -24,16 +24,19 @@
             </b-col>
             <b-col md="6">
               <form action="" >
-                <b-input-group-append class="justify-content-end mt-5">
-                <b-form-input
-                  type="text"
-                  placeholder="Entrar com o código">
-                </b-form-input>
-                  <b-button
-                    variant="outline-primary">
-                    Join
-                  </b-button>
-                </b-input-group-append>
+                <b-row class="mt-5">
+                  <b-col md="12" class="d-flex">
+                    <b-form-input
+                      type="text"
+                      placeholder="Entrar com o código">
+                    </b-form-input>
+                    <b-button
+                      type="submit"
+                      variant="info">
+                      Join
+                    </b-button>
+                  </b-col>
+                </b-row>
               </form>
             </b-col>
           </b-row>

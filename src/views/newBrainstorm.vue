@@ -92,7 +92,7 @@
                     <b-form-input
                       v-model="member1"
                       class="input-code input-with-prepend"
-                      placeholder="Member"
+                      placeholder="Guest"
                       id="name-1">
                     </b-form-input>
                   </b-input-group>
@@ -107,7 +107,7 @@
                     </b-input-group-prepend>
                     <b-form-input
                       v-model="member2"
-                      placeholder="Member"
+                      placeholder="Guest"
                       class="input-code input-with-prepend"
                       id="name-2">
                     </b-form-input>
@@ -123,7 +123,7 @@
                     </b-input-group-prepend>
                     <b-form-input
                       v-model="member3"
-                      placeholder="Member"
+                      placeholder="Guest"
                       class="input-code input-with-prepend"
                       id="name-3">
                     </b-form-input>
@@ -139,7 +139,7 @@
                     </b-input-group-prepend>
                     <b-form-input
                       v-model="member4"
-                      placeholder="Member"
+                      placeholder="Guest"
                       class="input-code input-with-prepend"
                       id="name-4">
                     </b-form-input>

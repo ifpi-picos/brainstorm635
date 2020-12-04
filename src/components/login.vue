@@ -1,8 +1,8 @@
 <template>
   <div class="login">
-    <b-button pill variant="outline-success" @click="login()">
+    <b-button class="inicial-buttons btn-google" pill variant="outline-info" @click="login()">
       <img class="img-fluid" height="30" width="30" src="/img/google.png" alt="Google logo" />
-      Login with google
+      Login with Google
     </b-button>
   </div>
 </template>
@@ -27,7 +27,7 @@ export default {
           user.displayName = result.user.displayName
           /* user.uid = result.user.uid */
           this.saveUser(user, result.user.uid)
-          this.$router.push('/')
+          this.$router.push({ name: 'brainstorm' })
         }).catch(function (error) {
           // eslint-disable-next-line no-unused-vars
           const errorCode = error.code
@@ -57,11 +57,17 @@ export default {
 </script>
 
 <style lang="css">
-.login {
+/* .login {
   width: 100%;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+} */
+
+.btn-google:hover {
+background-color: #fff;
+color: #138496;
+font-weight: 300;
 }
 </style>

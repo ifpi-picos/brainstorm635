@@ -99,49 +99,50 @@ html {
 }
 
 /* The next 4 selectors are changes to success buttons */
-.btn-outline-success, .btn-primary {
+/* .btn-outline-success, .btn-primary {
   background-color: transparent !important;
   color: #18d26e !important;
   border-color: #18d26e !important;
-}
+} */
 
-.btn-outline-success:not(:disabled):not(.disabled):active, .btn-outline-success:not(:disabled):not(.disabled).active, .show > .btn-outline-success.dropdown-toggle {
+/* btn-outline-success:not(:disabled):not(.disabled):active, .btn-outline-success:not(:disabled):not(.disabled).active, .show > .btn-outline-success.dropdown-toggle {
   background-color: #18d26e !important;
   color: #fff !important;
   border-color: #18d26e !important; 
-}
+} */
 
-.btn-outline-success:hover, .btn-primary:hover {
+/* .btn-outline-success:hover, .btn-primary:hover {
   color: #fff !important;
   background-color: #18d26e !important;
   border-color: #18d26e !important;
-}
+} */
 
-.btn-outline-success:focus, .btn-outline-success.focus, .btn-primary:focus {
+/* .btn-outline-success:focus, .btn-outline-success.focus, .btn-primary:focus {
   background-color: #28a745 !important;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 6px 0px !important;
   color: #fff !important;
-}
+ */
 
 /* The next 4 selectors are changes for primary button */
-.btn-outline-primary {
+/* .btn-outline-primary {
   color: #17a2b8 !important;
   border-color: #17a2b8 !important;
-}
+} */
 
-.btn-outline-primary:hover {
+/* .btn-outline-primary:hover {
   color: #fff !important;
   border-color: #17a2b8 !important;
   background-color: #17a2b8 !important;
-}
+} */
 
-.btn-outline-primary:not(:disabled):not(.disabled):active, .btn-outline-primary:not(:disabled):not(.disabled).active, .show > .btn-outline-primary.dropdown-toggle {
+/* .btn-outline-primary:not(:disabled):not(.disabled):active, .btn-outline-primary:not(:disabled):not(.disabled).active, .show > .btn-outline-primary.dropdown-toggle {
   color: #fff !important;
   background-color: #17a2b8 !important;
   border-color: #17a2b8 !important;
-}
+} */
 
 /* Style for inputs from newBrainstorm and waitForMembers scream */
+
 .create {
   padding-top: 0.4rem !important;
   padding-bottom: 0.4rem !important;

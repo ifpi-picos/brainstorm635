@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 import { BootstrapVue } from 'bootstrap-vue'
 import defaultTemplate from '@/templates/default.vue'
 
+import firebase from 'firebase/app'
+
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
@@ -13,19 +15,15 @@ Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 
 const routes = [
-  {
-    path: '/login',
-    name: 'login',
-    component: () => import('@/views/login')
-  },
 
   {
     path: '/',
-    name: 'home ',
+    name: 'default',
     component: defaultTemplate,
+    redirect: 'home',
     children: [
       {
-        path: '/',
+        path: '/home',
         name: 'home',
         component: () => import('@/views/home')
       },
@@ -67,6 +65,26 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach((to, from, next) => {
+/*  console.log('from: ', from, ' to: ', to) */
+  const HOME = '/'
+  /* const LOGIN = '/' */
+  const INICIAL_PAGE_AUTH = '/brainstorm'
+  firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+      if (to.path === HOME) {
+        next({ path: INICIAL_PAGE_AUTH })
+      }
+      next()
+    } else {
+      if (to.path !== HOME) {
+        next({ path: HOME })
+      }
+    }
+  })
+  next()
 })
 
 export default router
