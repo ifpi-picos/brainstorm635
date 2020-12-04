@@ -25,25 +25,25 @@ const routes = [
       {
         path: '/home',
         name: 'home',
-        component: () => import('@/views/home')
+        component: () => import('@/views/home.vue')
       },
 
       {
         path: '/brainstorm',
         name: 'brainstorm',
-        component: () => import('@/views/brainstorm')
+        component: () => import('@/views/brainstorm.vue')
       },
 
       {
         path: '/novobrainstorm',
         name: 'newBrainstorm',
-        component: () => import('@/views/newBrainstorm')
+        component: () => import('@/views/newBrainstorm.vue')
       },
 
       {
         path: '/startBrainstorm',
         name: 'startBrainstorm',
-        component: () => import('@/views/startBrainstorm')
+        component: () => import('@/views/startBrainstorm.vue')
       }
     ]
   },
