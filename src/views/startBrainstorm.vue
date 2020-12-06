@@ -50,8 +50,8 @@
           </b-card-body>
         </b-card>
       </b-col>
-      <b-col>
-        class="align-items-center justify-content-center ml-auto mr-auto mb-2 h->
+      <b-col
+        class="align-items-center justify-content-center ml-auto mr-auto mb-2 h-100">
         <b-card class="cartao text-center pr-0 pl-0 pb-0 pt-0">
           <b-card-body class="pb-0">
             <b-form-group>
@@ -64,8 +64,8 @@
             </b-form-group>
             <div class="cor"></div>
             <b-button variant="warning" class="continueIdea"
-              >Continue idea...[M]</b-button
-            >
+              >Continue idea...[M]
+            </b-button>
           </b-card-body>
         </b-card>
       </b-col>
