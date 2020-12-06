@@ -22,7 +22,6 @@
                       <span class="input-group-text"><i class="fas fa-file-signature fa-lg"></i></span>
                     </b-input-group-prepend>
                     <b-form-input
-                      disabled
                       type="text"
                       class="input-with-prepend input-code"
                       id="input-1"
@@ -73,7 +72,7 @@
                     <b-form-input
                       disabled
                       type="number"
-                      v-model="numberOFMembers"
+                      v-model="activeMembers"
                       value="this.numberOFMembers"
                       id="input-3"
                       class="input-with-prepend input-code text-center"
@@ -185,7 +184,7 @@ export default {
     return {
       description: '',
       code: '',
-      numberOFMembers: 0,
+      activeMembers: 1,
       allInputsVerified: true,
       disabledButton: true,
       member1: '',
@@ -225,6 +224,11 @@ export default {
     },
 
     brainstormInit () {
+      if (this.activeMembers >= 3 || this.activeMembers <= 6) {
+        this.disabledButton = false
+      } else {
+        this.disabledButton = true
+      }
       this.$router.push({ name: 'startbrainstorm' })
     },
 
