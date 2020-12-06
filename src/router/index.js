@@ -34,7 +34,7 @@ const routes = [
       },
 
       {
-        path: '/novobrainstorm',
+        path: '/newbrainstorm',
         name: 'newBrainstorm',
         component: () => import('@/views/newBrainstorm.vue')
       },

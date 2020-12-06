@@ -13,20 +13,20 @@
           <b-row
             class="text-center mt-4">
             <b-col md="6">
-              <router-link :to="{ name: 'newBrainstorm' }">
-                <b-button
-                  class="new-brain-button mt-5"
-                  variant="outline-info">
-                  New Brainstorm
-                  <i class="fas fa-plus"></i>
-                </b-button>
-              </router-link>
+              <b-button
+                @click="createNewBrainstorm () "
+                class="new-brain-button mt-5"
+                variant="outline-info">
+                New Brainstorm
+                <i class="fas fa-plus"></i>
+              </b-button>
             </b-col>
             <b-col md="6">
               <form action="" >
                 <b-row class="mt-5">
                   <b-col md="12" class="d-flex">
                     <b-form-input
+                      class="input-join"
                       type="text"
                       placeholder="Entrar com o código">
                     </b-form-input>
@@ -85,6 +85,7 @@
 export default {
   data () {
     return {
+      idBrainstorm: ''
     }
   },
 
@@ -92,17 +93,19 @@ export default {
   },
 
   methods: {
-    createNewBrainstorming () {
+    createNewBrainstorm () {
       this.$firebase.firestore().collection('brainstorms').add({
-        leader: 'Edmarques',
+        /* leader: 'Edmarques',
         users: ['Rafael', 'Jáder', 'Wisley', 'Pedro', 'Georgina'],
         description: 'iBeer',
-        ideas: []
+        ideas: [] */
       }).then(function (docRef) {
+        this.idBrainstorm = docRef.id
         console.log('Document id: ', docRef.id)
       }).catch(function (error) {
         console.error(error)
       })
+      this.$router.push({ name: 'newBrainstorm' })
     }
   }
 }
@@ -140,6 +143,10 @@ padding: 1.3rem 0.5rem !important;
 
 .modal-content {
   box-shadow: 0px 5px 10px 0px rgba(230, 230, 230, 0.2) !important;
+}
+
+.input-join {
+  padding-top: 1.5rem !important;
 }
 
 /* Chancge colors for class button .btn-secondary */

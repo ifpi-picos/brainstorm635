@@ -217,8 +217,9 @@ export default {
       const db = this.$firebase.firestore()
       db.collection('brainstorms').get().then(querySnapshot => {
         const dados = querySnapshot.docs[0]
-        this.description = dados.data().description
-        this.numberOFMembers = dados.data().users.length + 1
+        console.log(dados.id)
+        /* this.description = dados.data().description
+        this.numberOFMembers = dados.data().users.length + 1 */
         this.code = dados.id
       })
     },
@@ -246,28 +247,6 @@ export default {
         timer: 1200
       })
     }
-
-    /*   this.$bvToast.toast('Link copiado', {
-        title: '',
-        toaster: 'b-toaster-top-center',
-        variant: 'success',
-        autoHideDelay: 1000,
-        appendToast: true
-      }) */
-    /* copyCode () {
-      const copyText = this.code
-      copyText.select()
-      copyText.setSelectionRange(0, 99999)
-      document.execCommand('copy')
-      alert('Copied the text: ' + copyText.value)
-      Swal.fire({
-        title: 'Código copiado',
-        text: 'Você já pode enviá-lo aos seus amigos',
-        icon: 'success',
-        confirmButtonText: 'OK',
-        timer: 1200
-      })
-    } */
   }
 }
 </script>

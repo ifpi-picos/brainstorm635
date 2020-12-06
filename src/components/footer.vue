@@ -1,10 +1,10 @@
 <template>
-  <b-container class=" footer" >
+  <b-container class="footer" >
     <b-row class="text-center" no-gutters  >
       <b-col class="ml-auto mr-auto" xs="6" sm="12" md="8" lg="10" align-self="center">
         <b-row class="mt-4" no-gutters>
           <b-col xs="4">
-            <span>
+            <span class="span">
               &copy; CopyRight, Brainstorm635 2020
             </span>
           </b-col>
@@ -12,7 +12,7 @@
             <span class="sidebar-footer"></span>
           </b-col>
           <b-col xs="4">
-            <span>
+            <span class="span">
               All Rights Reserved
             </span>
           </b-col>
@@ -23,6 +23,11 @@
 </template>
 
 <style lang="css">
+.span {
+  font-family: comfortaa !important;
+  color: #2c3e50 !important ;
+}
+
 .footer {
   min-width: 100% !important;
   max-width: 100% !important;
@@ -32,9 +37,7 @@
   height: 75px !important;
   border-radius: 0 !important;
   background-color: #fff !important;
-  color: #2c3e50;
   border-top: rgb(0, 0, 0, 0.125 ) 0.2px solid !important;
-  font-size: 17px !important;
 }
 
 .sidebar-footer {
@@ -46,7 +49,7 @@
 
 /* Media queries for responsive footer bar */
 @media only screen and (max-width: 576px) {
-  span {
+  .span {
     font-size: 15px !important;
   }
 }
