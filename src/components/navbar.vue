@@ -7,7 +7,7 @@
       <b-navbar-brand>
         <b-link
           class="sidebar-nav
-          navbar-brand "
+          navbar-brand ml-1"
           to="/">
           <b-img class="ml-3 mt-4" width="190" height="20" :src="require('../../public/img/brainstorm635.png')" />
         </b-link>
@@ -149,6 +149,12 @@ export default {
 
 span, .user {
   font-size: 1.2rem;
+}
+/* Media queries for responsive nav bar */
+@media only screen and (max-width: 576px) {
+  .navbar {
+    padding: 0 !important;
+  }
 }
 
 /* .navbar-brand {
