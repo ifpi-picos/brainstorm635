@@ -88,7 +88,7 @@ html {
 
 .btn {
   padding: 0.4rem 0.9rem !important;
-  font-size: 1.1rem !important;
+  font-size: 1.3rem !important;
   font-family: Comfortaa !important;
 }
 
@@ -177,12 +177,6 @@ html {
 
 .input-code {
   background-color: #fff !important;
-}
-
-/* Changing the background color of input appends */
-.input-group-text {
-  background-color: #17a2b8 !important;
-  opacity: 0.95;
 }
 
 /* Asterisk for required inputs */

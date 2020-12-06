@@ -4,7 +4,7 @@
     <b-row align-v="end">
       <b-col class="brain-card align-items-center justify-content-center ml-auto mr-auto" md="7">
         <b-card
-          class="text-center pr-5 pl-5 pb-5 pt-0 mt-5">
+          class="text-center pr-5 pl-5 pb-5 pt-0 mt-3">
           <b-row>
             <b-col>
               <h4 class="page-tittle mb-5 mt-4">Brainstorm</h4>
@@ -140,10 +140,10 @@ padding: 1.3rem 0.5rem !important;
 
 .modal-content {
   box-shadow: 0px 5px 10px 0px rgba(230, 230, 230, 0.2) !important;
-} */
+}
 
 /* Chancge colors for class button .btn-secondary */
-.btn-outline-danger {
+/* .btn-outline-danger {
   background-color: transparent !important;
   border-color: #ce242a !important;
   color: #bd2130 !important;
@@ -160,6 +160,6 @@ padding: 1.3rem 0.5rem !important;
   background-color: #a94442 !important;
   border-color: #a94442 !important;
   box-shadow: 0 0 0 0.2rem rgba(225,83,97,.5) !important;
-}
+} */
 
 </style>

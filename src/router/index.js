@@ -15,7 +15,6 @@ Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 
 const routes = [
-
   {
     path: '/',
     name: 'default',
@@ -41,7 +40,7 @@ const routes = [
       },
 
       {
-        path: '/startBrainstorm',
+        path: '/startbrainstorm',
         name: 'startBrainstorm',
         component: () => import('@/views/startBrainstorm.vue')
       }
@@ -68,23 +67,21 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-/*  console.log('from: ', from, ' to: ', to) */
-  const HOME = '/'
-  /* const LOGIN = '/' */
-  const INICIAL_PAGE_AUTH = '/brainstorm'
-  firebase.auth().onAuthStateChanged(user => {
-    if (user) {
-      if (to.path === HOME) {
-        next({ path: INICIAL_PAGE_AUTH })
+  try {
+    const HOME = '/home'
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        next()
+      } else {
+        if (to.path !== HOME) {
+          next({ path: HOME })
+        }
+        next()
       }
-      next()
-    } else {
-      if (to.path !== HOME) {
-        next({ path: HOME })
-      }
-    }
-  })
-  next()
+    })
+  } catch (error) {
+    console.error(error)
+  }
 })
 
 export default router

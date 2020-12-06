@@ -3,7 +3,7 @@
     <b-row align-v="center">
       <b-col class="align-items-center justify-content-center ml-auto mr-auto" md="7">
         <b-card
-          class="text-center pr-5 pl-5 pb-5 pt-0 mt-5">
+          class="text-center pr-5 pl-5 pb-5 pt-0 mt-3">
           <b-row>
             <b-col>
               <h4 class="page-tittle mb-5 mt-4"> Welcome to Brainstorm 635 online</h4>
@@ -49,8 +49,8 @@ export default {
 </script>
 <style lang="css">
 .inicial-buttons {
-  padding-left: 1.5rem !important;
-  padding-right: 1.5rem !important;
+  padding-left: 1.6rem !important;
+  padding-right: 1.6rem !important;
 }
 
 </style>

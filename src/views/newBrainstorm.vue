@@ -5,7 +5,7 @@
         <b-card class="text-center pr-3 pl-3 pb-3 pt-0">
           <b-row>
             <b-col>
-              <h4 class="page-tittle mb-5 mt-4">Create Brainstorm</h4>
+              <h4 class="page-tittle mb-5 mt-3">Create Brainstorm</h4>
             </b-col>
           </b-row>
           <b-form @submit="brainstormInit()">
@@ -39,12 +39,9 @@
                   label="Brainstorm code"
                   label-for="input-2">
                   <b-input-group>
-                    <b-input-group-prepend>
-                      <span class="input-group-text" variant="light"><i class="fas fa-code fa-lg"></i></span>
-                    </b-input-group-prepend>
                     <b-form-input
                       disabled
-                      class="input-code input-with-prepend"
+                      class="input-code"
                       id="input-2"
                       v-model="code"
                       value="this.code">
@@ -157,11 +154,10 @@
                 <span class="loading">Start when all members are registered</span>
                 <b-row align-h="center" class="pt-4">
                   <b-button
-                    :disabled="disabledButton"
                     type="submit"
                     class="pl-3 pr-3"
                     pill
-                    variant="outline-primary">
+                    variant="outline-info">
                     Start
                   </b-button>
                 </b-row>
@@ -221,7 +217,7 @@ export default {
     },
 
     brainstormInit () {
-      this.$router.push({ name: 'startBrainstorm' })
+      this.$router.push({ name: 'startbrainstorm' })
     },
 
     copyCode () {
@@ -272,4 +268,9 @@ export default {
   animation: blink 1.3s linear infinite;
 }
 
+/* Changing the background color of input appends */
+.input-group-text {
+  background-color: #fff !important;
+ /*  opacity: 0.95; */
+}
 </style>

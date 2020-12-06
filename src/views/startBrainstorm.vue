@@ -3,6 +3,11 @@
     <b-row class="align-items-center justify-content-center ml-auto mr-auto">
       <b-col>
         <b-card>
+          <b-row>
+            <b-col>
+              <h4 class="page-tittle mb-5 mt-4">Brainstorm 635 online</h4>
+            </b-col>
+          </b-row>
           <b-card-body class="d-flex justify-content-between">
               <span class="corpoInfo">
                 <span class="icone">
@@ -27,9 +32,9 @@
       <b-col
         class="align-items-center justify-content-center ml-auto mr-auto mb-2 h-100">
         <b-card class="cartao text-center pr-0 pl-0 pb-0 pt-0">
-          <b-card-body>
+          <b-card-body class="pl-0 pb-0">
             <b-form-group>
-              <label for="ideia1">Idea #1</label>
+              <label for="ideia1" class="idea-label"><strong>Idea #1</strong></label>
               <b-form-textarea
                 id="ideia1"
                 placeholder="Write your idea..."
@@ -43,9 +48,9 @@
       <b-col
         class="align-items-center justify-content-center ml-auto mr-auto mb-2 h-100">
         <b-card class="cartao text-center pr-0 pl-0 pb-0 pt-0">
-          <b-card-body>
+          <b-card-body class="pb-0 pl-0">
             <b-form-group>
-              <label for="ideia2">Idea #2</label>
+              <label for="ideia2" class="idea-label"><strong>Idea #2</strong></label>
               <b-form-textarea
                 id="ideia2"
                 placeholder="Write your idea..."
@@ -59,9 +64,9 @@
       <b-col
         class="align-items-center justify-content-center ml-auto mr-auto mb-2 h-100">
         <b-card class="cartao text-center pr-0 pl-0 pb-0 pt-0">
-          <b-card-body>
+          <b-card-body class="pb-0 pl-0">
             <b-form-group>
-              <label for="ideia3">Idea #3</label>
+              <label for="ideia3" class="idea-label"><strong>Idea #3</strong></label>
               <b-form-textarea
                 id="ideia3"
                 placeholder="Write your idea..."
@@ -95,6 +100,12 @@ export default {}
   min-width: 200px !important;
   border: none !important;
   flex-wrap: wrap;
+  margin-left: 1rem;
+}
+
+.entradaTexto:focus {
+  /* box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25) */
+  box-shadow: none !important;
 }
 
 .entradaTexto::-webkit-scrollbar {
@@ -128,8 +139,8 @@ export default {}
 }
 
 .icone {
-  background: #17a2b8 !important;
-  opacity: 0.95;
+  /* background: #17a2b8 !important;
+  opacity: 0.95; */
   height: 43.98px !important;
   width: 38.38px !important;
   padding: 5.25px 7.5px;
@@ -139,6 +150,10 @@ export default {}
 .corpoInfo {
   padding: 2px 0 !important;
   border-radius: 0.25rem !important;
-  border: solid 1px #ced4da;
+  /* border: solid 1px #ced4da; */
+}
+
+.idea-label {
+  font-size: 17px;
 }
 </style>

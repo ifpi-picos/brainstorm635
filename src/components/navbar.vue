@@ -22,6 +22,26 @@
             </b-navbar-nav> -->
             <!-- Right aligned nav items -->
             <b-navbar-nav class="ml-auto">
+              <b-nav-item
+                right>
+                <b-avatar
+                  circle
+                  src="https://placekitten.com/300/300"
+                  alt="Foto do usuário">
+                </b-avatar>
+                {]~~]}
+              </b-nav-item>
+
+              <b-nav-item-dropdown
+                class="avatar d-flex justify-content-end"
+                right
+                v-if="isLogged">
+                <b-dropdown-item
+                  @click="signOut()">
+                  Sair
+                </b-dropdown-item>
+              </b-nav-item-dropdown>
+
               <!-- <b-nav-form>
                 <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
                 <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
@@ -76,7 +96,9 @@
 <script>
 export default {
   data () {
-    return {}
+    return {
+      isLoged: true
+    }
   },
 
   methods: {
@@ -85,11 +107,16 @@ export default {
         .auth()
         .signOut()
         .then(function () {
-          this.$router.push({ name: 'login' })
+          localStorage.removeItem('user')
+          this.$store.commit('logged', false)
+
+          console.log('Deu certo!')
+          this.$router.push('/')
           console.log('Deu certo!')
         }).catch(function (error) {
           console.log(error)
         })
+      this.isLoged = false
     }
   }
 }
