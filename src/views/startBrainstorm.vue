@@ -9,21 +9,23 @@
             </b-col>
           </b-row>
           <b-card-body class="d-flex justify-content-between">
-              <span class="corpoInfo">
-                <span class="icone">
-                  <i class="fa fa-file-signature fa-lg"></i>
-                </span>Description
-              </span>
-              <span class="corpoInfo">
-                <span class="icone">
-                  <i class="fa fa-circle-notch fa-lg mr-auto ml-auto"></i>
-                </span>Round
-              </span>
-              <span class="corpoInfo">
-                <span class="icone">
-                  <i class="fa fa-clock fa-lg"></i>
-                </span>Restant Time
-              </span>
+            <span class="corpoInfo">
+              <span class="icone">
+                <i class="fa fa-file-signature fa-lg"></i> </span>Description
+            </span>
+            <span class="corpoInfo">
+              <span class="icone">
+                <i
+                  class="fa fa-circle-notch fa-lg mr-auto ml-auto">
+                  </i>
+                </span>
+                Round
+            </span>
+            <span class="corpoInfo">
+              <span class="icone">
+                <i class="fa fa-clock fa-lg"></i> </span>
+                Restant Time
+            </span>
           </b-card-body>
         </b-card>
       </b-col>
@@ -32,7 +34,7 @@
       <b-col
         class="align-items-center justify-content-center ml-auto mr-auto mb-2 h-100">
         <b-card class="cartao text-center pr-0 pl-0 pb-0 pt-0">
-          <b-card-body class="pl-0 pb-0">
+          <b-card-body class="pb-0">
             <b-form-group>
               <label for="ideia1" class="idea-label"><strong>Idea #1</strong></label>
               <b-form-textarea
@@ -42,13 +44,16 @@
               </b-form-textarea>
             </b-form-group>
             <div class="cor"></div>
+            <b-button variant="warning" class="continueIdea">
+              Continue idea...[M]
+            </b-button>
           </b-card-body>
         </b-card>
       </b-col>
-      <b-col
-        class="align-items-center justify-content-center ml-auto mr-auto mb-2 h-100">
+      <b-col>
+        class="align-items-center justify-content-center ml-auto mr-auto mb-2 h->
         <b-card class="cartao text-center pr-0 pl-0 pb-0 pt-0">
-          <b-card-body class="pb-0 pl-0">
+          <b-card-body class="pb-0">
             <b-form-group>
               <label for="ideia2" class="idea-label"><strong>Idea #2</strong></label>
               <b-form-textarea
@@ -58,6 +63,9 @@
               ></b-form-textarea>
             </b-form-group>
             <div class="cor"></div>
+            <b-button variant="warning" class="continueIdea"
+              >Continue idea...[M]</b-button
+            >
           </b-card-body>
         </b-card>
       </b-col>
@@ -75,6 +83,9 @@
               </b-form-textarea>
             </b-form-group>
             <div class="cor"></div>
+            <b-button variant="warning" class="continueIdea"
+              >Continue idea...[M]
+            </b-button>
           </b-card-body>
         </b-card>
       </b-col>
@@ -127,7 +138,10 @@ export default {}
 }
 
 .cor {
-  display: block;
+  position: absolute;
+  left: 20px;
+  bottom: 26px;
+  display: inline-block;
   width: 10px;
   height: 10px;
   border-radius: 50%;
@@ -155,5 +169,10 @@ export default {}
 
 .idea-label {
   font-size: 17px;
+}
+
+.continueIdea {
+  height: 20% !important;
+  padding: 0 5px 0 5px !important;
 }
 </style>
