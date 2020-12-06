@@ -5,7 +5,7 @@
         <b-card>
           <b-row>
             <b-col>
-              <h4 class="page-tittle mb-5 mt-4">Brainstorm 635 online</h4>
+              <h4 class="page-tittle mb-5 mt-2">Brainstorm 635 online</h4>
             </b-col>
           </b-row>
           <b-card-body class="d-flex justify-content-between">
