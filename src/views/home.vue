@@ -22,9 +22,11 @@
                 About
               </b-button>
             </b-col>
+            <b-col md="6">
+              <Login> </Login>
+            </b-col>
             <b-col md="3">
               <!-- </router-link> -->
-              <Login> </Login>
               <router-link to="/brainstorm">
                 <b-button
                   class="inicial-buttons"

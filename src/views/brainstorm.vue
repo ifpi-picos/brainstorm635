@@ -16,8 +16,8 @@
               <router-link :to="{ name: 'newBrainstorm' }">
                 <b-button
                   class="new-brain-button mt-5"
-                  variant="outline-info"
-                >New Brainstorm
+                  variant="outline-info">
+                  New Brainstorm
                   <i class="fas fa-plus"></i>
                 </b-button>
               </router-link>

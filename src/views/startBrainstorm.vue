@@ -189,6 +189,7 @@ export default {}
 
 .continueIdea:hover {
   background-color: #fff !important;
-  color: #17a2b8;
+  color: #138496;
+  font-weight: 300;
 }
 </style>

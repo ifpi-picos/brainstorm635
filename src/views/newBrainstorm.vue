@@ -37,17 +37,24 @@
                   class="text-left"
                   id="input-group-2"
                   label="Brainstorm code"
-                  label-for="input-2">
+                  label-for="copyCode">
                   <b-input-group>
                     <b-form-input
-                      disabled
+                      id="copyCode"
+                      @click="codeSelect ()"
+                      readonly
                       class="input-code"
-                      id="input-2"
                       v-model="code"
                       value="this.code">
                     </b-form-input>
                     <b-input-group-append>
-                      <b-button class="line-button" variant="light"><i class="fas fa-copy"/></b-button>
+                      <b-button
+                        v-b-tooltip.hover.v-info title="Copy Code"
+                        class="line-button"
+                        variant="light"
+                        @click="copyCodeToClipboad ()">
+                        <i class="fas fa-copy"/>
+                      </b-button>
                     </b-input-group-append>
                   </b-input-group>
                 </b-form-group>
@@ -220,7 +227,34 @@ export default {
       this.$router.push({ name: 'startbrainstorm' })
     },
 
-    copyCode () {
+    codeSelect () {
+      const copyText = document.getElementById('copyCode')
+      copyText.select()
+      copyText.setSelectionRange(0, 99999) /* For mobile devices */
+    },
+
+    copyCodeToClipboad () {
+      const copyText = document.getElementById('copyCode')
+      copyText.select()
+      copyText.setSelectionRange(0, 99999) /* For mobile devices */
+      document.execCommand('copy')
+      Swal.fire({
+        title: 'Code copied!',
+        text: 'You cant alread sent it to your friends!',
+        icon: 'success',
+        confirmButtonText: 'OK',
+        timer: 1200
+      })
+    }
+
+    /*   this.$bvToast.toast('Link copiado', {
+        title: '',
+        toaster: 'b-toaster-top-center',
+        variant: 'success',
+        autoHideDelay: 1000,
+        appendToast: true
+      }) */
+    /* copyCode () {
       const copyText = this.code
       copyText.select()
       copyText.setSelectionRange(0, 99999)
@@ -233,7 +267,7 @@ export default {
         confirmButtonText: 'OK',
         timer: 1200
       })
-    }
+    } */
   }
 }
 </script>
@@ -271,6 +305,7 @@ export default {
 /* Changing the background color of input appends */
 .input-group-text {
   background-color: #fff !important;
- /*  opacity: 0.95; */
+  color:  #17a2b8 !important;
+ /*  opacity: 1.95 !important; */
 }
 </style>
