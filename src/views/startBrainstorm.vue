@@ -47,8 +47,10 @@
               </b-form-textarea>
             </b-form-group>
             <div class="cor"></div>
-            <b-button variant="outline-info" class="continueIdea">
-              Continue idea...[M]
+            <b-button
+              v-b-tooltip.hover.v-info title="Continue idea... [M]"
+              variant="outline-info" class="continueIdea">
+              Continue
             </b-button>
           </b-card-body>
         </b-card>
@@ -66,8 +68,10 @@
               ></b-form-textarea>
             </b-form-group>
             <div class="cor"></div>
-            <b-button variant="outline-info" class="continueIdea"
-              >Continue idea...[M]
+            <b-button
+              v-b-tooltip.hover.v-info title="Continue idea... [M]"
+              variant="outline-info" class="continueIdea"
+              >Continue
             </b-button>
           </b-card-body>
         </b-card>
@@ -86,8 +90,10 @@
               </b-form-textarea>
             </b-form-group>
             <div class="cor"></div>
-            <b-button variant="outline-info" class="continueIdea"
-              >Continue idea...[M]
+            <b-button
+              v-b-tooltip.hover.v-info title="Continue idea... [M]"
+              variant="outline-info" class="continueIdea"
+              >Continue
             </b-button>
           </b-card-body>
         </b-card>
@@ -175,9 +181,14 @@ export default {}
 }
 
 .continueIdea {
-  height: 20% !important;
-  padding: 0 5px 0 5px !important;
+ /*  height: 20% !important;
+  padding: 0 5px 0 5px !important; */
   font-size: 15px !important;
   float: right !important;
+}
+
+.continueIdea:hover {
+  background-color: #fff !important;
+  color: #17a2b8;
 }
 </style>
