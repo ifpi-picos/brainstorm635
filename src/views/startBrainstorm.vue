@@ -11,7 +11,9 @@
           <b-card-body class="d-flex justify-content-between">
             <span class="corpoInfo">
               <span class="icone">
-                <i class="fa fa-file-signature fa-lg"></i> </span>Description
+                <i class="fa fa-file-signature fa-lg"></i>
+                Description
+              </span>
             </span>
             <span class="corpoInfo">
               <span class="icone">
@@ -23,7 +25,8 @@
             </span>
             <span class="corpoInfo">
               <span class="icone">
-                <i class="fa fa-clock fa-lg"></i> </span>
+                <i class="fa fa-clock fa-lg"></i>
+              </span>
                 Restant Time
             </span>
           </b-card-body>
@@ -44,7 +47,7 @@
               </b-form-textarea>
             </b-form-group>
             <div class="cor"></div>
-            <b-button variant="warning" class="continueIdea">
+            <b-button variant="outline-info" class="continueIdea">
               Continue idea...[M]
             </b-button>
           </b-card-body>
@@ -63,7 +66,7 @@
               ></b-form-textarea>
             </b-form-group>
             <div class="cor"></div>
-            <b-button variant="warning" class="continueIdea"
+            <b-button variant="outline-info" class="continueIdea"
               >Continue idea...[M]
             </b-button>
           </b-card-body>
@@ -83,7 +86,7 @@
               </b-form-textarea>
             </b-form-group>
             <div class="cor"></div>
-            <b-button variant="warning" class="continueIdea"
+            <b-button variant="outline-info" class="continueIdea"
               >Continue idea...[M]
             </b-button>
           </b-card-body>
@@ -174,5 +177,7 @@ export default {}
 .continueIdea {
   height: 20% !important;
   padding: 0 5px 0 5px !important;
+  font-size: 15px !important;
+  float: right !important;
 }
 </style>
