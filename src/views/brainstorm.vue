@@ -100,7 +100,7 @@ export default {
         description: 'iBeer',
         ideas: [] */
       }).then(function (docRef) {
-        this.idBrainstorm = docRef.id
+        /* this.idBrainstorm = docRef.id */
         console.log('Document id: ', docRef.id)
       }).catch(function (error) {
         console.error(error)

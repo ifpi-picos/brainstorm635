@@ -1,35 +1,43 @@
 <template>
   <b-container align-v="center">
     <b-row class="align-items-center justify-content-center ml-auto mr-auto">
-      <b-col>
-        <b-card>
+      <b-col class="pr-0 pl-0">
+        <b-card no-body>
           <b-row>
             <b-col>
-              <h4 class="page-tittle mb-5 mt-2">Brainstorm 635 online</h4>
+              <h4 class="page-tittle mb-4 mt-2">Brainstorm 635 online</h4>
             </b-col>
           </b-row>
-          <b-card-body class="d-flex justify-content-between">
-            <span class="corpoInfo">
-              <span class="icone">
-                <i class="fa fa-file-signature fa-lg"></i>
+          <br>
+          <b-row >
+            <b-col xs="12" sm="4" md="4" class="text-center culums">
+              <span class="corpoInfo">
+                <span class="icone icone-padd">
+                  <i class="fa fa-file-signature fa-lg"></i>
+                </span>
                 Description
               </span>
-            </span>
-            <span class="corpoInfo">
-              <span class="icone">
-                <i
-                  class="fa fa-circle-notch fa-lg mr-auto ml-auto">
+            </b-col>
+            <b-col xs="12" sm="4" md="4" class="text-center culums">
+              <span class="corpoInfo round">
+                <span class="icone">
+                  <i
+                    class="fa fa-circle-notch fa-lg">
                   </i>
                 </span>
                 Round
-            </span>
-            <span class="corpoInfo">
-              <span class="icone">
-                <i class="fa fa-clock fa-lg"></i>
               </span>
+            </b-col>
+            <b-col xs="12" sm="4" md="4" class="text-center culums">
+              <span class="corpoInfo">
+                <span class="icone">
+                  <i class="fa fa-clock fa-lg"></i>
+                </span>
                 Restant Time
             </span>
-          </b-card-body>
+            </b-col>
+          </b-row>
+          <br><br>
         </b-card>
       </b-col>
     </b-row>
@@ -154,11 +162,11 @@ export default {}
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: blue;
+  background:#17a2b8;
 }
 
 .cartao {
-  border: solid 1px blue !important;
+  border: solid 1px #17a2b8 !important;
 }
 
 .icone {
@@ -168,6 +176,11 @@ export default {}
   width: 38.38px !important;
   padding: 5.25px 7.5px;
   border-radius: 0.25rem 0 0 0.25rem !important;
+  color: #138496 !important;
+}
+
+.icone-padd {
+  padding-right: 3.5px !important;
 }
 
 .corpoInfo {
@@ -191,5 +204,18 @@ export default {}
   background-color: #fff !important;
   color: #138496;
   font-weight: 300;
+}
+
+@media only screen and (max-width: 576px) {
+  .corpoInfo {
+    font-size: 15px  !important;
+  }
+  .culums {
+    text-align: left !important;
+    margin-bottom: 0.4rem !important;
+  }
+  .round {
+    margin-left: -0.1rem;
+  }
 }
 </style>

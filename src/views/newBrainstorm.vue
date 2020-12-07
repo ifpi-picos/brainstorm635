@@ -288,7 +288,7 @@ export default {
 /* Changing the background color of input appends */
 .input-group-text {
   background-color: #fff !important;
-  color:  #17a2b8 !important;
+  color:  #138496 !important;
  /*  opacity: 1.95 !important; */
 }
 </style>
