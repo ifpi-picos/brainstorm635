@@ -1,7 +1,18 @@
 <template>
   <div class="login" v-if="isLoged === true">
-    <b-button class="inicial-buttons btn-google" pill variant="outline-info" @click="login()">
-      <img class="img-fluid" height="30" width="30" src="/img/google.png" alt="Google logo" />
+    <b-button
+      class="inicial-buttons btn-google"
+      pill
+      variant="outline-info"
+      @click="login()"
+    >
+      <img
+        class="img-fluid"
+        height="30"
+        width="30"
+        src="/img/google.png"
+        alt="Google logo"
+      />
       Login with Google
     </b-button>
   </div>
@@ -26,7 +37,7 @@ export default {
 
   created () {
     this.users = JSON.parse(localStorage.getItem('user'))
-    this.$firebase.auth().onAuthStateChanged(async (user) => {
+    this.$firebase.auth().onAuthStateChanged(async user => {
       if (user) {
         this.$store.commit('logged', true)
         this.geraUrlDaFoto(this.user.photoURL)
@@ -37,7 +48,6 @@ export default {
   },
 
   methods: {
-
     login () {
       this.$firebase
         .auth()
@@ -65,7 +75,8 @@ export default {
     async saveUser (user, uid) {
       this.$firebase
         .firestore()
-        .collection('users').add({ userRegistered: true })
+        .collection('users')
+        .add({ userRegistered: true })
         .doc(uid)
         .set(user)
         .then(docRef => {
@@ -102,7 +113,7 @@ export default {
       if (letter === 'gs') {
         const storage = this.$firebase.storage()
         const storageRef = storage.refFromURL(photoURL)
-        storageRef.getDownloadURL().then((url) => {
+        storageRef.getDownloadURL().then(url => {
           this.imageUrl = url
         })
       } else {
@@ -110,7 +121,6 @@ export default {
       }
     }
   }
-
 }
 </script>
 
@@ -124,8 +134,8 @@ export default {
 } */
 
 .btn-google:hover {
-background-color: #fff;
-color: #138496;
-font-weight: 300;
+  background-color: #fff;
+  color: #138496;
+  font-weight: 300;
 }
 </style>

@@ -28,7 +28,7 @@ const routes = [
       },
 
       {
-        path: '/brainstorm',
+        path: '/brainstorm/:id',
         name: 'brainstorm',
         component: () => import('@/views/brainstorm.vue')
       },
@@ -69,8 +69,12 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   try {
     const HOME = '/home'
+    const HOME_LOGIN = '/newbrainstorm'
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
+        if (to.path === HOME) {
+          next({ path: HOME_LOGIN })
+        }
         next()
       } else {
         if (to.path !== HOME) {
