@@ -20,6 +20,7 @@
 
 <script>
 import googleProvider from '../firebase/providers'
+import { EventBus } from '@/eventBus'
 
 export default {
   data () {
@@ -53,8 +54,8 @@ export default {
               displayName: result.user.displayName
             }
             localStorage.setItem('currentUser', JSON.stringify(user))
+            EventBus.$emit('user')
           } else {
-            console.log('add new user ')
             await this.saveUser({
               photoURL: result.user.photoURL,
               email: result.user.email,

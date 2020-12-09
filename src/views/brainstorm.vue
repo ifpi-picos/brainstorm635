@@ -11,7 +11,7 @@
               <h4 class="page-tittle mb-5 mt-3">Create Brainstorm</h4>
             </b-col>
           </b-row>
-          <b-form @submit="brainstormInit()">
+          <b-form @submit="startBrainstorm()">
             <b-row align-h="center" class="mb-5">
               <b-col md="4">
                 <b-form-group
@@ -192,14 +192,14 @@ export default {
       }
     },
 
-    /* startBrainstorm () {
+    startBrainstorm () {
       if (this.activeMembers >= 3 || this.activeMembers <= 6) {
         this.disabledButton = false
       } else {
         this.disabledButton = true
       }
       this.$router.push({ name: 'startbrainstorm' })
-    }, */
+    },
 
     codeSelect () {
       const copyText = document.getElementById('copyCode')

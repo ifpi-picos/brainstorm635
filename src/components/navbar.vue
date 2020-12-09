@@ -85,10 +85,12 @@
 </template>
 
 <script>
+import { EventBus } from '@/eventBus'
+
 export default {
   data () {
     return {
-      verifyLocalStorage: false,
+      verifyLocalStorage: true,
       user: {
         photoURL: '',
         displayName: ''
@@ -97,13 +99,17 @@ export default {
   },
 
   created () {
-    this.user = JSON.parse(localStorage.getItem('currentUser'))
-    if (this.user === null) {
-      this.user = { photoURL: '', displayName: '' }
-    } else {
-      this.verifyLocalStorage = true
-    }
-    console.log(this.user)
+    EventBus.$on('user', () => {
+      this.user = JSON.parse(localStorage.getItem('currentUser'))
+      console.log(this.user)
+      if (this.user) {
+        this.verifyLocalStorage = true
+      }
+      if (this.user === null) {
+        this.user = { photoURL: '', displayName: '' }
+      }
+      console.log(this.user)
+    })
   },
 
   updated () {
@@ -112,13 +118,13 @@ export default {
 
   methods: {
     logout () {
+      this.verifyLocalStorage = false
       this.$firebase
         .auth()
         .signOut()
         .then(function () {
           localStorage.removeItem('currentUser')
           this.user = { photoURL: '', displayName: '' }
-          this.verifyLocalStorage = false
           this.$router.push('/')
           console.log('dasda', this.$router)
         }).catch(function (error) {

@@ -23,7 +23,7 @@
               </b-button>
             </b-col>
             <b-col md="6">
-              <form action="">
+              <b-form @submit="joinWithCode()">
                 <b-row class="mt-5">
                   <b-col md="12" class="d-flex">
                     <b-form-input
@@ -37,7 +37,7 @@
                     </b-button>
                   </b-col>
                 </b-row>
-              </form>
+              </b-form>
             </b-col>
           </b-row>
         </b-card>
@@ -115,6 +115,10 @@ export default {
         result += characters.charAt(Math.floor(Math.random() * charactersLength))
       }
       return result
+    },
+
+    joinWithCode () {
+      console.log('Hello!')
     }
   }
 }
