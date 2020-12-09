@@ -22,7 +22,9 @@
             </b-navbar-nav> -->
             <!-- Right aligned nav items -->
             <b-navbar-nav class="ml-auto">
-              <div>
+              <div
+                v-if="verifyLocalStorage"
+                class="d-flex mr-3" >
                 <b-nav-item
                   right>
                   <b-avatar
@@ -33,7 +35,7 @@
                   <span class="user ml-2">{{ user.displayName }}</span>
                 </b-nav-item>
                 <b-nav-item-dropdown
-                  class="avatar d-flex justify-content-end"
+                  class="avatar d-flex justify-content-end pl-0"
                   right>
                   <b-dropdown-item href="#">Profile</b-dropdown-item>
                   <b-dropdown-item @click="logout()">Sign Out</b-dropdown-item>
@@ -86,6 +88,7 @@
 export default {
   data () {
     return {
+      verifyLocalStorage: false,
       user: {
         photoURL: '',
         displayName: ''
@@ -97,6 +100,8 @@ export default {
     this.user = JSON.parse(localStorage.getItem('currentUser'))
     if (this.user === null) {
       this.user = { photoURL: '', displayName: '' }
+    } else {
+      this.verifyLocalStorage = true
     }
     console.log(this.user)
   },
@@ -113,7 +118,7 @@ export default {
         .then(function () {
           localStorage.removeItem('currentUser')
           this.user = { photoURL: '', displayName: '' }
-          /* console.log('Deu certo!') */
+          this.verifyLocalStorage = false
           this.$router.push('/')
           console.log('dasda', this.$router)
         }).catch(function (error) {
@@ -168,4 +173,9 @@ span, .user {
   line-height: inherit;
   white-space: nowrap;
 } */
+
+.navbar-expand-lg .navbar-nav .nav-link {
+  padding-right: 0.5rem;
+  padding-left: 0 !important;
+}
 </style>
