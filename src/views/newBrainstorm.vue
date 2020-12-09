@@ -93,7 +93,7 @@ export default {
 
   methods: {
     createNewBrainstorm () {
-      const id = Math.floor(Math.random() * (100000 - 10000)) + 10000
+      const id = this.codeGenerator(6)
       const user = this.$firebase.auth().currentUser.uid
       console.log('id', id)
       this.$firebase
@@ -105,6 +105,16 @@ export default {
           description: 'desc ' + id
         })
       this.$router.push({ name: 'brainstorm', params: { id: id } })
+    },
+
+    codeGenerator (length) {
+      let result = ''
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+      const charactersLength = characters.length
+      for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength))
+      }
+      return result
     }
   }
 }

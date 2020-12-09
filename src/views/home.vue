@@ -31,7 +31,6 @@
             <b-col md="6">
               <Login> </Login>
             </b-col>
-            <b-col md="3"> </b-col>
           </b-row>
         </b-card>
       </b-col>
@@ -41,6 +40,7 @@
 
 <script>
 import Login from '../components/login'
+
 export default {
   components: { Login }
 }

@@ -106,75 +106,14 @@
                 >
                   <b-input-group>
                     <b-input-group-prepend>
-                      <span class="input-group-text" variant="light"
+                      <span class="input-group-text guests" variant="light"
                         ><i class="fas fa-user fa-lg"></i>1</span
                       >
                     </b-input-group-prepend>
                     <b-form-input
-                      v-model="member1"
-                      class="input-code input-with-prepend"
+                      class="guests"
                       placeholder="Guest"
                       id="name-1"
-                    >
-                    </b-form-input>
-                  </b-input-group>
-                </b-form-group>
-                <b-form-group
-                  class="text-left"
-                  id="input-name-2"
-                  label-for="name-2"
-                >
-                  <b-input-group>
-                    <b-input-group-prepend>
-                      <span class="input-group-text" variant="light"
-                        ><i class="fas fa-user fa-lg"></i>2</span
-                      >
-                    </b-input-group-prepend>
-                    <b-form-input
-                      v-model="member2"
-                      placeholder="Guest"
-                      class="input-code input-with-prepend"
-                      id="name-2"
-                    >
-                    </b-form-input>
-                  </b-input-group>
-                </b-form-group>
-                <b-form-group
-                  class="text-left"
-                  id="input-name-3"
-                  label-for="name-3"
-                >
-                  <b-input-group>
-                    <b-input-group-prepend>
-                      <span class="input-group-text" variant="light"
-                        ><i class="fas fa-user fa-lg"></i>3</span
-                      >
-                    </b-input-group-prepend>
-                    <b-form-input
-                      v-model="member3"
-                      placeholder="Guest"
-                      class="input-code input-with-prepend"
-                      id="name-3"
-                    >
-                    </b-form-input>
-                  </b-input-group>
-                </b-form-group>
-                <b-form-group
-                  class="text-left"
-                  id="input-name-4"
-                  label-for="name-4"
-                >
-                  <b-input-group>
-                    <b-input-group-prepend>
-                      <span class="input-group-text" variant="light"
-                        ><i class="fas fa-user fa-lg"></i>4</span
-                      >
-                    </b-input-group-prepend>
-                    <b-form-input
-                      v-model="member4"
-                      placeholder="Guest"
-                      class="input-code input-with-prepend"
-                      id="name-4"
                     >
                     </b-form-input>
                   </b-input-group>
@@ -188,7 +127,7 @@
                 ></b-spinner>
                 <span
                   v-if="allInputsVerified"
-                  class="text-spinner text-flashes loading"
+                  class="text-spinner text-flashes"
                   >Waiting Members...</span
                 >
                 <br /><br />
@@ -220,6 +159,8 @@ import Swal from 'sweetalert2'
 export default {
   data () {
     return {
+      activeMembers: 1,
+      allInputsVerified: true,
       brainstormId: this.$route.params.id,
       brainstorm: {
         description: ''
@@ -231,23 +172,7 @@ export default {
     this.getData()
   },
 
-  computed: {
-    stateBrainstormButton () {
-      if (
-        !this.member1 === '' &&
-        !this.member2 === '' &&
-        !this.member3 === '' &&
-        !this.member4 === ''
-      ) {
-        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-        this.disabledButton = false
-      } else {
-        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-        this.disabledButton = true
-      }
-      return this.disabledButton
-    }
-  },
+  computed: {},
 
   methods: {
     getData () {
@@ -259,7 +184,7 @@ export default {
             if (doc.exists) {
               this.brainstorm = doc.data()
             } else {
-              console.log('brainstorm não existe')
+              console.log('The Brainstorm not exist!')
             }
           })
       } catch (error) {
@@ -267,14 +192,14 @@ export default {
       }
     },
 
-    brainstormInit () {
+    /* startBrainstorm () {
       if (this.activeMembers >= 3 || this.activeMembers <= 6) {
         this.disabledButton = false
       } else {
         this.disabledButton = true
       }
       this.$router.push({ name: 'startbrainstorm' })
-    },
+    }, */
 
     codeSelect () {
       const copyText = document.getElementById('copyCode')
@@ -304,14 +229,12 @@ export default {
   margin-top: 22px !important;
 }
 
-.loading {
-  font-family: comfortaa;
-}
-
 /* Efects for spinner and text spinner */
 .text-spinner {
   margin-left: 7px;
   color: #17a2b8;
+   font-family: comfortaa;
+  font-size: 16px;
 }
 
 @keyframes blink {
@@ -343,5 +266,9 @@ export default {
   background-color: #fff !important;
   color: #138496 !important;
   /*  opacity: 1.95 !important; */
+}
+
+.guests {
+  border: none !important;
 }
 </style>

@@ -32,8 +32,8 @@
   min-width: 100% !important;
   max-width: 100% !important;
   box-shadow: 0px 5px 10px 0px rgba(153, 153, 153, 0.3) !important;
-  bottom: 0px !important;
-  position: fixed !important;
+ /*  bottom: 0px !important;
+  position: fixed !important; */
   height: 75px !important;
   border-radius: 0 !important;
   background-color: #fff !important;

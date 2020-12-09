@@ -176,7 +176,7 @@ html {
   border-right: none !important;
 }
 
-.input-code {
+.input-code, .form-control:disabled {
   background-color: #fff !important;
 }
 

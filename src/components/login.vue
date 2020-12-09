@@ -1,5 +1,5 @@
 <template>
-  <div class="login" v-if="isLoged === true">
+  <div class="login">
     <b-button
       class="inicial-buttons btn-google"
       pill
@@ -24,27 +24,17 @@ import googleProvider from '../firebase/providers'
 export default {
   data () {
     return {
-      isLoged: true,
-      user: {},
-      imageUrl: ''
-      /* users: {
-        fotoUrl: null,
-        nome: '',
-        email: ''
-      } */
+      user: {}
     }
   },
 
   created () {
-    this.users = JSON.parse(localStorage.getItem('user'))
-    this.$firebase.auth().onAuthStateChanged(async user => {
-      if (user) {
-        this.$store.commit('logged', true)
-        this.geraUrlDaFoto(this.user.photoURL)
-      } else {
-        this.$store.commit('logged', false)
-      }
-    })
+    this.users = JSON.parse(localStorage.getItem('currentUser'))
+    if (this.user) {
+      /* this.existedUser() */
+    } else {
+      console.log('error')
+    }
   },
 
   methods: {
@@ -53,23 +43,35 @@ export default {
         .auth()
         .signInWithPopup(googleProvider)
         .then(async result => {
-          localStorage.setItem('username', result.user.displayName)
-          const user = {}
-          user.photoURL = result.user.photoURL
-          user.email = result.user.email
-          user.displayName = result.user.displayName
           const existentUser = await this.existentUser(result.user.uid)
           console.log('existentUser', existentUser)
           if (!existentUser) {
+            const user = {
+              uid: result.user.uid,
+              photoURL: this.geraUrlDaFoto(result.user.photoURL),
+              email: result.user.email,
+              displayName: result.user.displayName
+            }
+            localStorage.setItem('currentUser', JSON.stringify(user))
+          } else {
             console.log('add new user ')
-            await this.saveUser(user, result.user.uid)
-            await this.saveLocalStorage(user)
+            await this.saveUser({
+              photoURL: result.user.photoURL,
+              email: result.user.email,
+              displayName: result.user.displayName
+            }, result.user.uid)
+            const user = {
+              uid: result.user.uid,
+              photoURL: this.geraUrlDaFoto(result.user.photoURL),
+              email: result.user.email,
+              displayName: result.user.displayName
+            }
+            localStorage.setItem('currentUser', JSON.stringify(user))
           }
         })
         .catch(function (error) {
           console.error(error)
         })
-      this.isLoged = true
     },
 
     async saveUser (user, uid) {
@@ -97,16 +99,16 @@ export default {
       return doc.exists
     },
 
-    saveLocalStorage (user) {
+    /* saveLocalStorage (user) {
       let usersLocalStorage = localStorage.getItem('users')
 
       if (usersLocalStorage) {
-        /* dadsda */
-      } else {
-        usersLocalStorage = [user]
+        /* dadsda  } else {
+        usersLoca
+        Storage = [user]
       }
       localStorage.setItem('users', JSON.stringify(usersLocalStorage))
-    },
+    }, */
 
     geraUrlDaFoto (photoURL) {
       const letter = photoURL.substring(0, 2)
@@ -114,10 +116,10 @@ export default {
         const storage = this.$firebase.storage()
         const storageRef = storage.refFromURL(photoURL)
         storageRef.getDownloadURL().then(url => {
-          this.imageUrl = url
+          return url
         })
       } else {
-        this.imageUrl = photoURL
+        return photoURL
       }
     }
   }

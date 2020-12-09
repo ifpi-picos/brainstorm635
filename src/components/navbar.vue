@@ -22,25 +22,23 @@
             </b-navbar-nav> -->
             <!-- Right aligned nav items -->
             <b-navbar-nav class="ml-auto">
-              <b-nav-item
-                right>
-                <b-avatar
-                  circle
-                  src="https://placekitten.com/300/300"
-                  alt="Foto do usuário">
-                </b-avatar>
-                {]~~]}
-              </b-nav-item>
-
-              <b-nav-item-dropdown
-                class="avatar d-flex justify-content-end"
-                right
-                v-if="isLogged">
-                <b-dropdown-item
-                  @click="signOut()">
-                  Sair
-                </b-dropdown-item>
-              </b-nav-item-dropdown>
+              <div>
+                <b-nav-item
+                  right>
+                  <b-avatar
+                    circle
+                    :src="user.photoURL"
+                    alt="Foto do usuário">
+                  </b-avatar>
+                  <span class="user ml-2">{{ user.displayName }}</span>
+                </b-nav-item>
+                <b-nav-item-dropdown
+                  class="avatar d-flex justify-content-end"
+                  right>
+                  <b-dropdown-item href="#">Profile</b-dropdown-item>
+                  <b-dropdown-item @click="logout()">Sign Out</b-dropdown-item>
+                </b-nav-item-dropdown>
+              </div>
 
               <!-- <b-nav-form>
                 <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
@@ -78,15 +76,6 @@
                   </b-img>
                 </b-dropdown-item>
               </b-nav-item-dropdown>
-
-              <b-nav-item-dropdown right>
-                <!-- //Using 'button-content' slot -->
-                <template #button-content>
-                  <span class="user">User</span>
-                </template>
-                <b-dropdown-item href="#">Profile</b-dropdown-item>
-                <b-dropdown-item @click="logout()">Sign Out</b-dropdown-item>
-              </b-nav-item-dropdown>
             </b-navbar-nav>
           </b-collapse>
     </b-navbar>
@@ -97,8 +86,23 @@
 export default {
   data () {
     return {
-      isLoged: true
+      user: {
+        photoURL: '',
+        displayName: ''
+      }
     }
+  },
+
+  created () {
+    this.user = JSON.parse(localStorage.getItem('currentUser'))
+    if (this.user === null) {
+      this.user = { photoURL: '', displayName: '' }
+    }
+    console.log(this.user)
+  },
+
+  updated () {
+    console.log('sasdas')
   },
 
   methods: {
@@ -107,16 +111,14 @@ export default {
         .auth()
         .signOut()
         .then(function () {
-          localStorage.removeItem('user')
-          this.$store.commit('logged', false)
-
-          console.log('Deu certo!')
+          localStorage.removeItem('currentUser')
+          this.user = { photoURL: '', displayName: '' }
+          /* console.log('Deu certo!') */
           this.$router.push('/')
-          console.log('Deu certo!')
+          console.log('dasda', this.$router)
         }).catch(function (error) {
-          console.log(error)
+          console.log('errou', error)
         })
-      this.isLoged = false
     }
   }
 }
