@@ -100,16 +100,9 @@ export default {
 
   created () {
     EventBus.$on('user', () => {
-      this.user = JSON.parse(localStorage.getItem('currentUser'))
-      console.log(this.user)
-      if (this.user) {
-        this.verifyLocalStorage = true
-      }
-      if (this.user === null) {
-        this.user = { photoURL: '', displayName: '' }
-      }
-      console.log(this.user)
+      this.getLocalStorage()
     })
+    this.getLocalStorage()
   },
 
   updated () {
@@ -130,6 +123,18 @@ export default {
         }).catch(function (error) {
           console.log('errou', error)
         })
+    },
+
+    getLocalStorage () {
+      this.user = JSON.parse(localStorage.getItem('currentUser'))
+      console.log(this.user)
+      if (this.user) {
+        this.verifyLocalStorage = true
+      }
+      if (this.user === null) {
+        this.user = { photoURL: '', displayName: '' }
+      }
+      console.log(this.user)
     }
   }
 }

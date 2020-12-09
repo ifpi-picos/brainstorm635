@@ -87,7 +87,6 @@
                       disabled
                       type="number"
                       v-model="activeMembers"
-                      value="this.numberOFMembers"
                       id="input-3"
                       class="input-with-prepend input-code text-center"
                       placeholder="Defina o número de participantes"
@@ -106,13 +105,18 @@
                 >
                   <b-input-group>
                     <b-input-group-prepend>
-                      <span class="input-group-text guests" variant="light"
-                        ><i class="fas fa-user fa-lg"></i>1</span
-                      >
+                      <span class="input-group-text guests" variant="light">
+                        <div v-if="!user.photoURL">
+                          <i class="fas fa-user fa-lg"></i>
+                          1
+                        </div>
+                        <b-avatar v-else :src="user.photoURL"></b-avatar>
+                      </span>
                     </b-input-group-prepend>
                     <b-form-input
+                      type="text"
                       class="guests"
-                      placeholder="Guest"
+                      v-model="this.user.displayName"
                       id="name-1"
                     >
                     </b-form-input>
@@ -164,12 +168,17 @@ export default {
       brainstormId: this.$route.params.id,
       brainstorm: {
         description: ''
+      },
+      user: {
+        photoURL: '',
+        displayName: ''
       }
     }
   },
 
   mounted: function () {
     this.getData()
+    this.getLocalStorage()
   },
 
   computed: {},
@@ -219,6 +228,18 @@ export default {
         confirmButtonText: 'OK',
         timer: 1200
       })
+    },
+
+    getLocalStorage () {
+      this.user = JSON.parse(localStorage.getItem('currentUser'))
+      console.log(this.user)
+      if (this.user) {
+        this.verifyLocalStorage = true
+      }
+      if (this.user === null) {
+        this.user = { photoURL: '', displayName: '' }
+      }
+      console.log(this.user)
     }
   }
 }
@@ -270,5 +291,9 @@ export default {
 
 .guests {
   border: none !important;
+}
+
+.guests:focus {
+  box-shadow: none !important;
 }
 </style>

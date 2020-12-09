@@ -20,10 +20,10 @@ $success: #18d26e;
   box-sizing: border-box;
 }
 
-html {
+/* html {
   font-size: 14px !important;
   font-family: Arial, Helvetica, sans-serif;
-}
+} */
 
 .body {
   height: 100% !important;
@@ -61,7 +61,6 @@ html {
   bottom: 1px;
   left: calc(50% - 60px);
 }
-
 
 /* The next 2 selectors are for underlined for h3 or title page */
 .page-tittle {
