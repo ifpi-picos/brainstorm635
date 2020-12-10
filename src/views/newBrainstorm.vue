@@ -23,13 +23,14 @@
               </b-button>
             </b-col>
             <b-col md="6">
-              <b-form @submit="joinWithCode()">
+              <b-form @submit.prevent="joinWithCode(coderoom)">
                 <b-row class="mt-5">
                   <b-col md="12" class="d-flex">
                     <b-form-input
                       class="input-join"
                       type="text"
-                      placeholder="Entrar com o código"
+                      v-model="coderoom"
+                      placeholder="Join with code"
                     >
                     </b-form-input>
                     <b-button type="submit" variant="info">
@@ -85,7 +86,8 @@
 export default {
   data () {
     return {
-      idBrainstorm: ''
+      idBrainstorm: '',
+      coderoom: ''
     }
   },
 
@@ -117,8 +119,15 @@ export default {
       return result
     },
 
-    joinWithCode () {
-      console.log('Hello!')
+    joinWithCode (code) {
+      const database = this.$firebase.firestore().collection('brainstorms')
+      database.doc(code).get().then(doc => {
+        if (doc.exists) {
+          this.$router.push({ name: 'brainstorm', params: { id: code } })
+        } else {
+          console.log('Documento não existe!')
+        }
+      })
     }
   }
 }
