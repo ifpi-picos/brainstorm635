@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid class="contain">
+  <b-container fluid>
     <b-row align-v="start">
       <b-col
         class="align-items-center justify-content-center ml-auto mr-auto"
@@ -11,7 +11,7 @@
               <h4 class="page-tittle mb-5 mt-3">Create Brainstorm</h4>
             </b-col>
           </b-row>
-          <b-form @submit="brainstormInit()">
+          <b-form @submit="startBrainstorm()">
             <b-row align-h="center" class="mb-5">
               <b-col md="4">
                 <b-form-group
@@ -87,7 +87,6 @@
                       disabled
                       type="number"
                       v-model="activeMembers"
-                      value="this.numberOFMembers"
                       id="input-3"
                       class="input-with-prepend input-code text-center"
                       placeholder="Defina o número de participantes"
@@ -106,13 +105,18 @@
                 >
                   <b-input-group>
                     <b-input-group-prepend>
-                      <span class="input-group-text guests" variant="light"
-                        ><i class="fas fa-user fa-lg"></i>1</span
-                      >
+                      <span class="input-group-text guests" variant="light">
+                        <div v-if="!user.photoURL">
+                          <i class="fas fa-user fa-lg"></i>
+                          1
+                        </div>
+                        <b-avatar v-else :src="user.photoURL"></b-avatar>
+                      </span>
                     </b-input-group-prepend>
                     <b-form-input
+                      type="text"
                       class="guests"
-                      placeholder="Guest"
+                      v-model="this.user.displayName"
                       id="name-1"
                     >
                     </b-form-input>
@@ -124,12 +128,14 @@
                   v-if="allInputsVerified"
                   variant="info"
                   label="Spinning"
+                  style="width: 1.5rem; height: 1.5rem;"
+                  type="grow"
                 ></b-spinner>
                 <span
                   v-if="allInputsVerified"
                   class="text-spinner text-flashes"
-                  >Waiting Members...</span
-                >
+                  >Waiting Members...
+                </span>
                 <br /><br />
                 <span class="loading"
                   >Start when all members are registered</span
@@ -164,12 +170,17 @@ export default {
       brainstormId: this.$route.params.id,
       brainstorm: {
         description: ''
+      },
+      user: {
+        photoURL: '',
+        displayName: ''
       }
     }
   },
 
   mounted: function () {
     this.getData()
+    this.getLocalStorage()
   },
 
   computed: {},
@@ -192,14 +203,14 @@ export default {
       }
     },
 
-    /* startBrainstorm () {
+    startBrainstorm () {
       if (this.activeMembers >= 3 || this.activeMembers <= 6) {
         this.disabledButton = false
       } else {
         this.disabledButton = true
       }
       this.$router.push({ name: 'startbrainstorm' })
-    }, */
+    },
 
     codeSelect () {
       const copyText = document.getElementById('copyCode')
@@ -219,14 +230,55 @@ export default {
         confirmButtonText: 'OK',
         timer: 1200
       })
+    },
+
+    getLocalStorage () {
+      this.user = JSON.parse(localStorage.getItem('currentUser'))
+      console.log(this.user)
+      if (this.user) {
+        this.verifyLocalStorage = true
+      }
+      if (this.user === null) {
+        this.user = { photoURL: '', displayName: '' }
+      }
+      console.log(this.user)
     }
   }
 }
 </script>
 
 <style lang="css">
-.contain {
-  margin-top: 22px !important;
+
+/* Style for inputs from brainstorm scream */
+.line-button {
+  border: 1px #ced4da solid  !important;
+  border-left: none !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  background-color: #fff !important;
+  color: #17a2b8 !important;
+}
+
+.line-button:hover {
+  background-color: #fff !important;
+  box-shadow: none !important;
+}
+
+.line-button:focus {
+  background-color: #fff !important;
+  box-shadow: none !important;
+}
+
+.input-with-prepend {
+  border-left: none !important;
+}
+
+.input-with-prepend:focus,   .input-code:focus {
+  box-shadow: none !important;
+}
+
+.input-code, .form-control:disabled {
+  background-color: #fff !important;
 }
 
 /* Efects for spinner and text spinner */
@@ -270,5 +322,13 @@ export default {
 
 .guests {
   border: none !important;
+}
+
+.guests:focus {
+  box-shadow: none !important;
+}
+
+.loading {
+  font-size: 15.5px;
 }
 </style>

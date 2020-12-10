@@ -23,13 +23,13 @@
               </b-button>
             </b-col>
             <b-col md="6">
-              <form action="">
+              <b-form @submit.prevent="joinWithCode(coderoom)">
                 <b-row class="mt-5">
                   <b-col md="12" class="d-flex">
                     <b-form-input
-                      class="input-join"
-                      type="text"
-                      placeholder="Entrar com o código"
+                      class="input-for-code"
+                      v-model="coderoom"
+                      placeholder="Join with code"
                     >
                     </b-form-input>
                     <b-button type="submit" variant="info">
@@ -37,7 +37,7 @@
                     </b-button>
                   </b-col>
                 </b-row>
-              </form>
+              </b-form>
             </b-col>
           </b-row>
         </b-card>
@@ -85,7 +85,8 @@
 export default {
   data () {
     return {
-      idBrainstorm: ''
+      idBrainstorm: '',
+      coderoom: ''
     }
   },
 
@@ -115,6 +116,17 @@ export default {
         result += characters.charAt(Math.floor(Math.random() * charactersLength))
       }
       return result
+    },
+
+    joinWithCode (code) {
+      const database = this.$firebase.firestore().collection('brainstorms')
+      database.doc(code).get().then(doc => {
+        if (doc.exists) {
+          this.$router.push({ name: 'brainstorm', params: { id: code } })
+        } else {
+          console.log('Documento não existe!')
+        }
+      })
     }
   }
 }
@@ -125,8 +137,8 @@ export default {
   box-sizing: border-box;
 }
 
-.form-control {
-  padding: 1.3rem 0.5rem !important;
+.input-for-code {
+  padding: 1.2rem 0.5rem !important;
 }
 
 /* Changes for Modal */
@@ -151,10 +163,6 @@ export default {
 
 .modal-content {
   box-shadow: 0px 5px 10px 0px rgba(230, 230, 230, 0.2) !important;
-}
-
-.input-join {
-  padding-top: 1.5rem !important;
 }
 
 /* Chancge colors for class button .btn-secondary */

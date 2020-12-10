@@ -25,7 +25,8 @@
 <style lang="css">
 .span {
   font-family: comfortaa !important;
-  color: #2c3e50 !important ;
+  color: #2c3e50 !important;
+  font-size: 16px !important;
 }
 
 .footer {

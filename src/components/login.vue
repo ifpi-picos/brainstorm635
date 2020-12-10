@@ -20,6 +20,7 @@
 
 <script>
 import googleProvider from '../firebase/providers'
+import { EventBus } from '@/eventBus'
 
 export default {
   data () {
@@ -52,14 +53,14 @@ export default {
               email: result.user.email,
               displayName: result.user.displayName
             }
-            localStorage.setItem('currentUser', JSON.stringify(user))
-          } else {
-            console.log('add new user ')
             await this.saveUser({
               photoURL: result.user.photoURL,
               email: result.user.email,
               displayName: result.user.displayName
             }, result.user.uid)
+            localStorage.setItem('currentUser', JSON.stringify(user))
+            EventBus.$emit('user')
+          } else {
             const user = {
               uid: result.user.uid,
               photoURL: this.geraUrlDaFoto(result.user.photoURL),
@@ -68,6 +69,7 @@ export default {
             }
             localStorage.setItem('currentUser', JSON.stringify(user))
           }
+          EventBus.$emit('user')
         })
         .catch(function (error) {
           console.error(error)
@@ -78,7 +80,6 @@ export default {
       this.$firebase
         .firestore()
         .collection('users')
-        .add({ userRegistered: true })
         .doc(uid)
         .set(user)
         .then(docRef => {
