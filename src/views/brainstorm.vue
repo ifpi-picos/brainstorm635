@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid class="contain">
+  <b-container fluid>
     <b-row align-v="start">
       <b-col
         class="align-items-center justify-content-center ml-auto mr-auto"
