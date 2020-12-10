@@ -246,10 +246,13 @@ export default {
 </script>
 
 <style lang="css">
-.contain {
+/* .contain {
   margin-top: 22px !important;
+} */
+.container-fluid {
+  margin-top: 75px !important;
+  margin-bottom: 75px !important;
 }
-
 /* Style for inputs from brainstorm scream */
 .line-button {
   border: 1px #ced4da solid  !important;
