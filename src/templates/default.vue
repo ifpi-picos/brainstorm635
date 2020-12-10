@@ -1,7 +1,7 @@
 <template>
   <div>
     <NavBar />
-      <router-view></router-view>
+    <router-view></router-view>
     <Footer class="fixed-bottom" />
   </div>
 </template>
@@ -22,10 +22,7 @@ export default {
 </script>
 
 <style lang="css">
-/* .template {
-  background-color: #fafafa !important;
-  width: 100% !important;
-  height: 100% !important;
-} */
-
+#app div .container-fluid {
+  margin-top: 90px;
+}
 </style>
