@@ -250,6 +250,38 @@ export default {
   margin-top: 22px !important;
 }
 
+/* Style for inputs from brainstorm scream */
+.line-button {
+  border: 1px #ced4da solid  !important;
+  border-left: none !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  background-color: #fff !important;
+  color: #17a2b8 !important;
+}
+
+.line-button:hover {
+  background-color: #fff !important;
+  box-shadow: none !important;
+}
+
+.line-button:focus {
+  background-color: #fff !important;
+  box-shadow: none !important;
+}
+
+.input-with-prepend {
+  border-left: none !important;
+}
+
+.input-with-append {
+  border-right: none !important;
+}
+
+.input-code, .form-control:disabled {
+  background-color: #fff !important;
+}
+
 /* Efects for spinner and text spinner */
 .text-spinner {
   margin-left: 7px;
