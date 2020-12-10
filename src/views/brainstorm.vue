@@ -128,12 +128,14 @@
                   v-if="allInputsVerified"
                   variant="info"
                   label="Spinning"
+                  style="width: 1.5rem; height: 1.5rem;"
+                  type="grow"
                 ></b-spinner>
                 <span
                   v-if="allInputsVerified"
                   class="text-spinner text-flashes"
-                  >Waiting Members...</span
-                >
+                  >Waiting Members...
+                </span>
                 <br /><br />
                 <span class="loading"
                   >Start when all members are registered</span
@@ -246,13 +248,7 @@ export default {
 </script>
 
 <style lang="css">
-/* .contain {
-  margin-top: 22px !important;
-} */
-.container-fluid {
-  margin-top: 75px !important;
-  margin-bottom: 75px !important;
-}
+
 /* Style for inputs from brainstorm scream */
 .line-button {
   border: 1px #ced4da solid  !important;
@@ -277,8 +273,8 @@ export default {
   border-left: none !important;
 }
 
-.input-with-append {
-  border-right: none !important;
+.input-with-prepend:focus,   .input-code:focus {
+  box-shadow: none !important;
 }
 
 .input-code, .form-control:disabled {
@@ -330,5 +326,9 @@ export default {
 
 .guests:focus {
   box-shadow: none !important;
+}
+
+.loading {
+  font-size: 15.5px;
 }
 </style>

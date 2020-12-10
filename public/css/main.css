@@ -31,11 +31,6 @@ $success: #18d26e;
   height: 100vh !important;
 }
 
-.container-fluid {
-  margin-top: 75px !important;
-  margin-bottom: 75px !important;
-}
-
 /* Shadow para todos os cards */
 .card {
   /* box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 6px 0px; */
