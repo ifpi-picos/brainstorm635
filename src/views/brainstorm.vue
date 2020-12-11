@@ -24,7 +24,7 @@
                   <b-input-group>
                     <b-input-group-prepend>
                       <span class="input-group-text"
-                        ><i class="far fa-envelope"></i>
+                        ><i class="fas fa-file-signature"></i>
                       </span>
                     </b-input-group-prepend>
                     <b-form-input
@@ -116,12 +116,48 @@
                     <b-form-input
                       type="text"
                       class="guests"
-                      v-model="this.user.displayName"
+                      v-model="this.user1.displayName"
+                      id="name-1"
+                    >
+                    </b-form-input>
+                  </b-input-group>
+                  <b-input-group>
+                    <b-input-group-prepend>
+                      <span class=" photo-guests" variant="light">
+                        <div v-if="!user.photoURL">
+                          <i class="fas fa-user fa-lg"></i>
+                          1
+                        </div>
+                        <b-avatar v-else :src="user.photoURL"></b-avatar>
+                      </span>
+                    </b-input-group-prepend>
+                    <b-form-input
+                      type="text"
+                      class="guests"
+                      v-model="this.user2.displayName"
                       id="name-1"
                     >
                     </b-form-input>
                   </b-input-group>
                 </b-form-group>
+                <b-input-group>
+                  <b-input-group-prepend>
+                    <span class=" photo-guests" variant="light">
+                      <div v-if="!user.photoURL">
+                        <i class="fas fa-user fa-lg"></i>
+                        1
+                      </div>
+                      <b-avatar v-else :src="user.photoURL"></b-avatar>
+                    </span>
+                  </b-input-group-prepend>
+                  <b-form-input
+                    type="text"
+                    class="guests"
+                    v-model="this.user2.displayName"
+                    id="name-1"
+                  >
+                  </b-form-input>
+                </b-input-group>
               </b-col>
               <b-col md="4">
                 <b-spinner
@@ -172,7 +208,15 @@ export default {
         description: '',
         listGuests: []
       },
-      user: {
+      user1: {
+        photoURL: '',
+        displayName: ''
+      },
+      user2: {
+        photoURL: '',
+        displayName: ''
+      },
+      user3: {
         photoURL: '',
         displayName: ''
       }
