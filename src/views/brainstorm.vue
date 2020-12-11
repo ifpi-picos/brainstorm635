@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid class="contain">
+  <b-container fluid>
     <b-row align-v="start">
       <b-col
         class="align-items-center justify-content-center ml-auto mr-auto"
@@ -128,12 +128,14 @@
                   v-if="allInputsVerified"
                   variant="info"
                   label="Spinning"
+                  style="width: 1.5rem; height: 1.5rem;"
+                  type="grow"
                 ></b-spinner>
                 <span
                   v-if="allInputsVerified"
                   class="text-spinner text-flashes"
-                  >Waiting Members...</span
-                >
+                  >Waiting Members...
+                </span>
                 <br /><br />
                 <span class="loading"
                   >Start when all members are registered</span
@@ -248,8 +250,37 @@ export default {
 </script>
 
 <style lang="css">
-.contain {
-  margin-top: 22px !important;
+
+/* Style for inputs from brainstorm scream */
+.line-button {
+  border: 1px #ced4da solid  !important;
+  border-left: none !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  background-color: #fff !important;
+  color: #17a2b8 !important;
+}
+
+.line-button:hover {
+  background-color: #fff !important;
+  box-shadow: none !important;
+}
+
+.line-button:focus {
+  background-color: #fff !important;
+  box-shadow: none !important;
+}
+
+.input-with-prepend {
+  border-left: none !important;
+}
+
+.input-with-prepend:focus,   .input-code:focus {
+  box-shadow: none !important;
+}
+
+.input-code, .form-control:disabled {
+  background-color: #fff !important;
 }
 
 /* Efects for spinner and text spinner */
@@ -297,5 +328,9 @@ export default {
 
 .guests:focus {
   box-shadow: none !important;
+}
+
+.loading {
+  font-size: 15.5px;
 }
 </style>

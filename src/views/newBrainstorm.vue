@@ -27,8 +27,7 @@
                 <b-row class="mt-5">
                   <b-col md="12" class="d-flex">
                     <b-form-input
-                      class="input-join"
-                      type="text"
+                      class="input-for-code"
                       v-model="coderoom"
                       placeholder="Join with code"
                     >
@@ -164,8 +163,8 @@ export default {
   box-sizing: border-box;
 }
 
-.form-control {
-  padding: 1.3rem 0.5rem !important;
+.input-for-code {
+  padding: 1.2rem 0.5rem !important;
 }
 
 /* Changes for Modal */
@@ -190,10 +189,6 @@ export default {
 
 .modal-content {
   box-shadow: 0px 5px 10px 0px rgba(230, 230, 230, 0.2) !important;
-}
-
-.input-join {
-  padding-top: 1.5rem !important;
 }
 
 /* Chancge colors for class button .btn-secondary */
