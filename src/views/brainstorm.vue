@@ -167,7 +167,8 @@ export default {
       allInputsVerified: true,
       brainstormId: this.$route.params.id,
       brainstorm: {
-        description: ''
+        description: '',
+        listGuests: []
       },
       user: {
         photoURL: '',
@@ -192,6 +193,7 @@ export default {
           .onSnapshot(doc => {
             if (doc.exists) {
               this.brainstorm = doc.data()
+              this.activeMembers = doc.data().listGuests.length
             } else {
               console.log('The Brainstorm not exist!')
             }
