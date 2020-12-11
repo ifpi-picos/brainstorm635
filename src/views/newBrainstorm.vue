@@ -1,5 +1,6 @@
 <template>
   <b-container fluid>
+    <br>
     <b-row align-v="end">
       <b-col
         class="brain-card align-items-center justify-content-center ml-auto mr-auto"
