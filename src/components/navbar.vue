@@ -87,7 +87,7 @@ import { EventBus } from '@/eventBus'
 export default {
   data () {
     return {
-      verifyLocalStorage: true,
+      verifyLocalStorage: false,
       user: {
         photoURL: '',
         displayName: ''
@@ -98,6 +98,7 @@ export default {
   created () {
     EventBus.$on('user', () => {
       this.getLocalStorage()
+      this.verifyLocalStorage = true
     })
     this.getLocalStorage()
   },

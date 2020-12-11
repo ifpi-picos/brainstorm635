@@ -1,5 +1,6 @@
 <template>
   <b-container fluid>
+    <br>
     <b-row align-v="end">
       <b-col
         class="brain-card align-items-center justify-content-center ml-auto mr-auto"
@@ -81,7 +82,7 @@
 </template>
 
 <script>
-// import firebase from 'firebase/app'
+import firebase from 'firebase/app'
 export default {
   data () {
     return {
@@ -103,7 +104,8 @@ export default {
         .doc(id.toString())
         .set({
           leader: user,
-          description: 'desc ' + id
+          description: 'desc ' + id,
+          listGuests: [user]
         })
       this.$router.push({ name: 'brainstorm', params: { id: id } })
     },
@@ -118,15 +120,40 @@ export default {
       return result
     },
 
-    joinWithCode (code) {
-      const database = this.$firebase.firestore().collection('brainstorms')
-      database.doc(code).get().then(doc => {
-        if (doc.exists) {
-          this.$router.push({ name: 'brainstorm', params: { id: code } })
-        } else {
-          console.log('Documento não existe!')
+    async saveGuestInBrainstorm (idGuest, coderoom, users) {
+      const brainstorm = this.$firebase.firestore().collection('brainstorms').doc(coderoom)
+      let guestExists = false
+      if (users) {
+        users.map(guest => {
+          if (guest === idGuest) guestExists = true
+        })
+        if (!guestExists) {
+          await brainstorm.update({
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            listGuests: firebase.firestore.FieldValue.arrayUnion(idGuest)
+          })
         }
-      })
+      }
+    },
+
+    async joinWithCode (coderoom) {
+      if (coderoom) {
+        const database = this.$firebase.firestore().collection('brainstorms')
+        await database.doc(coderoom).onSnapshot(doc => {
+          doc.metadata.hasPendingWrites = 'Server'
+          if (doc.exists) {
+            const numberOfGuests = doc.data().listGuests ? doc.data().listGuests.length : 0
+            if (numberOfGuests <= 6) {
+              const idGuest = this.$firebase.auth().currentUser.uid
+              const users = doc.data().listGuests
+              this.saveGuestInBrainstorm(idGuest, coderoom, users)
+              this.$router.push({ name: 'brainstorm', params: { id: coderoom } })
+            }
+          } else {
+            console.log('Documento não existe!')
+          }
+        })
+      }
     }
   }
 }

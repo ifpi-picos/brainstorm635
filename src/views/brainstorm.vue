@@ -24,8 +24,8 @@
                   <b-input-group>
                     <b-input-group-prepend>
                       <span class="input-group-text"
-                        ><i class="fas fa-file-signature fa-lg"></i
-                      ></span>
+                        ><i class="far fa-envelope"></i>
+                      </span>
                     </b-input-group-prepend>
                     <b-form-input
                       type="text"
@@ -105,7 +105,7 @@
                 >
                   <b-input-group>
                     <b-input-group-prepend>
-                      <span class="input-group-text guests" variant="light">
+                      <span class=" photo-guests" variant="light">
                         <div v-if="!user.photoURL">
                           <i class="fas fa-user fa-lg"></i>
                           1
@@ -169,7 +169,8 @@ export default {
       allInputsVerified: true,
       brainstormId: this.$route.params.id,
       brainstorm: {
-        description: ''
+        description: '',
+        listGuests: []
       },
       user: {
         photoURL: '',
@@ -194,6 +195,7 @@ export default {
           .onSnapshot(doc => {
             if (doc.exists) {
               this.brainstorm = doc.data()
+              this.activeMembers = doc.data().listGuests.length
             } else {
               console.log('The Brainstorm not exist!')
             }
@@ -314,7 +316,7 @@ export default {
 }
 
 /* Changing the background color of input appends */
-.input-group-text {
+.input-group-text, .photo-guests {
   background-color: #fff !important;
   color: #138496 !important;
   /*  opacity: 1.95 !important; */
