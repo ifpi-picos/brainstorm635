@@ -24,7 +24,7 @@
                   <b-input-group>
                     <b-input-group-prepend>
                       <span class="input-group-text"
-                        ><i class="fas fa-file-signature"></i>
+                        ><i class="fas fa-file-signature fa-lg"></i>
                       </span>
                     </b-input-group-prepend>
                     <b-form-input
@@ -103,9 +103,9 @@
                   id="input-name-1"
                   label-for="name-1"
                 >
-                  <b-input-group>
+                  <b-input-group v>
                     <b-input-group-prepend>
-                      <span class=" photo-guests" variant="light">
+                      <span class="photo-guests" variant="light">
                         <div v-if="!user.photoURL">
                           <i class="fas fa-user fa-lg"></i>
                           1
@@ -165,6 +165,7 @@ import Swal from 'sweetalert2'
 export default {
   data () {
     return {
+      listGuests: [],
       activeMembers: 1,
       allInputsVerified: true,
       brainstormId: this.$route.params.id,
@@ -232,7 +233,8 @@ export default {
 
     getLocalStorage () {
       this.user = JSON.parse(localStorage.getItem('currentUser'))
-      console.log(this.user)
+      this.listGuests.push(this.user)
+      console.log(this.listGuests)
       if (this.user) {
         this.verifyLocalStorage = true
       }
