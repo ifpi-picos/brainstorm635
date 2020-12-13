@@ -83,6 +83,8 @@
 
 <script>
 import firebase from 'firebase/app'
+import Swal from 'sweetalert2'
+
 export default {
   data () {
     return {
@@ -142,7 +144,7 @@ export default {
         await database.doc(coderoom).onSnapshot(doc => {
           doc.metadata.hasPendingWrites = 'Server'
           if (doc.exists) {
-            const numberOfGuests = doc.data().listGuests ? doc.data().listGuests.length : 0
+            const numberOfGuests = doc.data().listGuests.length
             if (numberOfGuests <= 6) {
               const idGuest = this.$firebase.auth().currentUser.uid
               const users = doc.data().listGuests
@@ -150,10 +152,20 @@ export default {
               this.$router.push({ name: 'brainstorm', params: { id: coderoom } })
             }
           } else {
-            console.log('Documento não existe!')
+            this.nonExistentBrainstorm()
           }
         })
       }
+    },
+
+    nonExistentBrainstorm () {
+      Swal.fire({
+        title: 'Brainstorm not existent!',
+        text: 'You are trying to access a non-existent Brainstorm, try another code!',
+        icon: 'error',
+        confirmButtonText: 'OK',
+        timer: 4000
+      })
     }
   }
 }

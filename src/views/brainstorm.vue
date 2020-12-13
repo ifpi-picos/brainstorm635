@@ -24,7 +24,7 @@
                   <b-input-group>
                     <b-input-group-prepend>
                       <span class="input-group-text"
-                        ><i class="far fa-envelope"></i>
+                        ><i class="fas fa-file-signature"></i>
                       </span>
                     </b-input-group-prepend>
                     <b-form-input
@@ -171,10 +171,6 @@ export default {
       brainstorm: {
         description: '',
         listGuests: []
-      },
-      user: {
-        photoURL: '',
-        displayName: ''
       }
     }
   },
@@ -211,7 +207,7 @@ export default {
       } else {
         this.disabledButton = true
       }
-      this.$router.push({ name: 'startbrainstorm' })
+      this.$router.push({ name: 'startBrainstorm' })
     },
 
     codeSelect () {
