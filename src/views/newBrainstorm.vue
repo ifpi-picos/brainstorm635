@@ -144,7 +144,7 @@ export default {
         await database.doc(coderoom).onSnapshot(doc => {
           doc.metadata.hasPendingWrites = 'Server'
           if (doc.exists) {
-            const numberOfGuests = doc.data().listGuests ? doc.data().listGuests.length : 0
+            const numberOfGuests = doc.data().listGuests.length
             if (numberOfGuests <= 6) {
               const idGuest = this.$firebase.auth().currentUser.uid
               const users = doc.data().listGuests
@@ -152,7 +152,6 @@ export default {
               this.$router.push({ name: 'brainstorm', params: { id: coderoom } })
             }
           } else {
-            console.log('Documento não existe!')
             this.nonExistentBrainstorm()
           }
         })
