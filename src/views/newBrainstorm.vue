@@ -26,14 +26,20 @@
             <b-col md="6">
               <b-form @submit.prevent="joinWithCode(coderoom)">
                 <b-row class="mt-5">
-                  <b-col md="12" class="d-flex">
+                  <b-col
+                    md="12"
+                    class="d-flex"
+                  >
                     <b-form-input
                       class="input-for-code"
                       v-model="coderoom"
                       placeholder="Join with code"
                     >
                     </b-form-input>
-                    <b-button type="submit" variant="info">
+                    <b-button
+                      type="submit"
+                      variant="info"
+                    >
                       Join
                     </b-button>
                   </b-col>
@@ -98,14 +104,16 @@ export default {
   methods: {
     createNewBrainstorm () {
       const id = this.codeGenerator(6)
-      const user = this.$firebase.auth().currentUser.uid
-      console.log('id', id)
+      const uid = this.$firebase.auth().currentUser.uid
+      const user = JSON.parse(localStorage.getItem('currentUser'))
+      /* console.log('usuario:', user) */
+      /* console.log('id', id) */
       this.$firebase
         .firestore()
         .collection('brainstorms')
         .doc(id.toString())
         .set({
-          leader: user,
+          leader: uid,
           description: 'desc ' + id,
           listGuests: [user]
         })
@@ -122,12 +130,35 @@ export default {
       return result
     },
 
+    async joinWithCode (coderoom) {
+      if (coderoom) {
+        const database = this.$firebase.firestore().collection('brainstorms')
+        await database.doc(coderoom).onSnapshot(doc => {
+          doc.metadata.hasPendingWrites = 'Server'
+          if (doc.exists) {
+            const numberOfGuests = doc.data().listGuests.length
+            if (numberOfGuests <= 6) {
+              const idGuest = JSON.parse(localStorage.getItem('currentUser'))
+              /* console.log('id', idGuest) */
+              const users = doc.data().listGuests
+              this.saveGuestInBrainstorm(idGuest, coderoom, users)
+              this.$router.push({ name: 'brainstorm', params: { id: coderoom } })
+            } else {
+              this.fullBrainstorm()
+            }
+          } else {
+            this.nonExistentBrainstorm()
+          }
+        })
+      }
+    },
+
     async saveGuestInBrainstorm (idGuest, coderoom, users) {
       const brainstorm = this.$firebase.firestore().collection('brainstorms').doc(coderoom)
       let guestExists = false
       if (users) {
         users.map(guest => {
-          if (guest === idGuest) guestExists = true
+          if (guest === idGuest.uid) guestExists = true
         })
         if (!guestExists) {
           await brainstorm.update({
@@ -138,30 +169,20 @@ export default {
       }
     },
 
-    async joinWithCode (coderoom) {
-      if (coderoom) {
-        const database = this.$firebase.firestore().collection('brainstorms')
-        await database.doc(coderoom).onSnapshot(doc => {
-          doc.metadata.hasPendingWrites = 'Server'
-          if (doc.exists) {
-            const numberOfGuests = doc.data().listGuests.length
-            if (numberOfGuests <= 6) {
-              const idGuest = this.$firebase.auth().currentUser.uid
-              const users = doc.data().listGuests
-              this.saveGuestInBrainstorm(idGuest, coderoom, users)
-              this.$router.push({ name: 'brainstorm', params: { id: coderoom } })
-            }
-          } else {
-            this.nonExistentBrainstorm()
-          }
-        })
-      }
-    },
-
     nonExistentBrainstorm () {
       Swal.fire({
         title: 'Brainstorm not existent!',
         text: 'You are trying to access a non-existent Brainstorm, try another code!',
+        icon: 'error',
+        confirmButtonText: 'OK',
+        timer: 4000
+      })
+    },
+
+    fullBrainstorm () {
+      Swal.fire({
+        title: 'The Brainstorm is full!',
+        text: 'You are trying to access the Brainstorm, but it´s reached the number maximum of guests!',
         icon: 'error',
         confirmButtonText: 'OK',
         timer: 4000
