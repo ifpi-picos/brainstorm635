@@ -126,14 +126,13 @@ export default {
 
     getLocalStorage () {
       this.user = JSON.parse(localStorage.getItem('currentUser'))
-      console.log(this.user)
+      /* console.log(this.user) */
       if (this.user) {
         this.verifyLocalStorage = true
       }
       if (this.user === null) {
         this.user = { photoURL: '', displayName: '' }
-      }
-      console.log(this.user)
+      } /*  console.log(this.user) */
     }
   }
 }

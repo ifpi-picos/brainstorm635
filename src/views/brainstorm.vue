@@ -63,7 +63,7 @@
                         variant="light"
                         @click="copyCodeToClipboad()"
                       >
-                        <i class="fas fa-copy" />
+                        <i class="fas fa-copy fa-lg" />
                       </b-button>
                     </b-input-group-append>
                   </b-input-group>
@@ -98,15 +98,30 @@
             </b-row>
             <b-row class="" align-h="center">
               <b-col md="4">
+                {{ brainstorm.listGuests }}
                 <b-form-group
                   class="text-left"
                   id="input-name-1"
                   label-for="name-1"
                 >
-                  <b-input-group v>
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <td>#</td>
+                      <td>fdfs</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="user in brainstorm.listGuests" v-bind:key="user.id">
+                      <td>{{user.photoURL}}</td>
+                      <td>{{user.displayName}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                  <b-input-group v-for="user in brainstorm.listGuests" :key="user.id">
                     <b-input-group-prepend>
                       <span class="photo-guests" variant="light">
-                        <div v-if="!user.photoURL">
+                        <div v-if="user.photoURL === '46'">
                           <i class="fas fa-user fa-lg"></i>
                           1
                         </div>
@@ -116,7 +131,8 @@
                     <b-form-input
                       type="text"
                       class="guests"
-                      v-model="this.user.displayName"
+                      value=""
+                      v-model="user.displayName"
                       id="name-1"
                     >
                     </b-form-input>
@@ -165,20 +181,28 @@ import Swal from 'sweetalert2'
 export default {
   data () {
     return {
+      /* user: {
+        photoURL: '',
+        displayName: ''
+      }, */
       listGuests: [],
       activeMembers: 1,
       allInputsVerified: true,
       brainstormId: this.$route.params.id,
       brainstorm: {
-        description: '',
-        listGuests: []
+        /* description: '',
+        listGuests: [] */
       }
     }
   },
 
+  created () {
+    this.getData()
+  },
+
   mounted: function () {
     this.getData()
-    this.getLocalStorage()
+    /* this.getLocalStorage() */
   },
 
   computed: {},
@@ -190,15 +214,21 @@ export default {
         db.collection('brainstorms')
           .doc(this.brainstormId)
           .onSnapshot(doc => {
+            doc.metadata.hasPendingWrites = 'Server'
             if (doc.exists) {
               this.brainstorm = doc.data()
+              const listGuests = doc.data().listGuests
+              this.listGuests.push(listGuests)
+              console.log('brains', this.listGuests)
               this.activeMembers = doc.data().listGuests.length
+              /* this.brainstorm.listGuests = JSON.parse(localStorage.getItem('currentUser') */
+              /* this.listGuests = doc.data().listGuests */
             } else {
               console.log('The Brainstorm not exist!')
             }
           })
       } catch (error) {
-        console.error(error)
+        /* console.error(error) */
       }
     },
 
@@ -229,12 +259,10 @@ export default {
         confirmButtonText: 'OK',
         timer: 1200
       })
-    },
+    }
 
-    getLocalStorage () {
+    /* getLocalStorage () {
       this.user = JSON.parse(localStorage.getItem('currentUser'))
-      this.listGuests.push(this.user)
-      console.log(this.listGuests)
       if (this.user) {
         this.verifyLocalStorage = true
       }
@@ -242,7 +270,7 @@ export default {
         this.user = { photoURL: '', displayName: '' }
       }
       console.log(this.user)
-    }
+    } */
   }
 }
 </script>
