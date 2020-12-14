@@ -16,12 +16,14 @@
     </b-navbar-brand>
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
     <b-collapse id="nav-collapse" is-nav>
-      <!-- <b-navbar-nav>
-              <b-nav-item href="#">Link</b-nav-item>
-              <b-nav-item href="#" disabled>Disabled</b-nav-item>
-            </b-navbar-nav> -->
-      <!-- Right aligned nav items -->
       <b-navbar-nav class="ml-auto">
+        <!-- <b-spinner
+          v-if="load"
+          style="width: 1.5rem; height: 1.5rem;"
+          type="grow"
+          variant="info"
+          label="Spinning">
+        </b-spinner> -->
         <div v-if="verifyLocalStorage" class="d-flex mr-3">
           <b-nav-item right>
             <b-avatar circle :src="user.photoURL" alt="Foto do usuário">
@@ -36,11 +38,6 @@
             <b-dropdown-item @click="logout()">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
         </div>
-
-        <!-- <b-nav-form>
-                <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
-                <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
-              </b-nav-form> -->
         <b-nav-item-dropdown text="Lang" right>
           <b-dropdown-item href="#"
             >PT
@@ -87,6 +84,7 @@ import { EventBus } from '@/eventBus'
 export default {
   data () {
     return {
+      load: false,
       verifyLocalStorage: false,
       user: {
         photoURL: '',
@@ -126,13 +124,12 @@ export default {
 
     getLocalStorage () {
       this.user = JSON.parse(localStorage.getItem('currentUser'))
-      /* console.log(this.user) */
       if (this.user) {
         this.verifyLocalStorage = true
       }
       if (this.user === null) {
         this.user = { photoURL: '', displayName: '' }
-      } /*  console.log(this.user) */
+      }
     }
   }
 }

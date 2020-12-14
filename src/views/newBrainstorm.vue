@@ -90,6 +90,7 @@
 <script>
 import firebase from 'firebase/app'
 import Swal from 'sweetalert2'
+/* import { EventBus } from '@/eventBus' */
 
 export default {
   data () {
@@ -103,18 +104,17 @@ export default {
 
   methods: {
     createNewBrainstorm () {
+      /* EventBus.$emit('updateList') */
       const id = this.codeGenerator(6)
       const uid = this.$firebase.auth().currentUser.uid
       const user = JSON.parse(localStorage.getItem('currentUser'))
-      /* console.log('usuario:', user) */
-      /* console.log('id', id) */
       this.$firebase
         .firestore()
         .collection('brainstorms')
         .doc(id.toString())
         .set({
           leader: uid,
-          description: 'desc ' + id,
+          description: '',
           listGuests: [user]
         })
       this.$router.push({ name: 'brainstorm', params: { id: id } })
@@ -132,6 +132,7 @@ export default {
 
     async joinWithCode (coderoom) {
       if (coderoom) {
+        /* EventBus.$emit('updateList') */
         const database = this.$firebase.firestore().collection('brainstorms')
         await database.doc(coderoom).onSnapshot(doc => {
           doc.metadata.hasPendingWrites = 'Server'
@@ -139,7 +140,6 @@ export default {
             const numberOfGuests = doc.data().listGuests.length
             if (numberOfGuests <= 6) {
               const idGuest = JSON.parse(localStorage.getItem('currentUser'))
-              /* console.log('id', idGuest) */
               const users = doc.data().listGuests
               this.saveGuestInBrainstorm(idGuest, coderoom, users)
               this.$router.push({ name: 'brainstorm', params: { id: coderoom } })
@@ -169,20 +169,20 @@ export default {
       }
     },
 
-    nonExistentBrainstorm () {
+    fullBrainstorm () {
       Swal.fire({
-        title: 'Brainstorm not existent!',
-        text: 'You are trying to access a non-existent Brainstorm, try another code!',
+        title: 'The Brainstorm is full!',
+        text: 'You are trying to access the Brainstorm, but it´s reached the number maximum of guests!',
         icon: 'error',
         confirmButtonText: 'OK',
         timer: 4000
       })
     },
 
-    fullBrainstorm () {
+    nonExistentBrainstorm () {
       Swal.fire({
-        title: 'The Brainstorm is full!',
-        text: 'You are trying to access the Brainstorm, but it´s reached the number maximum of guests!',
+        title: 'Brainstorm not existent!',
+        text: 'You are trying to access a non-existent Brainstorm, try another code!',
         icon: 'error',
         confirmButtonText: 'OK',
         timer: 4000
