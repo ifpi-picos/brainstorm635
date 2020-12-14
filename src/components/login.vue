@@ -59,7 +59,6 @@ export default {
               displayName: result.user.displayName
             }, result.user.uid)
             localStorage.setItem('currentUser', JSON.stringify(user))
-            EventBus.$emit('user')
           } else {
             const user = {
               uid: result.user.uid,

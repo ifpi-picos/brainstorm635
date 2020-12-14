@@ -89,7 +89,6 @@
                       v-model="activeMembers"
                       id="input-3"
                       class="input-with-prepend input-code text-center"
-                      placeholder="Defina o número de participantes"
                     >
                     </b-form-input>
                   </b-input-group>
@@ -98,27 +97,16 @@
             </b-row>
             <b-row class="" align-h="center">
               <b-col md="4">
-                {{ brainstorm.listGuests }}
                 <b-form-group
                   class="text-left"
                   id="input-name-1"
                   label-for="name-1"
                 >
-                <table class="table table-striped">
-                  <thead>
-                    <tr>
-                      <td>#</td>
-                      <td>fdfs</td>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="user in brainstorm.listGuests" v-bind:key="user.id">
-                      <td>{{user.photoURL}}</td>
-                      <td>{{user.displayName}}</td>
-                    </tr>
-                  </tbody>
-                </table>
-                  <b-input-group v-for="user in brainstorm.listGuests" :key="user.id">
+                  <b-input-group
+                    v-b-tooltip.hover.topright.v-info
+                    title="Edit name"
+                    v-for="user in brainstorm.listGuests"
+                    :key="user.id" class="mb-2">
                     <b-input-group-prepend>
                       <span class="photo-guests" variant="light">
                         <div v-if="user.photoURL === '46'">
@@ -158,6 +146,7 @@
                 >
                 <b-row align-h="center" class="pt-4">
                   <b-button
+                    :disabled="disabledButton"
                     type="submit"
                     class="pl-3 pr-3"
                     pill
@@ -177,22 +166,16 @@
 
 <script>
 import Swal from 'sweetalert2'
+/* import { EventBus } from '@/eventBus' */
 
 export default {
   data () {
     return {
-      /* user: {
-        photoURL: '',
-        displayName: ''
-      }, */
-      listGuests: [],
+      disabledButton: true,
       activeMembers: 1,
       allInputsVerified: true,
       brainstormId: this.$route.params.id,
-      brainstorm: {
-        /* description: '',
-        listGuests: [] */
-      }
+      brainstorm: {}
     }
   },
 
@@ -201,8 +184,16 @@ export default {
   },
 
   mounted: function () {
+    /* EventBus.$on('updateList', () => {
+      this.getData()
+    }) */
     this.getData()
-    /* this.getLocalStorage() */
+
+    if (this.activeMembers >= 3 || this.activeMembers <= 6) {
+      this.disabledButton = false
+    } else {
+      this.disabledButton = true
+    }
   },
 
   computed: {},
@@ -217,12 +208,7 @@ export default {
             doc.metadata.hasPendingWrites = 'Server'
             if (doc.exists) {
               this.brainstorm = doc.data()
-              const listGuests = doc.data().listGuests
-              this.listGuests.push(listGuests)
-              console.log('brains', this.listGuests)
               this.activeMembers = doc.data().listGuests.length
-              /* this.brainstorm.listGuests = JSON.parse(localStorage.getItem('currentUser') */
-              /* this.listGuests = doc.data().listGuests */
             } else {
               console.log('The Brainstorm not exist!')
             }
@@ -230,15 +216,6 @@ export default {
       } catch (error) {
         /* console.error(error) */
       }
-    },
-
-    startBrainstorm () {
-      if (this.activeMembers >= 3 || this.activeMembers <= 6) {
-        this.disabledButton = false
-      } else {
-        this.disabledButton = true
-      }
-      this.$router.push({ name: 'startBrainstorm' })
     },
 
     codeSelect () {
@@ -259,18 +236,22 @@ export default {
         confirmButtonText: 'OK',
         timer: 1200
       })
-    }
+    },
 
-    /* getLocalStorage () {
-      this.user = JSON.parse(localStorage.getItem('currentUser'))
-      if (this.user) {
-        this.verifyLocalStorage = true
-      }
-      if (this.user === null) {
-        this.user = { photoURL: '', displayName: '' }
-      }
-      console.log(this.user)
-    } */
+    startBrainstorm () {
+      const uid = this.$firebase.auth().currentUser.uid
+      this.$firebase
+        .firestore()
+        .collection('brainstorms')
+        .doc(this.brainstormId.toString())
+        .set({
+          leader: uid,
+          description: '',
+          listGuests: [this.brainstorm.listGuests]
+        })
+
+      this.$router.push({ name: 'startBrainstorm' })
+    }
   }
 }
 </script>
