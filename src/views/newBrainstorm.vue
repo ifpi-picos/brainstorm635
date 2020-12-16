@@ -135,7 +135,7 @@ export default {
         /* EventBus.$emit('updateList') */
         const database = this.$firebase.firestore().collection('brainstorms')
         await database.doc(coderoom).onSnapshot(doc => {
-          doc.metadata.hasPendingWrites = 'Server'
+          /* doc.metadata.hasPendingWrites = 'Local' */
           if (doc.exists) {
             const numberOfGuests = doc.data().listGuests.length
             if (numberOfGuests <= 6) {
