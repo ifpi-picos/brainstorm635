@@ -179,10 +179,6 @@ export default {
     }
   },
 
-  created () {
-    this.getData()
-  },
-
   mounted: function () {
     /* EventBus.$on('updateList', () => {
       this.getData()
@@ -205,7 +201,7 @@ export default {
         db.collection('brainstorms')
           .doc(this.brainstormId)
           .onSnapshot(doc => {
-            doc.metadata.hasPendingWrites = 'Server'
+            /* doc.metadata.hasPendingWrites = 'Local' */
             if (doc.exists) {
               this.brainstorm = doc.data()
               this.activeMembers = doc.data().listGuests.length

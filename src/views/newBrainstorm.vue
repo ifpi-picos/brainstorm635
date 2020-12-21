@@ -34,6 +34,7 @@
                       class="input-for-code"
                       v-model="coderoom"
                       placeholder="Join with code"
+                      maxlength="6"
                     >
                     </b-form-input>
                     <b-button
@@ -115,7 +116,8 @@ export default {
         .set({
           leader: uid,
           description: '',
-          listGuests: [user]
+          listGuests: [user],
+          timestamp: firebase.firestore.FieldValue.serverTimestamp()
         })
       this.$router.push({ name: 'brainstorm', params: { id: id } })
     },
@@ -131,17 +133,17 @@ export default {
     },
 
     async joinWithCode (coderoom) {
+      coderoom = coderoom.toUpperCase()
       if (coderoom) {
-        /* EventBus.$emit('updateList') */
         const database = this.$firebase.firestore().collection('brainstorms')
         await database.doc(coderoom).onSnapshot(doc => {
           doc.metadata.hasPendingWrites = 'Server'
           if (doc.exists) {
             const numberOfGuests = doc.data().listGuests.length
-            if (numberOfGuests <= 6) {
-              const idGuest = JSON.parse(localStorage.getItem('currentUser'))
+            if (numberOfGuests < 6) {
+              const dataGuest = JSON.parse(localStorage.getItem('currentUser'))
               const users = doc.data().listGuests
-              this.saveGuestInBrainstorm(idGuest, coderoom, users)
+              this.saveGuestInBrainstorm(dataGuest, coderoom, users)
               this.$router.push({ name: 'brainstorm', params: { id: coderoom } })
             } else {
               this.fullBrainstorm()
@@ -153,17 +155,17 @@ export default {
       }
     },
 
-    async saveGuestInBrainstorm (idGuest, coderoom, users) {
+    async saveGuestInBrainstorm (dataGuest, coderoom, users) {
       const brainstorm = this.$firebase.firestore().collection('brainstorms').doc(coderoom)
       let guestExists = false
       if (users) {
         users.map(guest => {
-          if (guest === idGuest.uid) guestExists = true
+          if (guest.uid === dataGuest.uid) guestExists = true
         })
         if (!guestExists) {
           await brainstorm.update({
             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-            listGuests: firebase.firestore.FieldValue.arrayUnion(idGuest)
+            listGuests: firebase.firestore.FieldValue.arrayUnion(dataGuest)
           })
         }
       }
