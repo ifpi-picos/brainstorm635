@@ -34,6 +34,7 @@
                       class="input-for-code"
                       v-model="coderoom"
                       placeholder="Join with code"
+                      maxlength="6"
                     >
                     </b-form-input>
                     <b-button
@@ -115,7 +116,8 @@ export default {
         .set({
           leader: uid,
           description: '',
-          listGuests: [user]
+          listGuests: [user],
+          timestamp: firebase.firestore.FieldValue.serverTimestamp()
         })
       this.$router.push({ name: 'brainstorm', params: { id: id } })
     },
@@ -131,9 +133,11 @@ export default {
     },
 
     async joinWithCode (coderoom) {
+      coderoom = coderoom.toUpperCase()
       if (coderoom) {
         const database = this.$firebase.firestore().collection('brainstorms')
         await database.doc(coderoom).onSnapshot(doc => {
+          doc.metadata.hasPendingWrites = 'Server'
           if (doc.exists) {
             const numberOfGuests = doc.data().listGuests.length
             if (numberOfGuests < 6) {
