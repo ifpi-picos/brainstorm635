@@ -28,15 +28,15 @@ const routes = [
       },
 
       {
-        path: '/brainstorm/:id',
-        name: 'brainstorm',
-        component: () => import('@/views/brainstorm.vue')
-      },
-
-      {
         path: '/newbrainstorm',
         name: 'newBrainstorm',
         component: () => import('@/views/newBrainstorm.vue')
+      },
+
+      {
+        path: '/brainstorm/:id',
+        name: 'brainstorm',
+        component: () => import('@/views/brainstorm.vue')
       },
 
       {
