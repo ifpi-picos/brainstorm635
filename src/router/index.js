@@ -40,7 +40,7 @@ const routes = [
       },
 
       {
-        path: '/startbrainstorm',
+        path: '/startbrainstorm/:id',
         name: 'startBrainstorm',
         component: () => import('@/views/startBrainstorm.vue')
       }

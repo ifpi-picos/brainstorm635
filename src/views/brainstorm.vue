@@ -11,7 +11,7 @@
               <h4 class="page-tittle mb-5 mt-3">Create Brainstorm</h4>
             </b-col>
           </b-row>
-          <b-form @submit="startBrainstorm()">
+          <b-form @submit.prevent="startBrainstorm()">
             <b-row align-h="center" class="mb-5">
               <b-col md="4">
                 <b-form-group
@@ -106,7 +106,7 @@
                     v-b-tooltip.hover.topright.v-info
                     title="Edit name"
                     v-for="user in brainstorm.listGuests"
-                    :key="user.id" class="mb-2">
+                    :key="user.uid" class="mb-2">
                     <b-input-group-prepend>
                       <span class="photo-guests" variant="light">
                         <div v-if="user.photoURL === '46'">
@@ -121,7 +121,7 @@
                       class="guests"
                       value=""
                       v-model="user.displayName"
-                      id="name-1"
+                      :id="user.uid"
                     >
                     </b-form-input>
                   </b-input-group>
@@ -184,12 +184,6 @@ export default {
       this.getData()
     }) */
     this.getData()
-
-    if (this.activeMembers >= 3 || this.activeMembers <= 6) {
-      this.disabledButton = false
-    } else {
-      this.disabledButton = true
-    }
   },
 
   computed: {},
@@ -201,10 +195,14 @@ export default {
         db.collection('brainstorms')
           .doc(this.brainstormId)
           .onSnapshot(doc => {
-            /* doc.metadata.hasPendingWrites = 'Local' */
             if (doc.exists) {
               this.brainstorm = doc.data()
               this.activeMembers = doc.data().listGuests.length
+              if (this.activeMembers >= 3) {
+                this.disabledButton = false
+              } else {
+                this.disabledButton = true
+              }
             } else {
               console.log('The Brainstorm not exist!')
             }
@@ -235,18 +233,18 @@ export default {
     },
 
     startBrainstorm () {
-      const uid = this.$firebase.auth().currentUser.uid
-      this.$firebase
-        .firestore()
-        .collection('brainstorms')
-        .doc(this.brainstormId.toString())
-        .set({
-          leader: uid,
-          description: '',
-          listGuests: [this.brainstorm.listGuests]
-        })
+      // const uid = this.$firebase.auth().currentUser.uid
+      // this.$firebase
+      //   .firestore()
+      //   .collection('brainstorms')
+      //   .doc(this.brainstormId.toString())
+      //   .set({
+      //     leader: uid,
+      //     description: '',
+      //     listGuests: [this.brainstorm.listGuests]
+      //   })
 
-      this.$router.push({ name: 'startBrainstorm' })
+      this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId } })
     }
   }
 }
