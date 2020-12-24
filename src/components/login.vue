@@ -45,7 +45,6 @@ export default {
         .signInWithPopup(googleProvider)
         .then(async result => {
           const existentUser = await this.existentUser(result.user.uid)
-          console.log('existentUser', existentUser)
           if (!existentUser) {
             const user = {
               uid: result.user.uid,
@@ -81,9 +80,8 @@ export default {
         .collection('users')
         .doc(uid)
         .set(user)
-        .then(docRef => {
+        .then(() => {
           this.user = user
-          console.log('usuario salvo com sucesso: ', docRef.id)
         })
         .catch(function (error) {
           console.error('Error adding document: ', error)
