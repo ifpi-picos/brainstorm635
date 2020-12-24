@@ -111,7 +111,29 @@
 </template>
 
 <script>
-export default {}
+export default {
+  data () {
+    return {
+      brainstormId: this.$route.params.id
+    }
+  },
+
+  mounted () {
+    this.isStarted()
+  },
+
+  methods: {
+    isStarted () {
+      const db = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
+      db.onSnapshot(doc => {
+        const started = doc.data().started
+        if (!started) {
+          this.$router.push({ name: 'brainstorm', params: { id: this.brainstormId } })
+        }
+      })
+    }
+  }
+}
 </script>
 
 <style lang="css" scoped>

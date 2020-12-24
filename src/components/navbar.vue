@@ -101,24 +101,18 @@ export default {
     this.getLocalStorage()
   },
 
-  updated () {
-    console.log('sasdas')
-  },
-
   methods: {
     logout () {
       this.verifyLocalStorage = false
       this.$firebase
         .auth()
         .signOut()
-        .then(function () {
+        .then(() => {
           localStorage.removeItem('currentUser')
-          this.user = { photoURL: '', displayName: '' }
-          this.$router.push('/')
-          console.log('dasda', this.$router)
+          this.user = { photoURL: null, displayName: null }
         })
-        .catch(function (error) {
-          console.log('errou', error)
+        .catch((error) => {
+          console.error(error)
         })
     },
 

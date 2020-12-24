@@ -34,7 +34,7 @@
                       class="input-for-code"
                       v-model="coderoom"
                       placeholder="Join with code"
-                      maxlength="6"
+                      maxlength="10"
                     >
                     </b-form-input>
                     <b-button
@@ -114,6 +114,7 @@ export default {
         .collection('brainstorms')
         .doc(id.toString())
         .set({
+          started: false,
           leader: uid,
           description: '',
           listGuests: [user],
@@ -138,10 +139,18 @@ export default {
         const database = this.$firebase.firestore().collection('brainstorms')
         await database.doc(coderoom).onSnapshot(doc => {
           doc.metadata.hasPendingWrites = 'Server'
+
+          const dataGuest = JSON.parse(localStorage.getItem('currentUser'))
           if (doc.exists) {
+            let userExists = false
+            doc.data().listGuests.map(user => {
+              if (user.uid === dataGuest.uid) {
+                userExists = true
+              }
+            })
+
             const numberOfGuests = doc.data().listGuests.length
-            if (numberOfGuests < 6) {
-              const dataGuest = JSON.parse(localStorage.getItem('currentUser'))
+            if (numberOfGuests < 6 || userExists) {
               const users = doc.data().listGuests
               this.saveGuestInBrainstorm(dataGuest, coderoom, users)
               this.$router.push({ name: 'brainstorm', params: { id: coderoom } })

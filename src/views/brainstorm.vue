@@ -146,6 +146,7 @@
                 >
                 <b-row align-h="center" class="pt-4">
                   <b-button
+                    v-if="isLeader"
                     :disabled="disabledButton"
                     type="submit"
                     class="pl-3 pr-3"
@@ -175,7 +176,8 @@ export default {
       activeMembers: 1,
       allInputsVerified: true,
       brainstormId: this.$route.params.id,
-      brainstorm: {}
+      brainstorm: {},
+      isLeader: false
     }
   },
 
@@ -197,7 +199,12 @@ export default {
           .onSnapshot(doc => {
             if (doc.exists) {
               this.brainstorm = doc.data()
+              this.isLeader = this.brainstorm.leader === JSON.parse(localStorage.getItem('currentUser')).uid
               this.activeMembers = doc.data().listGuests.length
+              const started = doc.data().started
+              if (started) {
+                this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId } })
+              }
               if (this.activeMembers >= 3) {
                 this.disabledButton = false
               } else {
@@ -233,18 +240,8 @@ export default {
     },
 
     startBrainstorm () {
-      // const uid = this.$firebase.auth().currentUser.uid
-      // this.$firebase
-      //   .firestore()
-      //   .collection('brainstorms')
-      //   .doc(this.brainstormId.toString())
-      //   .set({
-      //     leader: uid,
-      //     description: '',
-      //     listGuests: [this.brainstorm.listGuests]
-      //   })
-
-      this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId } })
+      const db = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
+      db.update({ started: true })
     }
   }
 }
