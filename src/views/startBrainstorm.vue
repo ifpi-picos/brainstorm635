@@ -118,6 +118,7 @@ export default {
   data () {
     return {
       brainstormId: this.$route.params.id,
+      round: this.$route.params.round,
       description: '',
       ideas: []
     }
@@ -148,7 +149,7 @@ export default {
 
       setTimeout(async () => {
         const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
-        await database.collection('ideas').doc('round1').set(data).then(function () {}).catch(function (error) {
+        await database.collection('ideas').doc(this.round).set(data, { merge: true }).then(function () {}).catch(function (error) {
           console.error(error)
         })
       }, minutes)

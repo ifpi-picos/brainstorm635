@@ -217,7 +217,7 @@ export default {
               this.description = doc.data().description
               const started = doc.data().started
               if (started) {
-                this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId } })
+                this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: 'round1' } })
               }
               if (this.activeMembers >= 3) {
                 this.disabledButton = false
