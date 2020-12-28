@@ -15,7 +15,7 @@
                 <span class="icone icone-padd">
                   <i class="fa fa-file-signature fa-lg"></i>
                 </span>
-                Description
+                {{ description }}
               </span>
             </b-col>
             <b-col xs="12" sm="4" md="4" class="text-center culums">
@@ -51,6 +51,7 @@
               <b-form-textarea
                 id="ideia1"
                 placeholder="Write your idea..."
+                v-model="ideas[0]"
                 class="entradaTexto">
               </b-form-textarea>
             </b-form-group>
@@ -72,6 +73,7 @@
               <b-form-textarea
                 id="ideia2"
                 placeholder="Write your idea..."
+                v-model="ideas[1]"
                 class="entradaTexto"
               ></b-form-textarea>
             </b-form-group>
@@ -93,6 +95,7 @@
               <b-form-textarea
                 id="ideia3"
                 placeholder="Write your idea..."
+                v-model="ideas[2]"
                 class="entradaTexto"
                 wrap="hard">
               </b-form-textarea>
@@ -114,23 +117,42 @@
 export default {
   data () {
     return {
-      brainstormId: this.$route.params.id
+      brainstormId: this.$route.params.id,
+      round: this.$route.params.round,
+      description: '',
+      ideas: []
     }
   },
 
   mounted () {
-    this.isStarted()
+    this.getData()
+    this.saveIdeas()
   },
 
   methods: {
-    isStarted () {
-      const db = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
-      db.onSnapshot(doc => {
+    getData () {
+      const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
+      database.onSnapshot(doc => {
         const started = doc.data().started
         if (!started) {
           this.$router.push({ name: 'brainstorm', params: { id: this.brainstormId } })
+        } else {
+          this.description = doc.data().description
         }
       })
+    },
+
+    saveIdeas () {
+      const minutes = 20000
+      const user = JSON.parse(localStorage.getItem('currentUser')).uid
+      const data = { [user]: this.ideas }
+
+      setTimeout(async () => {
+        const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
+        await database.collection('ideas').doc(this.round).set(data, { merge: true }).then(function () {}).catch(function (error) {
+          console.error(error)
+        })
+      }, minutes)
     }
   }
 }

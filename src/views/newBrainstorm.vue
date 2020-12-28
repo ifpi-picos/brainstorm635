@@ -134,6 +134,7 @@ export default {
     },
 
     async joinWithCode (coderoom) {
+      coderoom = coderoom.trim()
       coderoom = coderoom.toUpperCase()
       if (coderoom) {
         const database = this.$firebase.firestore().collection('brainstorms')

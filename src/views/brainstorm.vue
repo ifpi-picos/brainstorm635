@@ -29,9 +29,10 @@
                     </b-input-group-prepend>
                     <b-form-input
                       type="text"
+                      :disabled="!isLeader"
                       class="input-with-prepend input-code"
                       id="input-1"
-                      v-model="brainstorm.description"
+                      v-model="description"
                       placeholder="Describe the brainstorm"
                     >
                     </b-form-input>
@@ -177,7 +178,8 @@ export default {
       allInputsVerified: true,
       brainstormId: this.$route.params.id,
       brainstorm: {},
-      isLeader: false
+      isLeader: false,
+      description: ''
     }
   },
 
@@ -188,9 +190,20 @@ export default {
     this.getData()
   },
 
-  computed: {},
+  watch: {
+    description: async function () {
+      await this.saveDescription()
+    }
+  },
 
   methods: {
+    saveDescription () {
+      const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
+      database.update({
+        description: this.description
+      })
+    },
+
     getData () {
       try {
         const db = this.$firebase.firestore()
@@ -201,9 +214,10 @@ export default {
               this.brainstorm = doc.data()
               this.isLeader = this.brainstorm.leader === JSON.parse(localStorage.getItem('currentUser')).uid
               this.activeMembers = doc.data().listGuests.length
+              this.description = doc.data().description
               const started = doc.data().started
               if (started) {
-                this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId } })
+                this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: 'round1' } })
               }
               if (this.activeMembers >= 3) {
                 this.disabledButton = false
@@ -239,8 +253,9 @@ export default {
       })
     },
 
-    startBrainstorm () {
+    async startBrainstorm () {
       const db = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
+      await this.saveDescription
       db.update({ started: true })
     }
   }
