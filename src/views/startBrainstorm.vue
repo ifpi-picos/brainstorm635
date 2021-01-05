@@ -25,7 +25,7 @@
                     class="fa fa-circle-notch fa-lg">
                   </i>
                 </span>
-                Round
+                {{ returnRound }}
               </span>
             </b-col>
             <b-col xs="12" sm="4" md="4" class="text-center culums">
@@ -33,7 +33,7 @@
                 <span class="icone">
                   <i class="fa fa-clock fa-lg"></i>
                 </span>
-                Restant Time
+                {{ time }}
             </span>
             </b-col>
           </b-row>
@@ -120,13 +120,22 @@ export default {
       brainstormId: this.$route.params.id,
       round: this.$route.params.round,
       description: '',
-      ideas: []
+      ideas: [],
+      time: ''
     }
   },
 
   mounted () {
     this.getData()
     this.saveIdeas()
+  },
+
+  computed: {
+    returnRound: function () {
+      let text = this.round
+      text = 'Round: ' + text[5]
+      return text
+    }
   },
 
   methods: {
@@ -142,17 +151,39 @@ export default {
       })
     },
 
-    saveIdeas () {
-      const minutes = 20000
+    createClock () {
+      let min = 0
+      let seg = 10
+      const cron = setInterval(() => {
+        seg--
+
+        if (min === 0 && seg === 0) {
+          clearInterval(cron)
+        } else if (min > 0 && seg < 0) {
+          seg = 59
+        }
+
+        if (seg === '00') {
+          seg = 59
+          min--
+        }
+
+        this.time = (min < 10 ? '0' + min : min) + ' : ' + (seg < 10 ? '0' + seg : seg)
+      }, 1000)
+    },
+
+    async saveIdeas () {
       const user = JSON.parse(localStorage.getItem('currentUser')).uid
       const data = { [user]: this.ideas }
+
+      await this.createClock()
 
       setTimeout(async () => {
         const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
         await database.collection('ideas').doc(this.round).set(data, { merge: true }).then(function () {}).catch(function (error) {
           console.error(error)
         })
-      }, minutes)
+      }, 10000)
     }
   }
 }
