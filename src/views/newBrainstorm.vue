@@ -4,8 +4,7 @@
     <b-row align-v="end">
       <b-col
         class="brain-card align-items-center justify-content-center ml-auto mr-auto"
-        md="7"
-      >
+        md="7">
         <b-card class="text-center pr-5 pl-5 pb-5 pt-0 mt-3">
           <b-row>
             <b-col>
@@ -17,8 +16,7 @@
               <b-button
                 @click="createNewBrainstorm()"
                 class="new-brain-button mt-5"
-                variant="outline-info"
-              >
+                variant="outline-info">
                 New Brainstorm
                 <i class="fas fa-plus"></i>
               </b-button>
@@ -28,8 +26,7 @@
                 <b-row class="mt-5">
                   <b-col
                     md="12"
-                    class="d-flex"
-                  >
+                    class="d-flex">
                     <b-form-input
                       class="input-for-code"
                       v-model="coderoom"
