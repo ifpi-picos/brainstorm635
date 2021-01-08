@@ -28,19 +28,19 @@ const routes = [
       },
 
       {
-        path: '/brainstorm/:id',
-        name: 'brainstorm',
-        component: () => import('@/views/brainstorm.vue')
-      },
-
-      {
         path: '/newbrainstorm',
         name: 'newBrainstorm',
         component: () => import('@/views/newBrainstorm.vue')
       },
 
       {
-        path: '/startbrainstorm',
+        path: '/brainstorm/:id',
+        name: 'brainstorm',
+        component: () => import('@/views/brainstorm.vue')
+      },
+
+      {
+        path: '/startbrainstorm/:id/:round',
         name: 'startBrainstorm',
         component: () => import('@/views/startBrainstorm.vue')
       }

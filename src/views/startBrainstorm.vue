@@ -15,7 +15,7 @@
                 <span class="icone icone-padd">
                   <i class="fa fa-file-signature fa-lg"></i>
                 </span>
-                Description
+                {{ description }}
               </span>
             </b-col>
             <b-col xs="12" sm="4" md="4" class="text-center culums">
@@ -25,7 +25,7 @@
                     class="fa fa-circle-notch fa-lg">
                   </i>
                 </span>
-                Round
+                {{ returnRound }}
               </span>
             </b-col>
             <b-col xs="12" sm="4" md="4" class="text-center culums">
@@ -33,7 +33,7 @@
                 <span class="icone">
                   <i class="fa fa-clock fa-lg"></i>
                 </span>
-                Restant Time
+                {{ time }}
             </span>
             </b-col>
           </b-row>
@@ -51,6 +51,7 @@
               <b-form-textarea
                 id="ideia1"
                 placeholder="Write your idea..."
+                v-model="ideas[0]"
                 class="entradaTexto">
               </b-form-textarea>
             </b-form-group>
@@ -72,6 +73,7 @@
               <b-form-textarea
                 id="ideia2"
                 placeholder="Write your idea..."
+                v-model="ideas[1]"
                 class="entradaTexto"
               ></b-form-textarea>
             </b-form-group>
@@ -93,6 +95,7 @@
               <b-form-textarea
                 id="ideia3"
                 placeholder="Write your idea..."
+                v-model="ideas[2]"
                 class="entradaTexto"
                 wrap="hard">
               </b-form-textarea>
@@ -111,7 +114,79 @@
 </template>
 
 <script>
-export default {}
+export default {
+  data () {
+    return {
+      brainstormId: this.$route.params.id,
+      round: this.$route.params.round,
+      description: '',
+      ideas: [],
+      time: ''
+    }
+  },
+
+  mounted () {
+    this.getData()
+    this.saveIdeas()
+  },
+
+  computed: {
+    returnRound: function () {
+      let text = this.round
+      text = 'Round: ' + text[5]
+      return text
+    }
+  },
+
+  methods: {
+    getData () {
+      const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
+      database.onSnapshot(doc => {
+        const started = doc.data().started
+        if (!started) {
+          this.$router.push({ name: 'brainstorm', params: { id: this.brainstormId } })
+        } else {
+          this.description = doc.data().description
+        }
+      })
+    },
+
+    createClock () {
+      let min = 0
+      let seg = 10
+      const cron = setInterval(() => {
+        seg--
+
+        if (min === 0 && seg === 0) {
+          clearInterval(cron)
+        } else if (min > 0 && seg < 0) {
+          seg = 59
+        }
+
+        if (seg === '00') {
+          seg = 59
+          min--
+        }
+
+        this.time = (min < 10 ? '0' + min : min) + ' : ' + (seg < 10 ? '0' + seg : seg)
+      }, 1000)
+    },
+
+    async saveIdeas () {
+      const user = JSON.parse(localStorage.getItem('currentUser')).uid
+      const data = { [user]: this.ideas }
+
+      await this.createClock()
+
+      setTimeout(async () => {
+        const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
+        await database.collection('ideas').doc(this.round).set(data, { merge: true }).then(function () {}).catch(function (error) {
+          console.error(error)
+        })
+      }, 10000)
+    }
+  }
+}
 </script>
 
 <style lang="css" scoped>

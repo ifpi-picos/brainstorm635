@@ -11,7 +11,7 @@
               <h4 class="page-tittle mb-5 mt-3">Create Brainstorm</h4>
             </b-col>
           </b-row>
-          <b-form @submit="startBrainstorm()">
+          <b-form @submit.prevent="startBrainstorm()">
             <b-row align-h="center" class="mb-5">
               <b-col md="4">
                 <b-form-group
@@ -29,9 +29,10 @@
                     </b-input-group-prepend>
                     <b-form-input
                       type="text"
+                      :disabled="!isLeader"
                       class="input-with-prepend input-code"
                       id="input-1"
-                      v-model="brainstorm.description"
+                      v-model="description"
                       placeholder="Describe the brainstorm"
                     >
                     </b-form-input>
@@ -106,7 +107,7 @@
                     v-b-tooltip.hover.topright.v-info
                     title="Edit name"
                     v-for="user in brainstorm.listGuests"
-                    :key="user.id" class="mb-2">
+                    :key="user.uid" class="mb-2">
                     <b-input-group-prepend>
                       <span class="photo-guests" variant="light">
                         <div v-if="user.photoURL === '46'">
@@ -121,7 +122,7 @@
                       class="guests"
                       value=""
                       v-model="user.displayName"
-                      id="name-1"
+                      :id="user.uid"
                     >
                     </b-form-input>
                   </b-input-group>
@@ -146,6 +147,7 @@
                 >
                 <b-row align-h="center" class="pt-4">
                   <b-button
+                    v-if="isLeader"
                     :disabled="disabledButton"
                     type="submit"
                     class="pl-3 pr-3"
@@ -175,7 +177,9 @@ export default {
       activeMembers: 1,
       allInputsVerified: true,
       brainstormId: this.$route.params.id,
-      brainstorm: {}
+      brainstorm: {},
+      isLeader: false,
+      description: ''
     }
   },
 
@@ -184,27 +188,42 @@ export default {
       this.getData()
     }) */
     this.getData()
+  },
 
-    if (this.activeMembers >= 3 || this.activeMembers <= 6) {
-      this.disabledButton = false
-    } else {
-      this.disabledButton = true
+  watch: {
+    description: async function () {
+      await this.saveDescription()
     }
   },
 
-  computed: {},
-
   methods: {
+    saveDescription () {
+      const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
+      database.update({
+        description: this.description
+      })
+    },
+
     getData () {
       try {
         const db = this.$firebase.firestore()
         db.collection('brainstorms')
           .doc(this.brainstormId)
           .onSnapshot(doc => {
-            /* doc.metadata.hasPendingWrites = 'Local' */
             if (doc.exists) {
               this.brainstorm = doc.data()
+              this.isLeader = this.brainstorm.leader === JSON.parse(localStorage.getItem('currentUser')).uid
               this.activeMembers = doc.data().listGuests.length
+              this.description = doc.data().description
+              const started = doc.data().started
+              if (started) {
+                this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: 'round1' } })
+              }
+              if (this.activeMembers >= 3) {
+                this.disabledButton = false
+              } else {
+                this.disabledButton = true
+              }
             } else {
               console.log('The Brainstorm not exist!')
             }
@@ -234,19 +253,10 @@ export default {
       })
     },
 
-    startBrainstorm () {
-      const uid = this.$firebase.auth().currentUser.uid
-      this.$firebase
-        .firestore()
-        .collection('brainstorms')
-        .doc(this.brainstormId.toString())
-        .set({
-          leader: uid,
-          description: '',
-          listGuests: [this.brainstorm.listGuests]
-        })
-
-      this.$router.push({ name: 'startBrainstorm' })
+    async startBrainstorm () {
+      const db = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
+      await this.saveDescription
+      db.update({ started: true })
     }
   }
 }
