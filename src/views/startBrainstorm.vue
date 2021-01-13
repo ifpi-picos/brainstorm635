@@ -121,7 +121,8 @@ export default {
       round: this.$route.params.round,
       description: '',
       ideas: [],
-      time: ''
+      time: '',
+      currentRound: 0
     }
   },
 
@@ -147,6 +148,7 @@ export default {
           this.$router.push({ name: 'brainstorm', params: { id: this.brainstormId } })
         } else {
           this.description = doc.data().description
+          this.currentRound = doc.data().currentRound
         }
       })
     },

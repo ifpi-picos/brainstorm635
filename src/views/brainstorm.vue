@@ -106,7 +106,7 @@
                   <b-input-group
                     v-b-tooltip.hover.topright.v-info
                     title="Edit name"
-                    v-for="user in brainstorm.listGuests"
+                    v-for="user in listGuests"
                     :key="user.uid" class="mb-2">
                     <b-input-group-prepend>
                       <span class="photo-guests" variant="light">
@@ -177,7 +177,7 @@ export default {
       activeMembers: 1,
       allInputsVerified: true,
       brainstormId: this.$route.params.id,
-      brainstorm: {},
+      listGuests: [],
       isLeader: false,
       description: ''
     }
@@ -198,10 +198,12 @@ export default {
 
   methods: {
     saveDescription () {
-      const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
-      database.update({
-        description: this.description
-      })
+      setTimeout(() => {
+        const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
+        database.update({
+          description: this.description
+        })
+      }, 2000)
     },
 
     getData () {
@@ -211,15 +213,16 @@ export default {
           .doc(this.brainstormId)
           .onSnapshot(doc => {
             if (doc.exists) {
-              this.brainstorm = doc.data()
-              this.isLeader = this.brainstorm.leader === JSON.parse(localStorage.getItem('currentUser')).uid
+              this.listGuests = doc.data().listGuests
+              this.isLeader = doc.data().leader === JSON.parse(localStorage.getItem('currentUser')).uid
               this.activeMembers = doc.data().listGuests.length
               this.description = doc.data().description
               const started = doc.data().started
               if (started) {
-                this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: 'round1' } })
+                const currentRound = 'round' + doc.data().currentRound
+                this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: currentRound } })
               }
-              if (this.activeMembers >= 3) {
+              if (this.activeMembers >= 2) {
                 this.disabledButton = false
               } else {
                 this.disabledButton = true
@@ -229,7 +232,7 @@ export default {
             }
           })
       } catch (error) {
-        /* console.error(error) */
+        console.error(error)
       }
     },
 
@@ -256,7 +259,7 @@ export default {
     async startBrainstorm () {
       const db = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
       await this.saveDescription
-      db.update({ started: true })
+      db.update({ started: true, currentRound: 1 })
     }
   }
 }
