@@ -106,7 +106,7 @@
                   <b-input-group
                     v-b-tooltip.hover.topright.v-info
                     title="Edit name"
-                    v-for="user in brainstorm.listGuests"
+                    v-for="user in listGuests"
                     :key="user.uid" class="mb-2">
                     <b-input-group-prepend>
                       <span class="photo-guests" variant="light">
@@ -177,7 +177,7 @@ export default {
       activeMembers: 1,
       allInputsVerified: true,
       brainstormId: this.$route.params.id,
-      brainstorm: {},
+      listGuests: [],
       isLeader: false,
       description: ''
     }
@@ -213,8 +213,8 @@ export default {
           .doc(this.brainstormId)
           .onSnapshot(doc => {
             if (doc.exists) {
-              this.brainstorm = doc.data()
-              this.isLeader = this.brainstorm.leader === JSON.parse(localStorage.getItem('currentUser')).uid
+              this.listGuests = doc.data().listGuests
+              this.isLeader = doc.data().leader === JSON.parse(localStorage.getItem('currentUser')).uid
               this.activeMembers = doc.data().listGuests.length
               this.description = doc.data().description
               const started = doc.data().started
