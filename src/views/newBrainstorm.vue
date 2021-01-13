@@ -117,7 +117,11 @@ export default {
           listGuests: [user],
           timestamp: firebase.firestore.FieldValue.serverTimestamp()
         })
-      this.$router.push({ name: 'brainstorm', params: { id: id } })
+        .then(() => {
+          console.log('sucesso')
+          this.$router.push({ name: 'brainstorm', params: { id: id } })
+        })
+        .catch(error => console.log(error))
     },
 
     codeGenerator (length) {
@@ -139,12 +143,12 @@ export default {
           doc.metadata.hasPendingWrites = 'Server'
 
           const dataGuest = JSON.parse(localStorage.getItem('currentUser'))
+          /* console.log(dataGuest.uid) */
           if (doc.exists) {
             let userExists = false
             doc.data().listGuests.map(user => {
-              if (user.uid === dataGuest.uid) {
-                userExists = true
-              }
+              /* console.log(dataGuest.uid) */
+              if (user.uid === dataGuest.uid) userExists = true
             })
 
             const numberOfGuests = doc.data().listGuests.length
