@@ -121,7 +121,8 @@ export default {
       round: this.$route.params.round,
       description: '',
       ideas: [],
-      time: ''
+      time: '',
+      currentRound: 0
     }
   },
 
@@ -147,13 +148,14 @@ export default {
           this.$router.push({ name: 'brainstorm', params: { id: this.brainstormId } })
         } else {
           this.description = doc.data().description
+          this.currentRound = doc.data().currentRound
         }
       })
     },
 
     createClock () {
       let min = 0
-      let seg = 10
+      let seg = 60
       const cron = setInterval(() => {
         seg--
 
@@ -183,7 +185,7 @@ export default {
         await database.collection('ideas').doc(this.round).set(data, { merge: true }).then(function () {}).catch(function (error) {
           console.error(error)
         })
-      }, 10000)
+      }, 60000)
     }
   }
 }
