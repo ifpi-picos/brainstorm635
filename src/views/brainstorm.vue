@@ -198,10 +198,12 @@ export default {
 
   methods: {
     saveDescription () {
-      const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
-      database.update({
-        description: this.description
-      })
+      setTimeout(() => {
+        const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
+        database.update({
+          description: this.description
+        })
+      }, 2000)
     },
 
     getData () {
@@ -217,9 +219,10 @@ export default {
               this.description = doc.data().description
               const started = doc.data().started
               if (started) {
-                this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: 'round1' } })
+                const currentRound = 'round' + doc.data().currentRound
+                this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: currentRound } })
               }
-              if (this.activeMembers >= 3) {
+              if (this.activeMembers >= 2) {
                 this.disabledButton = false
               } else {
                 this.disabledButton = true
@@ -229,7 +232,7 @@ export default {
             }
           })
       } catch (error) {
-        /* console.error(error) */
+        console.error(error)
       }
     },
 
@@ -256,7 +259,7 @@ export default {
     async startBrainstorm () {
       const db = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
       await this.saveDescription
-      db.update({ started: true })
+      db.update({ started: true, currentRound: 1 })
     }
   }
 }
