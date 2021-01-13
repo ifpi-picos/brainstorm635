@@ -1,6 +1,6 @@
 <template>
   <b-container fluid>
-    <br>
+    <br />
     <b-row align-v="end">
       <b-col
         class="brain-card align-items-center justify-content-center ml-auto mr-auto"
@@ -26,10 +26,7 @@
             <b-col md="6">
               <b-form @submit.prevent="joinWithCode(coderoom)">
                 <b-row class="mt-5">
-                  <b-col
-                    md="12"
-                    class="d-flex"
-                  >
+                  <b-col md="12" class="d-flex">
                     <b-form-input
                       class="input-for-code"
                       v-model="coderoom"
@@ -37,10 +34,7 @@
                       maxlength="10"
                     >
                     </b-form-input>
-                    <b-button
-                      type="submit"
-                      variant="info"
-                    >
+                    <b-button type="submit" variant="info">
                       Join
                     </b-button>
                   </b-col>
@@ -120,7 +114,10 @@ export default {
           listGuests: [user],
           timestamp: firebase.firestore.FieldValue.serverTimestamp()
         })
-      this.$router.push({ name: 'brainstorm', params: { id: id } })
+        .then(() => {
+          this.$router.push({ name: 'brainstorm', params: { id: id } })
+        })
+        .catch(error => console.error(error))
     },
 
     codeGenerator (length) {
@@ -128,7 +125,9 @@ export default {
       const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
       const charactersLength = characters.length
       for (let i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength))
+        result += characters.charAt(
+          Math.floor(Math.random() * charactersLength)
+        )
       }
       return result
     },
@@ -137,54 +136,65 @@ export default {
       coderoom = coderoom.trim()
       coderoom = coderoom.toUpperCase()
       if (coderoom) {
-        const database = this.$firebase.firestore().collection('brainstorms')
-        await database.doc(coderoom).onSnapshot(doc => {
-          doc.metadata.hasPendingWrites = 'Server'
+        const brainstorm = this.$firebase
+          .firestore()
+          .collection('brainstorms')
+          .doc(coderoom)
 
-          const dataGuest = JSON.parse(localStorage.getItem('currentUser'))
-          if (doc.exists) {
-            let userExists = false
-            doc.data().listGuests.map(user => {
-              if (user.uid === dataGuest.uid) {
-                userExists = true
-              }
-            })
-
-            const numberOfGuests = doc.data().listGuests.length
-            if (numberOfGuests < 6 || userExists) {
-              const users = doc.data().listGuests
-              this.saveGuestInBrainstorm(dataGuest, coderoom, users)
-              this.$router.push({ name: 'brainstorm', params: { id: coderoom } })
+        brainstorm
+          .get()
+          .then(async doc => {
+            if (doc.data().listGuests.length < 6) {
+              const userGuest = {}
+              userGuest.uid = this.$firebase.auth().currentUser.uid
+              userGuest.displayName = this.$firebase.auth().currentUser.displayName
+              userGuest.photoURL = this.$firebase.auth().currentUser.photoURL
+              userGuest.email = this.$firebase.auth().currentUser.email
+              await brainstorm.update({
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                listGuests: firebase.firestore.FieldValue.arrayUnion(userGuest)
+              })
+              console.log('Você entrou!!!')
+              this.$router.push({
+                name: 'brainstorm',
+                params: { id: coderoom }
+              })
             } else {
               this.fullBrainstorm()
+              console.log('Já está lotado!')
             }
-          } else {
+          })
+          .catch(function (error) {
+            console.log('Error getting cached document:', error)
             this.nonExistentBrainstorm()
-          }
-        })
+          })
       }
     },
 
-    async saveGuestInBrainstorm (dataGuest, coderoom, users) {
-      const brainstorm = this.$firebase.firestore().collection('brainstorms').doc(coderoom)
-      let guestExists = false
-      if (users) {
-        users.map(guest => {
-          if (guest.uid === dataGuest.uid) guestExists = true
-        })
-        if (!guestExists) {
-          await brainstorm.update({
-            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-            listGuests: firebase.firestore.FieldValue.arrayUnion(dataGuest)
-          })
-        }
-      }
-    },
+    // async saveGuestInBrainstorm (dataGuest, coderoom, users) {
+    //   const brainstorm = this.$firebase
+    //     .firestore()
+    //     .collection('brainstorms')
+    //     .doc(coderoom)
+    //   let guestExists = false
+    //   if (users) {
+    //     users.map(guest => {
+    //       if (guest.uid === dataGuest.uid) guestExists = true
+    //     })
+    //     if (!guestExists) {
+    //       await brainstorm.update({
+    //         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    //         listGuests: firebase.firestore.FieldValue.arrayUnion(dataGuest)
+    //       })
+    //     }
+    //   }
+    // },
 
     fullBrainstorm () {
       Swal.fire({
         title: 'The Brainstorm is full!',
-        text: 'You are trying to access the Brainstorm, but it´s reached the number maximum of guests!',
+        text:
+          'You are trying to access the Brainstorm, but it´s reached the number maximum of guests!',
         icon: 'error',
         confirmButtonText: 'OK',
         timer: 4000
@@ -194,7 +204,8 @@ export default {
     nonExistentBrainstorm () {
       Swal.fire({
         title: 'Brainstorm not existent!',
-        text: 'You are trying to access a non-existent Brainstorm, try another code!',
+        text:
+          'You are trying to access a non-existent Brainstorm, try another code!',
         icon: 'error',
         confirmButtonText: 'OK',
         timer: 4000
