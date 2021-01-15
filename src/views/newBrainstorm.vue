@@ -115,10 +115,11 @@ export default {
         .collection('brainstorms')
         .doc(id.toString())
         .set({
-          started: false,
+          running: false,
           leader: user.uid,
           description: 'Desc Brainstorm',
           listGuests: [user],
+          currentRound: 0,
           timestamp: firebase.firestore.FieldValue.serverTimestamp()
         })
         .then(() => {
@@ -156,7 +157,6 @@ export default {
               userGuest.uid = this.$firebase.auth().currentUser.uid
               userGuest.displayName = this.$firebase.auth().currentUser.displayName
               userGuest.photoURL = this.$firebase.auth().currentUser.photoURL
-              userGuest.email = this.$firebase.auth().currentUser.email
               await brainstorm.update({
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                 listGuests: firebase.firestore.FieldValue.arrayUnion(userGuest)

@@ -110,6 +110,12 @@
         </b-card>
       </b-col>
     </b-row>
+    <b-row align-v="center" align-h="center" class="mt-2">
+      <b-button
+      variant="outline-warning" class="buttonPause"
+      @click="pauseBrainstorm()" v-if="isLeader">Pause
+      </b-button>
+    </b-row>
   </b-container>
 </template>
 
@@ -122,7 +128,8 @@ export default {
       description: '',
       ideas: [],
       time: '',
-      currentRound: 0
+      currentRound: 0,
+      isLeader: false
     }
   },
 
@@ -143,12 +150,13 @@ export default {
     getData () {
       const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
       database.onSnapshot(doc => {
-        const started = doc.data().started
-        if (!started) {
+        const running = doc.data().running
+        if (!running) {
           this.$router.push({ name: 'brainstorm', params: { id: this.brainstormId } })
         } else {
           this.description = doc.data().description
           this.currentRound = doc.data().currentRound
+          this.isLeader = doc.data().leader === this.$firebase.auth().currentUser.uid
         }
       })
     },
@@ -174,6 +182,11 @@ export default {
       }, 1000)
     },
 
+    pauseBrainstorm () {
+      const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
+      database.update({ running: false })
+    },
+
     async saveIdeas () {
       const user = this.$firebase.auth().currentUser.uid
       const data = { [user]: this.ideas }
@@ -192,12 +205,9 @@ export default {
 </script>
 
 <style lang="css" scoped>
-/* .cartao{
-  display: flex !important;
-  flex-direction: column;
-  align-content: center;
-  align-items: center;
-} */
+.buttonPause:hover {
+  color: #fff;
+}
 
 .entradaTexto {
   display: flex;

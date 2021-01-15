@@ -154,7 +154,8 @@
                     pill
                     variant="outline-info"
                   >
-                    Start
+                    <template v-if="currentRound === 0">Start</template>
+                    <template v-else>Continue</template>
                   </b-button>
                 </b-row>
               </b-col>
@@ -179,7 +180,8 @@ export default {
       brainstormId: this.$route.params.id,
       listGuests: [],
       isLeader: false,
-      description: ''
+      description: '',
+      currentRound: 0
     }
   },
 
@@ -217,8 +219,9 @@ export default {
               this.isLeader = doc.data().leader === this.$firebase.auth().currentUser.uid
               this.activeMembers = doc.data().listGuests.length
               this.description = doc.data().description
-              const started = doc.data().started
-              if (started) {
+              this.currentRound = doc.data().currentRound
+              const running = doc.data().running
+              if (running) {
                 const currentRound = 'round' + doc.data().currentRound
                 this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: currentRound } })
               }
@@ -259,7 +262,7 @@ export default {
     async startBrainstorm () {
       const db = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
       await this.saveDescription
-      db.update({ started: true, currentRound: 1 })
+      db.update({ running: true, currentRound: 1 })
     }
   }
 }
