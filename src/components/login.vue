@@ -57,7 +57,8 @@ export default {
               email: result.user.email,
               displayName: result.user.displayName
             }, result.user.uid)
-            localStorage.setItem('currentUser', JSON.stringify(user))
+            const userForLocalStorage = { displayName: user.displayName, photoURL: user.photoURL }
+            localStorage.setItem('currentUser', JSON.stringify(userForLocalStorage))
           } else {
             const user = {
               uid: result.user.uid,
@@ -65,7 +66,8 @@ export default {
               email: result.user.email,
               displayName: result.user.displayName
             }
-            localStorage.setItem('currentUser', JSON.stringify(user))
+            const userForLocalStorage = { displayName: user.displayName, photoURL: user.photoURL }
+            localStorage.setItem('currentUser', JSON.stringify(userForLocalStorage))
           }
           EventBus.$emit('user')
         })
