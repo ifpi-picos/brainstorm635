@@ -214,7 +214,7 @@ export default {
           .onSnapshot(doc => {
             if (doc.exists) {
               this.listGuests = doc.data().listGuests
-              this.isLeader = doc.data().leader === JSON.parse(localStorage.getItem('currentUser')).uid
+              this.isLeader = doc.data().leader === this.$firebase.auth().currentUser.uid
               this.activeMembers = doc.data().listGuests.length
               this.description = doc.data().description
               const started = doc.data().started

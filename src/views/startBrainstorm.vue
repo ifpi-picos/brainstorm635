@@ -175,7 +175,7 @@ export default {
     },
 
     async saveIdeas () {
-      const user = JSON.parse(localStorage.getItem('currentUser')).uid
+      const user = this.$firebase.auth().currentUser.uid
       const data = { [user]: this.ideas }
 
       await this.createClock()

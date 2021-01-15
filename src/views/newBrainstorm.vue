@@ -95,22 +95,29 @@ export default {
     }
   },
 
-  props: {},
+  mounted () {
+    const currentUser = this.$firebase.auth().currentUser
+    console.log(currentUser.photoURL)
+  },
 
   methods: {
     createNewBrainstorm () {
       /* EventBus.$emit('updateList') */
       const id = this.codeGenerator(6)
-      const uid = this.$firebase.auth().currentUser.uid
-      const user = JSON.parse(localStorage.getItem('currentUser'))
+      const currentUser = this.$firebase.auth().currentUser
+      const user = {
+        displayName: currentUser.displayName,
+        photoURL: currentUser.photoURL,
+        uid: currentUser.uid
+      }
       this.$firebase
         .firestore()
         .collection('brainstorms')
         .doc(id.toString())
         .set({
           started: false,
-          leader: uid,
-          description: '',
+          leader: user.uid,
+          description: 'Desc Brainstorm',
           listGuests: [user],
           timestamp: firebase.firestore.FieldValue.serverTimestamp()
         })
@@ -170,25 +177,6 @@ export default {
           })
       }
     },
-
-    // async saveGuestInBrainstorm (dataGuest, coderoom, users) {
-    //   const brainstorm = this.$firebase
-    //     .firestore()
-    //     .collection('brainstorms')
-    //     .doc(coderoom)
-    //   let guestExists = false
-    //   if (users) {
-    //     users.map(guest => {
-    //       if (guest.uid === dataGuest.uid) guestExists = true
-    //     })
-    //     if (!guestExists) {
-    //       await brainstorm.update({
-    //         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-    //         listGuests: firebase.firestore.FieldValue.arrayUnion(dataGuest)
-    //       })
-    //     }
-    //   }
-    // },
 
     fullBrainstorm () {
       Swal.fire({
