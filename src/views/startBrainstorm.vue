@@ -161,20 +161,26 @@ export default {
   methods: {
     getData () {
       const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
+
+      const push = async (round) => {
+        this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: round } })
+      }
+
       database.onSnapshot(doc => {
         const running = doc.data().running
+
+        this.description = doc.data().description
+        this.currentRound = doc.data().currentRound
+        this.isLeader = doc.data().leader === this.$firebase.auth().currentUser.uid
+        this.listFinishWriteIdeas = doc.data().listFinishWriteIdeas.length
+        this.participants = doc.data().listGuests.length
         if (!running) {
           this.$router.push({ name: 'brainstorm', params: { id: this.brainstormId } })
         } else if (this.round !== ('round' + doc.data().currentRound)) {
           const round = 'round' + doc.data().currentRound
-          this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: round } })
-          window.location.reload()
-        } else {
-          this.description = doc.data().description
-          this.currentRound = doc.data().currentRound
-          this.isLeader = doc.data().leader === this.$firebase.auth().currentUser.uid
-          this.listFinishWriteIdeas = doc.data().listFinishWriteIdeas.length
-          this.participants = doc.data().listGuests.length
+          push(round).then(() => {
+            window.location.reload()
+          })
         }
       })
     },
@@ -205,10 +211,12 @@ export default {
       database.update({ running: false })
     },
 
-    changeRound () {
-      if ((this.listFinishWriteIdeas > 0) && (this.participants === this.listFinishWriteIdeas) && (this.currentRound < 6)) {
+    async changeRound () {
+      if ((this.listFinishWriteIdeas > 0) &&
+      (this.participants === this.listFinishWriteIdeas) &&
+      (this.currentRound < this.participants)) {
         const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
-        database.update({
+        await database.update({
           currentRound: this.currentRound + 1,
           listFinishWriteIdeas: []
         })
