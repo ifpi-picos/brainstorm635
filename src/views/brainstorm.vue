@@ -22,7 +22,8 @@
                   label-class="required"
                 >
                   <b-input-group>
-                    <b-input-group-prepend>
+                    <b-input-group-prepend
+                      class="input-with-prepend">
                       <span class="input-group-text"
                         ><i class="fas fa-file-signature fa-lg"></i>
                       </span>
@@ -39,7 +40,7 @@
                   </b-input-group>
                 </b-form-group>
               </b-col>
-              <b-col md="4">
+              <b-col md="3">
                 <b-form-group
                   class="text-left"
                   id="input-group-2"
@@ -56,7 +57,8 @@
                       value="this.code"
                     >
                     </b-form-input>
-                    <b-input-group-append>
+                    <b-input-group-append
+                      class="input-with-prepend">
                       <b-button
                         v-b-tooltip.hover.v-info
                         title="Copy Code"
@@ -75,7 +77,6 @@
                   id="input-group-3"
                   label="Active members"
                   label-for="input-3"
-                  label-class="required"
                   class="text-left "
                 >
                   <b-input-group>
@@ -105,7 +106,7 @@
                 >
                   <b-input-group
                     v-b-tooltip.hover.topright.v-info
-                    title="Edit name"
+                    title="Edit my name"
                     v-for="user in listGuests"
                     :key="user.uid" class="mb-2">
                     <b-input-group-prepend>
@@ -276,8 +277,7 @@ export default {
 
 /* Style for inputs from brainstorm scream */
 .line-button {
-  border: 1px #ced4da solid  !important;
-  border-left: none !important;
+  border: none !important;
   padding-top: 0 !important;
   padding-bottom: 0 !important;
   background-color: #fff !important;
@@ -292,14 +292,12 @@ export default {
 .line-button:focus {
   background-color: #fff !important;
   box-shadow: none !important;
-}
-
-.input-with-prepend {
-  border-left: none !important;
+  border: none !important;
 }
 
 .input-with-prepend:focus,   .input-code:focus {
   box-shadow: none !important;
+  border: none !important;
 }
 
 .input-code, .form-control:disabled {
@@ -343,9 +341,10 @@ export default {
   background-color: #fff !important;
   color: #138496 !important;
   /*  opacity: 1.95 !important; */
+  border: none !important;
 }
 
-.guests {
+.guests, .input-with-prepend, .input-with-append, .input-code{
   border: none !important;
 }
 
