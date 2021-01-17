@@ -115,7 +115,7 @@ export default {
         .set({
           running: false,
           leader: user.uid,
-          description: 'Desc Brainstorm',
+          description: 'Brainstorm description',
           listGuests: [user],
           currentRound: 0,
           timestamp: firebase.firestore.FieldValue.serverTimestamp()
