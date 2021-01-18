@@ -255,7 +255,7 @@ export default {
 
     async startBrainstorm () {
       const db = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
-      await this.saveDescription
+      await this.saveDescription()
       db.update({
         running: true,
         currentRound: 1,
