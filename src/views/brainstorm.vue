@@ -77,12 +77,7 @@
                 <b-form-group
                   id="input-group-3"
                   label="Active members"
-<<<<<<< HEAD
-                  label-for="input-3 "
-                  label-class="required"
-=======
                   label-for="input-3"
->>>>>>> development
                   class="text-left "
                 >
                   <b-input-group>
