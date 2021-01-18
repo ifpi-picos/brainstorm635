@@ -22,7 +22,8 @@
                   label-class="required"
                 >
                   <b-input-group>
-                    <b-input-group-prepend>
+                    <b-input-group-prepend
+                      class="input-with-prepend">
                       <span class="input-group-text"
                         ><i class="fas fa-file-signature fa-lg"></i>
                       </span>
@@ -30,6 +31,7 @@
                     <b-form-input
                       type="text"
                       :disabled="!isLeader"
+                      @blur="saveDescription"
                       class="input-with-prepend input-code"
                       id="input-1"
                       v-model="description"
@@ -39,7 +41,7 @@
                   </b-input-group>
                 </b-form-group>
               </b-col>
-              <b-col md="4">
+              <b-col md="3">
                 <b-form-group
                   class="text-left"
                   id="input-group-2"
@@ -56,7 +58,8 @@
                       value="this.code"
                     >
                     </b-form-input>
-                    <b-input-group-append>
+                    <b-input-group-append
+                      class="input-with-prepend">
                       <b-button
                         v-b-tooltip.hover.v-info
                         title="Copy Code"
@@ -74,8 +77,12 @@
                 <b-form-group
                   id="input-group-3"
                   label="Active members"
+<<<<<<< HEAD
                   label-for="input-3 "
                   label-class="required"
+=======
+                  label-for="input-3"
+>>>>>>> development
                   class="text-left "
                 >
                   <b-input-group>
@@ -105,7 +112,7 @@
                 >
                   <b-input-group
                     v-b-tooltip.hover.topright.v-info
-                    title="Edit name"
+                    title="Edit my name"
                     v-for="user in listGuests"
                     :key="user.uid" class="mb-2">
                     <b-input-group-prepend>
@@ -154,7 +161,8 @@
                     pill
                     variant="outline-info"
                   >
-                    Start
+                    <template v-if="currentRound === 0">Start</template>
+                    <template v-else>Continue</template>
                   </b-button>
                 </b-row>
               </b-col>
@@ -179,7 +187,8 @@ export default {
       brainstormId: this.$route.params.id,
       listGuests: [],
       isLeader: false,
-      description: ''
+      description: '',
+      currentRound: 0
     }
   },
 
@@ -190,20 +199,12 @@ export default {
     this.getData()
   },
 
-  watch: {
-    description: async function () {
-      await this.saveDescription()
-    }
-  },
-
   methods: {
     saveDescription () {
-      setTimeout(() => {
-        const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
-        database.update({
-          description: this.description
-        })
-      }, 2000)
+      const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
+      database.update({
+        description: this.description
+      })
     },
 
     getData () {
@@ -217,8 +218,9 @@ export default {
               this.isLeader = doc.data().leader === this.$firebase.auth().currentUser.uid
               this.activeMembers = doc.data().listGuests.length
               this.description = doc.data().description
-              const started = doc.data().started
-              if (started) {
+              this.currentRound = doc.data().currentRound
+              const running = doc.data().running
+              if (running) {
                 const currentRound = 'round' + doc.data().currentRound
                 this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: currentRound } })
               }
@@ -259,7 +261,11 @@ export default {
     async startBrainstorm () {
       const db = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
       await this.saveDescription
-      db.update({ started: true, currentRound: 1 })
+      db.update({
+        running: true,
+        currentRound: 1,
+        listFinishWriteIdeas: []
+      })
     }
   }
 }
@@ -269,8 +275,7 @@ export default {
 
 /* Style for inputs from brainstorm scream */
 .line-button {
-  border: 1px #ced4da solid  !important;
-  border-left: none !important;
+  border: none !important;
   padding-top: 0 !important;
   padding-bottom: 0 !important;
   background-color: #fff !important;
@@ -285,14 +290,12 @@ export default {
 .line-button:focus {
   background-color: #fff !important;
   box-shadow: none !important;
-}
-
-.input-with-prepend {
-  border-left: none !important;
+  border: none !important;
 }
 
 .input-with-prepend:focus,   .input-code:focus {
   box-shadow: none !important;
+  border: none !important;
 }
 
 .input-code, .form-control:disabled {
@@ -336,9 +339,10 @@ export default {
   background-color: #fff !important;
   color: #138496 !important;
   /*  opacity: 1.95 !important; */
+  border: none !important;
 }
 
-.guests {
+.guests, .input-with-prepend, .input-with-append, .input-code{
   border: none !important;
 }
 

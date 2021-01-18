@@ -49,6 +49,7 @@
             <b-form-group>
               <label for="ideia1" class="idea-label"><strong>Idea #1</strong></label>
               <b-form-textarea
+                @blur="finishWriteIdeas()"
                 id="ideia1"
                 placeholder="Write your idea..."
                 v-model="ideas[0]"
@@ -71,6 +72,7 @@
             <b-form-group>
               <label for="ideia2" class="idea-label"><strong>Idea #2</strong></label>
               <b-form-textarea
+                @blur="finishWriteIdeas()"
                 id="ideia2"
                 placeholder="Write your idea..."
                 v-model="ideas[1]"
@@ -93,6 +95,7 @@
             <b-form-group>
               <label for="ideia3" class="idea-label"><strong>Idea #3</strong></label>
               <b-form-textarea
+                @blur="finishWriteIdeas()"
                 id="ideia3"
                 placeholder="Write your idea..."
                 v-model="ideas[2]"
@@ -110,10 +113,17 @@
         </b-card>
       </b-col>
     </b-row>
+    <b-row align-v="center" align-h="center" class="mt-2">
+      <b-button
+      variant="outline-warning" class="buttonPause"
+      @click="pauseBrainstorm()" v-if="isLeader">Pause
+      </b-button>
+    </b-row>
   </b-container>
 </template>
 
 <script>
+import firebase from 'firebase/app'
 export default {
   data () {
     return {
@@ -122,13 +132,22 @@ export default {
       description: '',
       ideas: [],
       time: '',
-      currentRound: 0
+      currentRound: 0,
+      isLeader: false,
+      listFinishWriteIdeas: 0,
+      participants: 0
+    }
+  },
+
+  watch: {
+    listFinishWriteIdeas: function () {
+      this.changeRound()
     }
   },
 
   mounted () {
     this.getData()
-    this.saveIdeas()
+    this.timeForWriting()
   },
 
   computed: {
@@ -142,13 +161,26 @@ export default {
   methods: {
     getData () {
       const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
+
+      const push = async (round) => {
+        this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: round } })
+      }
+
       database.onSnapshot(doc => {
-        const started = doc.data().started
-        if (!started) {
+        const running = doc.data().running
+
+        this.description = doc.data().description
+        this.currentRound = doc.data().currentRound
+        this.isLeader = doc.data().leader === this.$firebase.auth().currentUser.uid
+        this.listFinishWriteIdeas = doc.data().listFinishWriteIdeas.length
+        this.participants = doc.data().listGuests.length
+        if (!running) {
           this.$router.push({ name: 'brainstorm', params: { id: this.brainstormId } })
-        } else {
-          this.description = doc.data().description
-          this.currentRound = doc.data().currentRound
+        } else if (this.round !== ('round' + doc.data().currentRound)) {
+          const round = 'round' + doc.data().currentRound
+          push(round).then(() => {
+            window.location.reload()
+          })
         }
       })
     },
@@ -174,17 +206,46 @@ export default {
       }, 1000)
     },
 
+    pauseBrainstorm () {
+      const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
+      database.update({ running: false })
+    },
+
+    async changeRound () {
+      if ((this.listFinishWriteIdeas > 0) &&
+      (this.participants === this.listFinishWriteIdeas) &&
+      (this.currentRound < this.participants)) {
+        const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
+        await database.update({
+          currentRound: this.currentRound + 1,
+          listFinishWriteIdeas: []
+        })
+      }
+    },
+
+    finishWriteIdeas () {
+      if (this.ideas.length === 3) {
+        this.saveIdeas()
+      }
+    },
+
     async saveIdeas () {
       const user = this.$firebase.auth().currentUser.uid
       const data = { [user]: this.ideas }
 
-      await this.createClock()
-
-      setTimeout(async () => {
-        const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
-        await database.collection('ideas').doc(this.round).set(data, { merge: true }).then(function () {}).catch(function (error) {
+      const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
+      await database.collection('ideas').doc(this.round).set(data, { merge: true })
+        .then(function () {})
+        .catch(function (error) {
           console.error(error)
         })
+      await database.update({ listFinishWriteIdeas: firebase.firestore.FieldValue.arrayUnion(user) })
+    },
+
+    async timeForWriting () {
+      this.createClock()
+      setTimeout(() => {
+        this.saveIdeas()
       }, 60000)
     }
   }
@@ -192,12 +253,9 @@ export default {
 </script>
 
 <style lang="css" scoped>
-/* .cartao{
-  display: flex !important;
-  flex-direction: column;
-  align-content: center;
-  align-items: center;
-} */
+.buttonPause:hover {
+  color: #fff;
+}
 
 .entradaTexto {
   display: flex;

@@ -4,8 +4,7 @@
     <b-row align-v="end">
       <b-col
         class="brain-card align-items-center justify-content-center ml-auto mr-auto"
-        md="7"
-      >
+        md="7">
         <b-card class="text-center pr-5 pl-5 pb-5 pt-0 mt-3">
           <b-row>
             <b-col>
@@ -17,8 +16,7 @@
               <b-button
                 @click="createNewBrainstorm()"
                 class="new-brain-button mt-5"
-                variant="outline-info"
-              >
+                variant="outline-info">
                 New Brainstorm
                 <i class="fas fa-plus"></i>
               </b-button>
@@ -115,10 +113,11 @@ export default {
         .collection('brainstorms')
         .doc(id.toString())
         .set({
-          started: false,
+          running: false,
           leader: user.uid,
-          description: 'Desc Brainstorm',
+          description: 'Brainstorm description',
           listGuests: [user],
+          currentRound: 0,
           timestamp: firebase.firestore.FieldValue.serverTimestamp()
         })
         .then(() => {
@@ -156,7 +155,6 @@ export default {
               userGuest.uid = this.$firebase.auth().currentUser.uid
               userGuest.displayName = this.$firebase.auth().currentUser.displayName
               userGuest.photoURL = this.$firebase.auth().currentUser.photoURL
-              userGuest.email = this.$firebase.auth().currentUser.email
               await brainstorm.update({
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                 listGuests: firebase.firestore.FieldValue.arrayUnion(userGuest)
