@@ -194,20 +194,12 @@ export default {
     this.getData()
   },
 
-  // watch: {
-  //   description: async function () {
-  //     await this.saveDescription()
-  //   }
-  // },
-
   methods: {
     saveDescription () {
-      // setTimeout(() => {
       const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
       database.update({
         description: this.description
       })
-      // }, 2000)
     },
 
     getData () {
