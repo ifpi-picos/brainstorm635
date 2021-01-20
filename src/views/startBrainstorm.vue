@@ -239,7 +239,10 @@ export default {
         .catch(function (error) {
           console.error(error)
         })
-      await database.update({ listFinishWriteIdeas: firebase.firestore.FieldValue.arrayUnion(user) })
+      await database.update({
+        listFinishWriteIdeas: firebase.firestore.FieldValue.arrayUnion(user),
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      })
     },
 
     async timeForWriting () {

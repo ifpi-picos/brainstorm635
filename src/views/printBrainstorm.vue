@@ -1,12 +1,14 @@
 <template>
   <b-container fluid class="pr-5 pl-5">
-    <b-row class=" plans ">
-      <b-col md="4" class=" mb-4">
+    <b-row class=" plans "
+      v-for="rows in rowsOfRound" :key="rows">
+      <b-col md="4" class=" mb-4"
+        v-for="(idea, index) in rowsOfRound[rows]" :key="index">
         <b-card border-variant="default" class="card-ideas" title="Ideia 1">
           <b-card-sub-title class="text-info" style="margin-bottom: 35px;">
             <p style="margin: 10px 0;">
               Planejamento criado por
-              <b style="font-weight: 600"> Ramos </b>
+              <b style="font-weight: 600"> {{ idea[index] }} </b>
             </p>
           </b-card-sub-title>
           <b-card-text>
@@ -35,7 +37,7 @@
           -->
           <template v-slot:footer>
             <small v-if="true" class="text-muted">
-              <b>Alterado em: </b>{{ datasOFBrainstorm.timestamp.toDate() }}
+              <b>Alterado em: </b>{{ date }}
               <!--{{ plan.lastUpdate.toDate() | formatDateHour }}-->
             </small>
           </template>
@@ -50,7 +52,10 @@ export default {
   data () {
     return {
       brainstormId: this.$route.params.id,
-      datasOFBrainstorm: {}
+      datasOFBrainstorm: {},
+      date: '',
+      rounds: [],
+      rowsOfRound: []
     }
   },
 
@@ -64,11 +69,34 @@ export default {
         const db = this.$firebase.firestore()
         db.collection('brainstorms')
           .doc(this.brainstormId)
-          .onSnapshot(doc => {
+          .get()
+          .then(async doc => {
             if (doc.exists) {
               this.datasOFBrainstorm = doc.data()
-              console.log(this.datasOFBrainstorm.ideas)
+              this.date = doc.data().timestamp.toDate()
             }
+          })
+      } catch (error) {
+        console.error(error)
+      }
+
+      try {
+        const rows = this.$firebase.firestore()
+        rows.collection('brainstorms')
+          .doc(this.brainstormId)
+          .collection('ideas')
+          .doc('round1')
+          .get()
+          .then(doc => {
+            this.rounds = doc.data()
+            /* console.log(this.rowsOfIdeas) */
+            for (const id in this.rounds) {
+              this.rowsOfRound.push(this.rounds[id])
+              /* console.log(id) */
+              /* console.log(this.rowsOfRound) */
+              /* console.log(this.rounds[id]) */
+            }
+            console.log(this.rowsOfRound)
           })
       } catch (error) {
         console.error(error)
