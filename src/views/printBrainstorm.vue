@@ -1,18 +1,16 @@
 <template>
   <b-container fluid class="pr-5 pl-5">
-    <b-row class=" plans "
-      v-for="rows in rowsOfRound" :key="rows">
-      <b-col md="4" class=" mb-4"
-        v-for="(idea, index) in rowsOfRound[rows]" :key="index">
-        <b-card border-variant="default" class="card-ideas" title="Ideia 1">
+    <b-row class=" plans " v-for="(values, key) in round" :key="key">
+      <b-col md="4" class=" mb-4" v-for="(value, index) in values" :key="index">
+        <b-card border-variant="default" class="card-ideas" :title="value">
           <b-card-sub-title class="text-info" style="margin-bottom: 35px;">
             <p style="margin: 10px 0;">
               Planejamento criado por
-              <b style="font-weight: 600"> {{ idea[index] }} </b>
+              <b style="font-weight: 600"> {{ idea }} </b>
             </p>
           </b-card-sub-title>
           <b-card-text>
-          {{ datasOFBrainstorm.ideas }}
+            {{ datasOFBrainstorm.ideas }}
           </b-card-text>
           <!--
           <b-button
@@ -54,7 +52,7 @@ export default {
       brainstormId: this.$route.params.id,
       datasOFBrainstorm: {},
       date: '',
-      rounds: [],
+      round: [],
       rowsOfRound: []
     }
   },
@@ -82,21 +80,14 @@ export default {
 
       try {
         const rows = this.$firebase.firestore()
-        rows.collection('brainstorms')
+        rows
+          .collection('brainstorms')
           .doc(this.brainstormId)
           .collection('ideas')
           .doc('round1')
           .get()
           .then(doc => {
-            this.rounds = doc.data()
-            /* console.log(this.rowsOfIdeas) */
-            for (const id in this.rounds) {
-              this.rowsOfRound.push(this.rounds[id])
-              /* console.log(id) */
-              /* console.log(this.rowsOfRound) */
-              /* console.log(this.rounds[id]) */
-            }
-            console.log(this.rowsOfRound)
+            this.round = doc.data()
           })
       } catch (error) {
         console.error(error)
@@ -107,12 +98,13 @@ export default {
 </script>
 
 <style lang="css">
+/**
 .plans {
   min-height: 50vh;
 }
-
+**/
 .card-ideas {
-  border: 1px solid rgba(0,0,0,.125) !important;
-  border-radius: .25rem !important;
+  border: 1px solid rgba(0, 0, 0, 0.125) !important;
+  border-radius: 0.25rem !important;
 }
 </style>
