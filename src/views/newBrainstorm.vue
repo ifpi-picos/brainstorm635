@@ -169,7 +169,7 @@ export default {
               console.log('Já está lotado!')
             }
           })
-          .catch(function (error) {
+          .catch((error) => {
             console.log('Error getting cached document:', error)
             this.nonExistentBrainstorm()
           })

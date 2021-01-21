@@ -1,5 +1,5 @@
 <template>
-  <b-container align-v="center">
+  <b-container align-v="center" style="margin-bottom: 8%">
     <b-row class="align-items-center justify-content-center ml-auto mr-auto">
       <b-col class="pr-0 pl-0">
         <b-card no-body>
