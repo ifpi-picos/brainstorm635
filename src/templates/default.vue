@@ -24,5 +24,6 @@ export default {
 <style lang="css">
 #app div .container-fluid {
   margin-top: 90px;
+  margin-bottom: 90px;
 }
 </style>
