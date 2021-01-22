@@ -253,13 +253,21 @@ export default {
       })
     },
 
-    async startBrainstorm () {
+    startBrainstorm () {
+      let currentRound
+
       const db = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
-      await this.saveDescription()
-      db.update({
-        running: true,
-        currentRound: 1,
-        listFinishWriteIdeas: []
+      db.get().then((doc) => {
+        console.log(doc.data().currentRound)
+        if (doc.exists) {
+          currentRound = doc.data().currentRound === 0 ? 1 : doc.data().currentRound
+          this.saveDescription()
+          db.update({
+            running: true,
+            currentRound: currentRound,
+            listFinishWriteIdeas: []
+          })
+        }
       })
     }
   }
