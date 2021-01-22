@@ -185,24 +185,19 @@ export default {
       })
     },
 
-    createClock () {
+    async createClock () {
       let min = 0
       let seg = 60
       const cron = setInterval(() => {
-        seg--
-
-        if (min === 0 && seg === 0) {
-          clearInterval(cron)
-        } else if (min > 0 && seg < 0) {
-          seg = 59
-        }
-
-        if (seg === '00') {
-          seg = 59
+        if (seg < 0 && min > 0) {
           min--
+          seg = 59
+        } else if (seg === 0 && min === 0) {
+          clearInterval(cron)
         }
 
         this.time = (min < 10 ? '0' + min : min) + ' : ' + (seg < 10 ? '0' + seg : seg)
+        seg--
       }, 1000)
     },
 
@@ -245,11 +240,12 @@ export default {
       })
     },
 
-    async timeForWriting () {
-      this.createClock()
-      setTimeout(() => {
-        this.saveIdeas()
-      }, 60000)
+    timeForWriting () {
+      this.createClock().then(() => {
+        setTimeout(() => {
+          this.saveIdeas()
+        }, 62000)
+      })
     }
   }
 }
