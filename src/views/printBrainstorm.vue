@@ -3,14 +3,14 @@
     <b-col md="12">
       <h5 class="page-tittle mb-3 mt-3">Ideas Report</h5>
     </b-col>
-    <b-row v-for="(roundy, i) in rounds" :key="i" no-gutters>
-      <b-col md="12" class="p-0 pl-3 mt-3 mb-0">
+    <b-row class="mb-4" v-for="(roundy, i) in ideasPerRound" :key="i">
+      <b-col md="12" class="mb-1">
         <h5 class="round">Round {{ i+1 }} </h5>
       </b-col>
-      <b-col md="12" class="mt-0">
-        <b-row v-for="(values, key) in round" :key="key" class="mt-0">
-          <b-col md="4" class="mb-0 mt-0" v-for="(value, index) in values" :key="index">
-            <div class="postit" >
+      <b-col md="12">
+        <b-row v-for="(values, key) in roundy" :key="key">
+          <b-col class="mb-4" md="4" v-for="(value, index) in values" :key="index">
+            <div class="postit">
               <h5> <b> Idea {{ index+1 }} </b> </h5>
               <b-card-text>
               <p style="font-size: 1rem">
@@ -77,7 +77,8 @@ export default {
       datasOFBrainstorm: {},
       date: '',
       round: [],
-      rounds: []
+      rounds: [],
+      ideasPerRound: []
     }
   },
 
@@ -94,24 +95,31 @@ export default {
           .get()
           .then(async doc => {
             this.rounds = doc.data().listGuests
-            console.log(this.rounds)
+            /* console.log(this.rounds.length) */
+            /* console.log(this.rounds) */
             /*  this.datasOFBrainstorm = doc.data() */
             /* this.date = doc.data().timestamp.toDate() */
-          })
-      } catch (error) {
-        console.error(error)
-      }
 
-      try {
-        const rows = this.$firebase.firestore()
-        rows
-          .collection('brainstorms')
-          .doc(this.brainstormId)
-          .collection('ideas')
-          .doc('round1')
-          .get()
-          .then(doc => {
-            this.round = doc.data()
+            for (let i = 1; i < this.rounds.length + 1; i++) {
+              const index = 'round' + i
+              /* console.log(index) */
+              try {
+                const rows = this.$firebase.firestore()
+                rows
+                  .collection('brainstorms')
+                  .doc(this.brainstormId)
+                  .collection('ideas')
+                  .doc(index)
+                  .get()
+                  .then(doc => {
+                    this.round = doc.data()
+                    this.ideasPerRound.push(this.round)
+                    /* console.log(this.ideasPerRound) */
+                  })
+              } catch (error) {
+                console.error(error)
+              }
+            }
           })
       } catch (error) {
         console.error(error)
@@ -126,19 +134,17 @@ export default {
 /* $color: rgb(255,215,7); */
 /* $color: #6495ED; */
 /* $color: #836FFF; */
-$color: #ADD8E6;
+/* $color: #ADD8E6; */
+/* $color:#ADFF2F; */
+$color: #DDA0DD;
 $colorDark: darken($color, 10%) transparent;
 
-div {
-  min-width: 13em;
-  margin: 1em auto;
-}
-
 .postit {
-  padding: 1rem;
+  padding: 1.5rem;
   background: $color;
   position: relative;
   min-height: 15em;
+  min-width: 13em;
 }
 .postit:after {
   content: "";
@@ -158,10 +164,6 @@ div {
   border-width: 1.5em 1.5em 0 0;
   border-style: solid;
   border-color: $colorDark;
-}
-.card-ideas {
-  border: 1px solid rgba(0, 0, 0, 0.125) !important;
-  border-radius: 0.25rem !important;
 }
 
 .container-ideas {
