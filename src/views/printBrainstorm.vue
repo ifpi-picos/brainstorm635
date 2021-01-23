@@ -11,7 +11,7 @@
         <b-row v-for="(values, key) in roundy" :key="key">
           <b-col class="mb-4" md="4" v-for="(value, index) in values" :key="index">
             <div class="postit">
-              <h5> <b> Idea {{ index+1 }} </b> </h5>
+              <h5 class="text-center"> <b> Idea #{{ index+1 }} </b> </h5>
               <b-card-text>
               <p style="font-size: 1rem">
                 {{ value }}

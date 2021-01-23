@@ -115,8 +115,14 @@
     </b-row>
     <b-row align-v="center" align-h="center" class="mt-2">
       <b-button
-      variant="outline-warning" class="buttonPause"
-      @click="pauseBrainstorm()" v-if="isLeader">Pause
+        v-if="isLeader && !endBrainstorm"
+        variant="outline-warning" class="buttonPause"
+        @click="pauseBrainstorm()">Pause
+      </b-button>
+      <b-button
+        v-if="isLeader && endBrainstorm"
+        variant="outline-info"
+        @click="printBrainstorm()">Finish and print Brainstorm
       </b-button>
     </b-row>
   </b-container>
@@ -135,7 +141,8 @@ export default {
       currentRound: 0,
       isLeader: false,
       listFinishWriteIdeas: 0,
-      participants: 0
+      participants: 0,
+      endBrainstorm: null
     }
   },
 
@@ -207,6 +214,7 @@ export default {
     },
 
     async changeRound () {
+      this.verifyFinalRound()
       if ((this.listFinishWriteIdeas > 0) &&
       (this.participants === this.listFinishWriteIdeas) &&
       (this.currentRound < this.participants)) {
@@ -246,6 +254,18 @@ export default {
           this.saveIdeas()
         }, 62000)
       })
+    },
+
+    verifyFinalRound () {
+      if (this.currentRound === this.participants) {
+        this.endBrainstorm = true
+      } else {
+        this.endBrainstorm = false
+      }
+    },
+
+    printBrainstorm () {
+      this.$router.push({ name: 'printBrainstorm' })
     }
   }
 }
