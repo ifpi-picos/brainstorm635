@@ -9,7 +9,7 @@
       </b-col>
       <b-col md="12">
         <b-row v-for="(values, key) in roundy" :key="key">
-          <b-col class="mb-4" md="4" v-for="(value, index) in values" :key="index">
+          <b-col class="mb-4 pl-1 pr-1" md="4" v-for="(value, index) in values" :key="index">
             <div class="postit">
               <h5 class="text-center"> <b> Idea #{{ index+1 }} </b> </h5>
               <b-card-text>
@@ -17,46 +17,6 @@
                 {{ value }}
               </p>
               </b-card-text>
-            <!-- <b-card border-variant="default" class="card-ideas" :title="'Idea'+[index+1]">
-              <b-card-sub-title class="text-info" style="margin-bottom: 35px;">
-                <p style="margin: 10px 0;">
-                  Criado por
-                  <b style="font-weight: 600"> Ramos </b>
-                </p>
-              </b-card-sub-title>
-              <b-card-text>
-                {{ value }}
-              </b-card-text> -->
-              <!--
-              <b-button
-                class="btn-share"
-                variant="outline-info"
-                :id="'share' + index"
-                @click.prevent="moutedLinkShare(plan.id)"
-                v-b-modal.modal-share2
-              >Compartilhar</b-button>
-              <b-tooltip :target="'share' + index" variant="secondary" placement="bottom">
-                Qualquer pessoa com o link pode acessar e alterar o planejamento
-              </b-tooltip>
-
-              <b-button
-                :id="'edit' + index"
-                class="btn-open"
-                @click.prevent="edit(plan.id)"
-                variant="primary"
-                >{{ plan.editable ? 'Editar' : 'Visualizar' }}
-              </b-button>
-              <b-tooltip :target="'edit' + index" variant="secondary" placement="bottom">Abrir planejamento</b-tooltip>
-              -->
-              <!-- <template v-slot:footer>
-                <small v-if="true" class="text-muted">
-                  <b>Alterado em: </b>{{ date }}
-                  {{ plan.lastUpdate.toDate() | formatDateHour }}
-                </small>
-
-              </template>
-              -->
-
               <p v-if="true" class="text-muted" style="position: absolute; bottom: -10px">
                 Editado por:
                 <b>Ramos</b>
@@ -64,6 +24,13 @@
             </div>
           </b-col>
         </b-row>
+      </b-col>
+    </b-row>
+    <b-row class="mr-auto">
+      <b-col>
+        <span>
+          <b class="date" > Brainstorm date: </b> {{ date }}
+        </span>
       </b-col>
     </b-row>
   </b-container>
@@ -98,7 +65,7 @@ export default {
             /* console.log(this.rounds.length) */
             /* console.log(this.rounds) */
             /*  this.datasOFBrainstorm = doc.data() */
-            /* this.date = doc.data().timestamp.toDate() */
+            this.date = doc.data().timestamp.toDate()
 
             for (let i = 1; i < this.rounds.length + 1; i++) {
               const index = 'round' + i
@@ -134,9 +101,9 @@ export default {
 /* $color: rgb(255,215,7); */
 /* $color: #6495ED; */
 /* $color: #836FFF; */
-/* $color: #ADD8E6; */
+$color: #ADD8E6;
 /* $color:#ADFF2F; */
-$color: #DDA0DD;
+/* $color: #DDA0DD; */
 $colorDark: darken($color, 10%) transparent;
 
 .postit {
@@ -171,7 +138,7 @@ $colorDark: darken($color, 10%) transparent;
   min-width: 80% !important;
 }
 
-h5, p {
+h5, p, span {
   font-family: 'comfortaa';
 }
 
@@ -179,5 +146,9 @@ h5, p {
   color: #138496;
   font-weight: bold;
   margin: 0 !important;
+}
+
+.date {
+  color: #138496;
 }
 </style>

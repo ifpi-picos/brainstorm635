@@ -115,12 +115,12 @@
     </b-row>
     <b-row align-v="center" align-h="center" class="mt-2">
       <b-button
-        v-if="isLeader && !endBrainstorm"
+        v-if="isLeader && !concluded"
         variant="outline-warning" class="buttonPause"
         @click="pauseBrainstorm()">Pause
       </b-button>
       <b-button
-        v-if="isLeader && endBrainstorm"
+        v-if="isLeader && concluded"
         variant="outline-info"
         @click="printBrainstorm()">Finish and print Brainstorm
       </b-button>
@@ -142,7 +142,7 @@ export default {
       isLeader: false,
       listFinishWriteIdeas: 0,
       participants: 0,
-      endBrainstorm: null
+      concluded: null
     }
   },
 
@@ -258,9 +258,9 @@ export default {
 
     verifyFinalRound () {
       if (this.currentRound === this.participants) {
-        this.endBrainstorm = true
+        this.concluded = true
       } else {
-        this.endBrainstorm = false
+        this.concluded = false
       }
     },
 
