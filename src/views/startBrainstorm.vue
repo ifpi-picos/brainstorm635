@@ -116,7 +116,7 @@
         </b-card>
       </b-col>
     </b-row>
-    <b-row align-v="center" align-h="center" class="mt-2">
+    <!-- <b-row align-v="center" align-h="center" class="mt-2">
       <b-button
         v-if="isLeader && !concluded"
         variant="outline-warning" class="buttonPause"
@@ -127,7 +127,7 @@
         variant="outline-info"
         @click="printBrainstorm()">Finish and print Brainstorm
       </b-button>
-    </b-row>
+    </b-row> -->
   </b-container>
 </template>
 
@@ -145,7 +145,7 @@ export default {
       isLeader: false,
       listFinishWriteIdeas: 0,
       participants: 0,
-      concluded: null,
+      // concluded: null,
       hourOfStartRound: ''
     }
   },
@@ -182,6 +182,7 @@ export default {
         console.log(this.hourOfStartRound)
       })
     },
+
     getData () {
       const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
 
@@ -191,6 +192,10 @@ export default {
 
       database.onSnapshot(doc => {
         const running = doc.data().running
+
+        if (doc.data().concluded) {
+          this.printBrainstorm()
+        }
 
         this.description = doc.data().description
         this.currentRound = doc.data().currentRound
@@ -293,16 +298,20 @@ export default {
       this.createClock().then(() => {
         setTimeout(() => {
           this.changeRound()
+          this.verifyFinalRound()
         }, time)
       })
     },
 
     verifyFinalRound () {
       if (this.currentRound === this.participants) {
-        this.concluded = true
-      } else {
-        this.concluded = false
-      }
+        const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
+        database.set({ concluded: true }, { merge: true }).then(() => {
+          this.printBrainstorm()
+        })
+      } // else {
+      //   this.concluded = false
+      // }
     },
 
     printBrainstorm () {

@@ -266,7 +266,8 @@ export default {
             running: true,
             currentRound: currentRound,
             listFinishWriteIdeas: [],
-            hourOfStartRound: Date()
+            hourOfStartRound: Date(),
+            concluded: false
           })
         }
       })
