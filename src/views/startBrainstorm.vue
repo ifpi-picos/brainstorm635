@@ -58,6 +58,7 @@
             </b-form-group>
             <div class="cor"></div>
             <b-button
+              hidden="true"
               v-b-tooltip.hover.v-info title="Continue idea... [M]"
               variant="outline-info" class="continueIdea">
               Continue
@@ -81,6 +82,7 @@
             </b-form-group>
             <div class="cor"></div>
             <b-button
+              hidden="true"
               v-b-tooltip.hover.v-info title="Continue idea... [M]"
               variant="outline-info" class="continueIdea"
               >Continue
@@ -105,6 +107,7 @@
             </b-form-group>
             <div class="cor"></div>
             <b-button
+              hidden="true"
               v-b-tooltip.hover.v-info title="Continue idea... [M]"
               variant="outline-info" class="continueIdea"
               >Continue
@@ -142,19 +145,25 @@ export default {
       isLeader: false,
       listFinishWriteIdeas: 0,
       participants: 0,
-      concluded: null
+      concluded: null,
+      hourOfStartRound: ''
     }
   },
 
   watch: {
-    listFinishWriteIdeas: function () {
-      this.changeRound()
+    // listFinishWriteIdeas: function () {
+    //   this.changeRound()
+    // },
+    hourOfStartRound: function () {
+      if (this.hourOfStartRound) {
+        this.timeForWriting()
+      }
     }
   },
 
   mounted () {
     this.getData()
-    this.timeForWriting()
+    this.getHourOfStartRound()
   },
 
   computed: {
@@ -166,6 +175,13 @@ export default {
   },
 
   methods: {
+    async getHourOfStartRound () {
+      const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
+      database.get().then(doc => {
+        this.hourOfStartRound = new Date(doc.data().hourOfStartRound)
+        console.log(this.hourOfStartRound)
+      })
+    },
     getData () {
       const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
 
@@ -193,8 +209,20 @@ export default {
     },
 
     async createClock () {
+      const currentTime = new Date()
+      let timeDifference = currentTime - this.hourOfStartRound
+      timeDifference = Number(timeDifference)
+
       let min = 0
       let seg = 60
+
+      if (timeDifference > 0 && (seg - (Math.trunc(timeDifference / 1000)) > 0)) {
+        seg = seg - (Math.trunc(timeDifference / 1000))
+        console.log('verdadeiro', timeDifference)
+      } else {
+        console.log('falso', timeDifference)
+      }
+
       const cron = setInterval(() => {
         if (seg < 0 && min > 0) {
           min--
@@ -215,15 +243,18 @@ export default {
 
     async changeRound () {
       this.verifyFinalRound()
-      if ((this.listFinishWriteIdeas > 0) &&
-      (this.participants === this.listFinishWriteIdeas) &&
-      (this.currentRound < this.participants)) {
+      if (
+      /* (this.listFinishWriteIdeas > 0) && */
+      /* (this.participants === this.listFinishWriteIdeas) && */
+        (this.currentRound < this.participants)) {
         const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
         await database.update({
           currentRound: this.currentRound + 1,
-          listFinishWriteIdeas: []
+          listFinishWriteIdeas: [],
+          hourOfStartRound: new Date()
         })
       }
+      await this.saveIdeas()
     },
 
     finishWriteIdeas () {
@@ -249,10 +280,20 @@ export default {
     },
 
     timeForWriting () {
+      let time = 62000
+
+      const currentTime = new Date()
+      let timeDifference = currentTime - this.hourOfStartRound
+      timeDifference = Number(timeDifference)
+
+      if (timeDifference > 0) {
+        time = time - timeDifference
+      }
+
       this.createClock().then(() => {
         setTimeout(() => {
-          this.saveIdeas()
-        }, 62000)
+          this.changeRound()
+        }, time)
       })
     },
 

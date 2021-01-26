@@ -123,6 +123,7 @@
                       type="text"
                       class="guests"
                       value=""
+                      disabled="true"
                       v-model="user.displayName"
                       :id="user.uid"
                     >
@@ -258,14 +259,14 @@ export default {
 
       const db = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
       db.get().then((doc) => {
-        console.log(doc.data().currentRound)
         if (doc.exists) {
           currentRound = doc.data().currentRound === 0 ? 1 : doc.data().currentRound
           this.saveDescription()
           db.update({
             running: true,
             currentRound: currentRound,
-            listFinishWriteIdeas: []
+            listFinishWriteIdeas: [],
+            hourOfStartRound: Date()
           })
         }
       })
