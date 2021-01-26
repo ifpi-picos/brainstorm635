@@ -116,13 +116,13 @@
         </b-card>
       </b-col>
     </b-row>
-    <!-- <b-row align-v="center" align-h="center" class="mt-2">
+    <b-row align-v="center" align-h="center" class="mt-2">
       <b-button
-        v-if="isLeader && !concluded"
+        v-if="isLeader"
         variant="outline-warning" class="buttonPause"
         @click="pauseBrainstorm()">Pause
       </b-button>
-      <b-button
+      <!-- <b-button
         v-if="isLeader && concluded"
         variant="outline-info"
         @click="printBrainstorm()">Finish and print Brainstorm
