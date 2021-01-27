@@ -126,8 +126,8 @@
         v-if="isLeader && concluded"
         variant="outline-info"
         @click="printBrainstorm()">Finish and print Brainstorm
-      </b-button>
-    </b-row> -->
+      </b-button>-->
+    </b-row>
   </b-container>
 </template>
 
@@ -371,20 +371,6 @@ export default {
 
 .cartao {
   border: solid 1px #17a2b8 !important;
-}
-
-.icone {
-  /* background: #17a2b8 !important;
-  opacity: 0.95; */
-  height: 43.98px !important;
-  width: 38.38px !important;
-  padding: 5.25px 7.5px;
-  border-radius: 0.25rem 0 0 0.25rem !important;
-  color: #138496 !important;
-}
-
-.icone-padd {
-  padding-right: 3.5px !important;
 }
 
 .corpoInfo {

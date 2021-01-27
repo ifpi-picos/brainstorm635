@@ -3,7 +3,15 @@
     <b-col md="12">
       <h5 class="page-tittle mb-3 mt-3">Ideas Report</h5>
     </b-col>
-    <b-row class="mb-4" v-for="(roundy, i) in ideasPerRound" :key="i">
+    <b-col xs="12" sm="12" md="12" class="text-left mb-3">
+      <span>
+        <span class="icone icone-padd">
+          <i class="fa fa-file-signature fa-lg"></i>
+        </span>
+        {{ description }}
+      </span>
+    </b-col>
+    <b-row class="mb-4 text-center" v-for="(roundy, i) in ideasPerRound" :key="i">
       <b-col md="12" class="mb-1">
         <h5 class="round">Round {{ i+1 }} </h5>
       </b-col>
@@ -17,10 +25,12 @@
                 {{ value }}
               </p>
               </b-card-text>
-              <p v-if="true" class="text-muted" style="position: absolute; bottom: -10px">
+              <!-- <p
+                class="text-muted"
+                style="position: absolute; bottom: -10px">
                 Editado por:
-                <b>Ramos</b>
-              </p>
+                <b>{{ guestNames[index] }}</b>
+              </p> -->
             </div>
           </b-col>
         </b-row>
@@ -45,7 +55,9 @@ export default {
       date: '',
       round: [],
       rounds: [],
-      ideasPerRound: []
+      ideasPerRound: [],
+      description: '',
+      guestNames: []
     }
   },
 
@@ -66,6 +78,7 @@ export default {
             /* console.log(this.rounds) */
             /*  this.datasOFBrainstorm = doc.data() */
             this.date = doc.data().timestamp.toDate()
+            this.description = doc.data().description
 
             for (let i = 1; i < this.rounds.length + 1; i++) {
               const index = 'round' + i
@@ -86,6 +99,22 @@ export default {
               } catch (error) {
                 console.error(error)
               }
+              /* try {
+                const guestName = this.$firebase.firestore()
+                guestName
+                  .collection('brainstorms')
+                  .doc(this.brainstormId)
+                  .get()
+                  .then(doc => {
+                    for (let cont = this.rounds.length; cont > 1; cont--) {
+                      this.guestNames.push(doc.data().listGuests[i - 1].displayName)
+                      this.guestNames.push(doc.data().listGuests[i - 1].displayName)
+                      this.guestNames.push(doc.data().listGuests[i - 1].displayName)
+                    }
+                  })
+              } catch (error) {
+                console.error(error)
+              } */
             }
           })
       } catch (error) {
@@ -111,8 +140,10 @@ $colorDark: darken($color, 10%) transparent;
   background: $color;
   position: relative;
   min-height: 15em;
+  max-height: 15em;
   min-width: 13em;
 }
+
 .postit:after {
   content: "";
   position: absolute;
@@ -123,6 +154,7 @@ $colorDark: darken($color, 10%) transparent;
   border-style: solid;
   border-color: $color;
 }
+
 .postit:before {
   content: "";
   position: absolute;
@@ -144,7 +176,7 @@ h5, p, span {
 
 .round {
   color: #138496;
-  font-weight: bold;
+  font-weight: 700;
   margin: 0 !important;
 }
 
