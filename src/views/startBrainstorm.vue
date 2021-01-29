@@ -146,7 +146,8 @@ export default {
       listFinishWriteIdeas: 0,
       participants: 0,
       // concluded: null,
-      hourOfStartRound: ''
+      hourOfStartRound: '',
+      running: true
     }
   },
 
@@ -191,7 +192,7 @@ export default {
       }
 
       database.onSnapshot(doc => {
-        const running = doc.data().running
+        this.running = doc.data().running
 
         if (doc.data().concluded) {
           this.printBrainstorm()
@@ -202,7 +203,7 @@ export default {
         this.isLeader = doc.data().leader === this.$firebase.auth().currentUser.uid
         this.listFinishWriteIdeas = doc.data().listFinishWriteIdeas.length
         this.participants = doc.data().listGuests.length
-        if (!running) {
+        if (!this.running) {
           this.$router.push({ name: 'brainstorm', params: { id: this.brainstormId } })
         } else if (this.round !== ('round' + doc.data().currentRound)) {
           const round = 'round' + doc.data().currentRound
@@ -232,7 +233,7 @@ export default {
         if (seg < 0 && min > 0) {
           min--
           seg = 59
-        } else if (seg === 0 && min === 0) {
+        } else if ((seg === 0 && min === 0) || !this.running) {
           clearInterval(cron)
         }
 
@@ -295,11 +296,17 @@ export default {
         time = time - timeDifference
       }
 
+      function clearTimeOut (timeout) {
+        if (!this.running) {
+          clearTimeout(timeout)
+        }
+      }
       this.createClock().then(() => {
-        setTimeout(() => {
+        const timeout = setTimeout(() => {
           this.changeRound()
           this.verifyFinalRound()
         }, time)
+        clearTimeOut(timeout)
       })
     },
 
