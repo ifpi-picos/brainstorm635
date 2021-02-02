@@ -184,24 +184,25 @@ export default {
       database.onSnapshot(doc => {
         this.running = doc.data().running
 
-        if (doc.data().concluded) {
-          this.printBrainstorm()
-        }
-
-        this.description = doc.data().description
-        this.currentRound = doc.data().currentRound
-        this.isLeader = doc.data().leader === this.$firebase.auth().currentUser.uid
-        this.listFinishWriteIdeas = doc.data().listFinishWriteIdeas.length
-        this.participants = doc.data().listGuests.length
-        if (!this.running) {
-          this.$router.push({ name: 'brainstorm', params: { id: this.brainstormId } })
-        } else if (this.round !== ('round' + doc.data().currentRound)) {
-          const round = 'round' + doc.data().currentRound
-          console.log('Aqui misera...', this.round, round)
+        if (doc.data().concluded && (this.$route.name !== 'printBrainstorm')) {
           this.saveIdeas().then(() => {
-            this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: round } })
-            window.location.reload()
+            this.$router.push({ name: 'printBrainstorm', params: { id: this.brainstormId } })
           })
+        } else {
+          this.description = doc.data().description
+          this.currentRound = doc.data().currentRound
+          this.isLeader = doc.data().leader === this.$firebase.auth().currentUser.uid
+          this.listFinishWriteIdeas = doc.data().listFinishWriteIdeas.length
+          this.participants = doc.data().listGuests.length
+          if (!this.running && (this.$route.name !== 'brainstorm')) {
+            this.$router.push({ name: 'brainstorm', params: { id: this.brainstormId } })
+          } else if (this.$route.params.round !== ('round' + doc.data().currentRound)) {
+            const round = 'round' + doc.data().currentRound
+            this.saveIdeas().then(() => {
+              this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: round } })
+              window.location.reload()
+            })
+          }
         }
       })
     },
@@ -226,8 +227,8 @@ export default {
           clearInterval(cron)
           this.saveIdeas()
           if (seg === 0 && min === 0) {
-            this.changeRound()
             this.verifyFinalRound()
+            this.changeRound()
           }
         }
 
@@ -307,16 +308,10 @@ export default {
     verifyFinalRound () {
       if (this.currentRound === this.participants) {
         const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
-        database.set({ concluded: true }, { merge: true }).then(() => {
-          this.printBrainstorm()
-        })
+        database.update({ concluded: true })
       } // else {
       //   this.concluded = false
       // }
-    },
-
-    printBrainstorm () {
-      this.$router.push({ name: 'printBrainstorm' })
     }
   }
 }

@@ -71,8 +71,7 @@ export default {
         const db = this.$firebase.firestore()
         db.collection('brainstorms')
           .doc(this.brainstormId)
-          .get()
-          .then(async doc => {
+          .onSnapshot(async doc => {
             this.rounds = doc.data().listGuests
             /* console.log(this.rounds.length) */
             /* console.log(this.rounds) */
