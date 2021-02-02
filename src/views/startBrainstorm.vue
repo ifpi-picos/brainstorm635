@@ -122,11 +122,6 @@
         variant="outline-warning" class="buttonPause"
         @click="pauseBrainstorm()">Pause
       </b-button>
-      <!-- <b-button
-        v-if="isLeader && concluded"
-        variant="outline-info"
-        @click="printBrainstorm()">Finish and print Brainstorm
-      </b-button>-->
     </b-row>
   </b-container>
 </template>
@@ -157,7 +152,7 @@ export default {
     // },
     hourOfStartRound: function () {
       if (this.hourOfStartRound) {
-        this.timeForWriting()
+        this.createClock()
       }
     }
   },
@@ -180,16 +175,11 @@ export default {
       const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
       database.get().then(doc => {
         this.hourOfStartRound = new Date(doc.data().hourOfStartRound)
-        console.log(this.hourOfStartRound)
       })
     },
 
     getData () {
       const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
-
-      const push = async (round) => {
-        this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: round } })
-      }
 
       database.onSnapshot(doc => {
         this.running = doc.data().running
@@ -207,26 +197,25 @@ export default {
           this.$router.push({ name: 'brainstorm', params: { id: this.brainstormId } })
         } else if (this.round !== ('round' + doc.data().currentRound)) {
           const round = 'round' + doc.data().currentRound
-          push(round).then(() => {
+          console.log('Aqui misera...', this.round, round)
+          this.saveIdeas().then(() => {
+            this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: round } })
             window.location.reload()
           })
         }
       })
     },
 
-    async createClock () {
+    createClock () {
       const currentTime = new Date()
       let timeDifference = currentTime - this.hourOfStartRound
       timeDifference = Number(timeDifference)
 
       let min = 0
-      let seg = 60
+      let seg = 20
 
       if (timeDifference > 0 && (seg - (Math.trunc(timeDifference / 1000)) > 0)) {
         seg = seg - (Math.trunc(timeDifference / 1000))
-        console.log('verdadeiro', timeDifference)
-      } else {
-        console.log('falso', timeDifference)
       }
 
       const cron = setInterval(() => {
@@ -235,6 +224,11 @@ export default {
           seg = 59
         } else if ((seg === 0 && min === 0) || !this.running) {
           clearInterval(cron)
+          this.saveIdeas()
+          if (seg === 0 && min === 0) {
+            this.changeRound()
+            this.verifyFinalRound()
+          }
         }
 
         this.time = (min < 10 ? '0' + min : min) + ' : ' + (seg < 10 ? '0' + seg : seg)
@@ -247,20 +241,18 @@ export default {
       database.update({ running: false })
     },
 
-    async changeRound () {
-      this.verifyFinalRound()
+    changeRound () {
       if (
       /* (this.listFinishWriteIdeas > 0) && */
       /* (this.participants === this.listFinishWriteIdeas) && */
         (this.currentRound < this.participants)) {
         const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
-        await database.update({
+        database.update({
           currentRound: this.currentRound + 1,
           listFinishWriteIdeas: [],
           hourOfStartRound: new Date()
         })
       }
-      await this.saveIdeas()
     },
 
     finishWriteIdeas () {
@@ -285,30 +277,32 @@ export default {
       })
     },
 
-    timeForWriting () {
-      let time = 62000
+    // timeForWriting () {
+    //   let time = 62000
 
-      const currentTime = new Date()
-      let timeDifference = currentTime - this.hourOfStartRound
-      timeDifference = Number(timeDifference)
+    //   const currentTime = new Date()
+    //   let timeDifference = currentTime - this.hourOfStartRound
+    //   timeDifference = Number(timeDifference)
 
-      if (timeDifference > 0) {
-        time = time - timeDifference
-      }
+    //   if (timeDifference > 0) {
+    //     time = time - timeDifference
+    //   }
 
-      function clearTimeOut (timeout) {
-        if (!this.running) {
-          clearTimeout(timeout)
-        }
-      }
-      this.createClock().then(() => {
-        const timeout = setTimeout(() => {
-          this.changeRound()
-          this.verifyFinalRound()
-        }, time)
-        clearTimeOut(timeout)
-      })
-    },
+    //   const clearTimeOut = (timeout) => {
+    //     if (!this.running) {
+    //       clearTimeout(timeout)
+    //       console.log('timeout limpo')
+    //     }
+    //   }
+    //   this.createClock().then(() => {
+    //     const timeout = setTimeout(() => {
+    //       this.changeRound()
+    //       this.verifyFinalRound()
+    //     }, time)
+    //     console.log('aeeeeeeeeeeee')
+    //     clearTimeOut(timeout)
+    //   })
+    // },
 
     verifyFinalRound () {
       if (this.currentRound === this.participants) {

@@ -123,7 +123,7 @@
                       type="text"
                       class="guests"
                       value=""
-                      disabled="true"
+                      :disabled="true"
                       v-model="user.displayName"
                       :id="user.uid"
                     >
