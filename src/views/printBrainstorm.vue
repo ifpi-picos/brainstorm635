@@ -61,7 +61,7 @@ export default {
     }
   },
 
-  created () {
+  mounted () {
     this.getData()
   },
 
@@ -71,7 +71,7 @@ export default {
         const db = this.$firebase.firestore()
         db.collection('brainstorms')
           .doc(this.brainstormId)
-          .onSnapshot(async doc => {
+          .get().then(doc => {
             this.rounds = doc.data().listGuests
             /* console.log(this.rounds.length) */
             /* console.log(this.rounds) */

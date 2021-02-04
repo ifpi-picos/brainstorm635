@@ -196,7 +196,7 @@ export default {
           this.participants = doc.data().listGuests.length
           if (!this.running && (this.$route.name !== 'brainstorm')) {
             this.$router.push({ name: 'brainstorm', params: { id: this.brainstormId } })
-          } else if (this.$route.params.round !== ('round' + doc.data().currentRound)) {
+          } else if (this.round !== ('round' + doc.data().currentRound)) {
             const round = 'round' + doc.data().currentRound
             this.saveIdeas().then(() => {
               this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: round } })
