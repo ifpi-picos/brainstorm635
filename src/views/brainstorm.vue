@@ -105,9 +105,9 @@
                   id="input-name-1"
                   label-for="name-1"
                 >
+                  <!--  v-b-tooltip.hover.topright.v-info
+                    title="Edit my name" -->
                   <b-input-group
-                    v-b-tooltip.hover.topright.v-info
-                    title="Edit my name"
                     v-for="user in listGuests"
                     :key="user.uid" class="mb-2">
                     <b-input-group-prepend>
