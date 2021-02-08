@@ -118,7 +118,7 @@ export default {
           description: 'Brainstorm description',
           listGuests: [user],
           currentRound: 0,
-          timestamp: firebase.firestore.FieldValue.serverTimestamp()
+          currentDate: firebase.firestore.FieldValue.serverTimestamp()
         })
         .then(() => {
           this.$router.push({ name: 'brainstorm', params: { id: id } })

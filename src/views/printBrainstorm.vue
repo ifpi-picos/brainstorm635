@@ -13,19 +13,30 @@
           {{ description }}
         </span>
       </b-col>
-      <b-row class="mb-4 text-center" v-for="(roundy, i) in ideasPerRound" :key="i">
+      <b-row
+        class="mb-4 text-center"
+        v-for="(roundy, i) in ideasPerRound"
+        :key="i"
+      >
         <b-col md="12" class="mb-1">
-          <h5 class="round">Round {{ i+1 }} </h5>
+          <h5 class="round">Round {{ i + 1 }}</h5>
         </b-col>
         <b-col md="12">
           <b-row v-for="(values, key) in roundy" :key="key">
-            <b-col class="mb-4 pl-1 pr-1" md="4" v-for="(value, index) in values" :key="index">
+            <b-col
+              class="mb-4 pl-1 pr-1"
+              md="4"
+              v-for="(value, index) in values"
+              :key="index"
+            >
               <div class="postit">
-                <h5 class="text-center"> <b> Idea #{{ index+1 }} </b> </h5>
+                <h5 class="text-center">
+                  <b> Idea #{{ index + 1 }} </b>
+                </h5>
                 <b-card-text>
-                <p style="font-size: 1rem">
-                  {{ value }}
-                </p>
+                  <p style="font-size: 1rem">
+                    {{ value }}
+                  </p>
                 </b-card-text>
                 <!-- <p
                   class="text-muted"
@@ -38,16 +49,14 @@
           </b-row>
         </b-col>
       </b-row>
-      <b-row >
+      <b-row>
         <b-col md="9" class="ml-0 pl-0">
           <span class="text-date">
-            <b class="date" > Brainstorm date: </b> <i> {{ date }} </i>
+            <b class="date"> Brainstorm date: </b> <i> {{ date }} </i>
           </span>
         </b-col>
         <b-col md="3" class="text-right pr-0">
-          <b-button
-            onClick="window.print()"
-            variant="outline-info">
+          <b-button onClick="window.print()" variant="outline-info">
             Print brainstorm
           </b-button>
         </b-col>
@@ -83,12 +92,14 @@ export default {
         const db = this.$firebase.firestore()
         db.collection('brainstorms')
           .doc(this.brainstormId)
-          .get().then(doc => {
+          .get()
+          .then(doc => {
             this.rounds = doc.data().listGuests
             /* console.log(this.rounds.length) */
             /* console.log(this.rounds) */
             /*  this.datasOFBrainstorm = doc.data() */
-            this.date = doc.data().timestamp.toDate()
+            console.log('doc.currentDate()', doc.currentDate())
+            this.date = doc.currentDate() ? doc.currentDate().timestamp.toDate() : ''
             this.description = doc.data().description
 
             for (let i = 1; i < this.rounds.length; i++) {
@@ -137,11 +148,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 /* $color: rgb(255,215,7); */
 /* $color: #6495ED; */
 /* $color: #836FFF; */
-$color: #ADD8E6;
+$color: #add8e6;
 /* $color:#ADFF2F; */
 /* $color: #DDA0DD; */
 $colorDark: darken($color, 10%) transparent;
@@ -158,7 +168,7 @@ $colorDark: darken($color, 10%) transparent;
 
 .postit:after {
   background: $color;
-  content: "";
+  content: '';
   position: absolute;
   bottom: -1.5em;
   left: -1px;
@@ -169,7 +179,7 @@ $colorDark: darken($color, 10%) transparent;
 }
 
 .postit:before {
-  content: "";
+  content: '';
   position: absolute;
   bottom: -1.5em;
   right: 0;
@@ -185,7 +195,9 @@ $colorDark: darken($color, 10%) transparent;
   padding-right: 0 !important;
 }
 
-h5, p, span {
+h5,
+p,
+span {
   font-family: 'comfortaa';
 }
 
