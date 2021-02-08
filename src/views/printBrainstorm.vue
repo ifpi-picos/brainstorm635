@@ -99,7 +99,9 @@ export default {
             /* console.log(this.rounds) */
             /*  this.datasOFBrainstorm = doc.data() */
             console.log('doc.currentDate()', doc.currentDate())
-            this.date = doc.currentDate() ? doc.currentDate().timestamp.toDate() : ''
+            this.date = doc.data().currentDate
+              ? doc.data().currentDate.timestamp.toDate()
+              : ''
             this.description = doc.data().description
 
             for (let i = 1; i < this.rounds.length; i++) {
