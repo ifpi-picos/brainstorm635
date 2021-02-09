@@ -274,7 +274,7 @@ export default {
         })
       await database.update({
         listFinishWriteIdeas: firebase.firestore.FieldValue.arrayUnion(user),
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        currentDate: firebase.firestore.FieldValue.serverTimestamp()
       })
     },
 
