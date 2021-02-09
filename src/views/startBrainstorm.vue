@@ -146,6 +146,11 @@ export default {
     }
   },
 
+  mounted () {
+    this.getData()
+    this.getHourOfStartRound()
+  },
+
   watch: {
     // listFinishWriteIdeas: function () {
     //   this.changeRound()
@@ -154,12 +159,12 @@ export default {
       if (this.hourOfStartRound) {
         this.createClock()
       }
+    },
+    $route (route) {
+      this.round = route.params.round
+      this.getData()
+      this.getHourOfStartRound()
     }
-  },
-
-  mounted () {
-    this.getData()
-    this.getHourOfStartRound()
   },
 
   computed: {
@@ -197,10 +202,10 @@ export default {
           if (!this.running && (this.$route.name !== 'brainstorm')) {
             this.$router.push({ name: 'brainstorm', params: { id: this.brainstormId } })
           } else if (this.round !== ('round' + doc.data().currentRound)) {
-            /* const round = 'round' + doc.data().currentRound */
+            const round = 'round' + doc.data().currentRound
             this.saveIdeas().then(() => {
-              /* this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: round } }) */
-              window.location.reload(true)
+              this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: round } })
+              /* window.location.reload() */
             })
           }
         }
@@ -213,7 +218,7 @@ export default {
       timeDifference = Number(timeDifference)
 
       let min = 0
-      let seg = 60
+      let seg = 10
 
       if (timeDifference > 0 && (seg - (Math.trunc(timeDifference / 1000)) > 0)) {
         seg = seg - (Math.trunc(timeDifference / 1000))
@@ -247,6 +252,14 @@ export default {
       /* (this.listFinishWriteIdeas > 0) && */
       /* (this.participants === this.listFinishWriteIdeas) && */
         (this.currentRound < this.participants)) {
+        this.ideas = ['', '', '']
+        /* this.$bvToast.toast('Changing to Round' + this.round[5], {
+          title: '',
+          toaster: 'b-toaster-top-center',
+          variant: 'success',
+          autoHideDelay: 1000,
+          appendToast: true
+        }) */
         const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
         database.update({
           currentRound: this.currentRound + 1,
