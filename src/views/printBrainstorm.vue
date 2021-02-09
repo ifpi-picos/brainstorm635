@@ -98,9 +98,10 @@ export default {
             /* console.log(this.rounds.length) */
             /* console.log(this.rounds) */
             /*  this.datasOFBrainstorm = doc.data() */
-            this.date = doc.data().currentDate
-              ? doc.data().currentDate.timestamp.toDate()
-              : ''
+
+            this.date = doc.data().currentDate.toDate()
+            /* ? doc.data().currentDate.timestamp
+            : '' */
             this.description = doc.data().description
 
             for (let i = 1; i < this.rounds.length; i++) {
@@ -116,7 +117,6 @@ export default {
                   .get()
                   .then(doc => {
                     this.ideasPerRound.push(doc.data())
-                    console.log(this.ideasPerRound)
                   })
               } catch (error) {
                 console.error(error)
