@@ -218,7 +218,7 @@ export default {
       timeDifference = Number(timeDifference)
 
       let min = 0
-      let seg = 10
+      let seg = 60
 
       if (timeDifference > 0 && (seg - (Math.trunc(timeDifference / 1000)) > 0)) {
         seg = seg - (Math.trunc(timeDifference / 1000))
@@ -291,40 +291,11 @@ export default {
       })
     },
 
-    // timeForWriting () {
-    //   let time = 62000
-
-    //   const currentTime = new Date()
-    //   let timeDifference = currentTime - this.hourOfStartRound
-    //   timeDifference = Number(timeDifference)
-
-    //   if (timeDifference > 0) {
-    //     time = time - timeDifference
-    //   }
-
-    //   const clearTimeOut = (timeout) => {
-    //     if (!this.running) {
-    //       clearTimeout(timeout)
-    //       console.log('timeout limpo')
-    //     }
-    //   }
-    //   this.createClock().then(() => {
-    //     const timeout = setTimeout(() => {
-    //       this.changeRound()
-    //       this.verifyFinalRound()
-    //     }, time)
-    //     console.log('aeeeeeeeeeeee')
-    //     clearTimeOut(timeout)
-    //   })
-    // },
-
     verifyFinalRound () {
       if (this.currentRound === this.participants) {
         const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
         database.update({ concluded: true })
-      } // else {
-      //   this.concluded = false
-      // }
+      }
     }
   }
 }
