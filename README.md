@@ -1,5 +1,10 @@
 # frontend
 
+## Project link
+```
+https://app-brainstorming.web.app/
+```
+
 ## Project setup
 ```
 npm install
