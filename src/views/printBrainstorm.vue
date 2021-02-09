@@ -104,8 +104,8 @@ export default {
             : '' */
             this.description = doc.data().description
 
-            for (let i = 1; i < this.rounds.length; i++) {
-              const index = 'round' + i
+            for (let i = 0; i < this.rounds.length; i++) {
+              const index = 'round' + (i + 1)
               /* console.log(index) */
               try {
                 const rows = this.$firebase.firestore()
