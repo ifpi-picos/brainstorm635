@@ -118,7 +118,7 @@ export default {
           description: 'Brainstorm description',
           listGuests: [user],
           currentRound: 0,
-          timestamp: firebase.firestore.FieldValue.serverTimestamp()
+          brainstormDate: firebase.firestore.FieldValue.serverTimestamp()
         })
         .then(() => {
           this.$router.push({ name: 'brainstorm', params: { id: id } })
@@ -156,7 +156,7 @@ export default {
               userGuest.displayName = this.$firebase.auth().currentUser.displayName
               userGuest.photoURL = this.$firebase.auth().currentUser.photoURL
               await brainstorm.update({
-                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                /* currentDate: firebase.firestore.FieldValue.serverTimestamp(), */
                 listGuests: firebase.firestore.FieldValue.arrayUnion(userGuest)
               })
               console.log('Você entrou!!!')

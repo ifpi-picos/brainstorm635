@@ -1,67 +1,86 @@
 <template>
-  <b-container fluid class="container-ideas">
-    <b-col md="12">
-      <h5 class="page-tittle mb-3 mt-3">Ideas Report</h5>
-    </b-col>
-    <b-col xs="12" sm="12" md="12" class="text-left mb-3">
-      <span>
-        <span class="icone icone-padd">
-          <i class="fa fa-file-signature fa-lg"></i>
-        </span>
-        {{ description }}
-      </span>
-    </b-col>
-    <b-row class="mb-4 text-center" v-for="(roundy, i) in ideasPerRound" :key="i">
-      <b-col md="12" class="mb-1">
-        <h5 class="round">Round {{ i+1 }} </h5>
-      </b-col>
+  <div>
+    <Loader v-if="loading"> </Loader>
+    <b-container v-if="!loading" fluid class="container-ideas">
       <b-col md="12">
-        <b-row v-for="(values, key) in roundy" :key="key">
-          <b-col class="mb-4 pl-1 pr-1" md="4" v-for="(value, index) in values" :key="index">
-            <div class="postit">
-              <h5 class="text-center"> <b> Idea #{{ index+1 }} </b> </h5>
-              <b-card-text>
-              <p style="font-size: 1rem">
-                {{ value }}
-              </p>
-              </b-card-text>
-              <!-- <p
-                class="text-muted"
-                style="position: absolute; bottom: -10px">
-                Editado por:
-                <b>{{ guestNames[index] }}</b>
-              </p> -->
-            </div>
-          </b-col>
-        </b-row>
+        <h5 class="page-tittle mb-3 mt-3">Ideas Report</h5>
       </b-col>
-    </b-row>
-    <b-row class="mr-auto">
-      <b-col>
+      <b-col xs="12" sm="12" md="12" class="text-left mb-3">
         <span>
-          <b class="date" > Brainstorm date: </b> {{ date }}
+          <span class="icone icone-padd">
+            <i class="fa fa-file-signature fa-lg"></i>
+          </span>
+          {{ description }}
         </span>
       </b-col>
-    </b-row>
-  </b-container>
+      <b-row
+        class="mb-4 text-center"
+        v-for="(roundy, i) in ideasPerRound"
+        :key="i"
+      >
+        <b-col md="12" class="mb-1">
+          <h5 class="round">Round {{ i + 1 }}</h5>
+        </b-col>
+        <b-col md="12">
+          <b-row v-for="(values, key) in roundy" :key="key">
+            <b-col
+              class="mb-4 pl-1 pr-1"
+              md="4"
+              v-for="(value, index) in values"
+              :key="index"
+            >
+              <div class="postit">
+                <h5 class="text-center">
+                  <b> Idea #{{ index + 1 }} </b>
+                </h5>
+                <b-card-text>
+                  <p style="font-size: 1rem">
+                    {{ value }}
+                  </p>
+                </b-card-text>
+                <!-- <p
+                  class="text-muted"
+                  style="position: absolute; bottom: -10px">
+                  Editado por:
+                  <b>{{ guestNames[index] }}</b>
+                </p> -->
+              </div>
+            </b-col>
+          </b-row>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col md="9" class="ml-0 pl-0">
+          <span class="text-date">
+            <b class="date"> Brainstorm date: </b> <i> {{ brainstormDate }} </i>
+          </span>
+        </b-col>
+        <b-col md="3" class="text-right pr-0">
+          <b-button onClick="window.print()" variant="outline-info">
+            Print brainstorm
+          </b-button>
+        </b-col>
+      </b-row>
+    </b-container>
+  </div>
 </template>
 
 <script>
+import Loader from '../components/loader'
 export default {
+  components: { Loader },
   data () {
     return {
+      loading: true,
       brainstormId: this.$route.params.id,
-      datasOFBrainstorm: {},
-      date: '',
-      round: [],
+      brainstormDate: '',
       rounds: [],
       ideasPerRound: [],
-      description: '',
-      guestNames: []
+      description: ''
     }
   },
 
-  created () {
+  mounted () {
     this.getData()
   },
 
@@ -71,17 +90,16 @@ export default {
         const db = this.$firebase.firestore()
         db.collection('brainstorms')
           .doc(this.brainstormId)
-          .onSnapshot(async doc => {
+          .get()
+          .then(doc => {
             this.rounds = doc.data().listGuests
-            /* console.log(this.rounds.length) */
-            /* console.log(this.rounds) */
-            /*  this.datasOFBrainstorm = doc.data() */
-            this.date = doc.data().timestamp.toDate()
             this.description = doc.data().description
+            this.brainstormDate = doc.data().brainstormDate.toDate()
+            /* ? doc.data().currentDate.timestamp
+            : '' */
 
-            for (let i = 1; i < this.rounds.length + 1; i++) {
-              const index = 'round' + i
-              /* console.log(index) */
+            for (let i = 0; i < this.rounds.length; i++) {
+              const index = 'round' + (i + 1)
               try {
                 const rows = this.$firebase.firestore()
                 rows
@@ -91,30 +109,13 @@ export default {
                   .doc(index)
                   .get()
                   .then(doc => {
-                    this.round = doc.data()
-                    this.ideasPerRound.push(this.round)
-                    /* console.log(this.ideasPerRound) */
+                    this.ideasPerRound.push(doc.data())
                   })
               } catch (error) {
                 console.error(error)
               }
-              /* try {
-                const guestName = this.$firebase.firestore()
-                guestName
-                  .collection('brainstorms')
-                  .doc(this.brainstormId)
-                  .get()
-                  .then(doc => {
-                    for (let cont = this.rounds.length; cont > 1; cont--) {
-                      this.guestNames.push(doc.data().listGuests[i - 1].displayName)
-                      this.guestNames.push(doc.data().listGuests[i - 1].displayName)
-                      this.guestNames.push(doc.data().listGuests[i - 1].displayName)
-                    }
-                  })
-              } catch (error) {
-                console.error(error)
-              } */
             }
+            this.loading = false
           })
       } catch (error) {
         console.error(error)
@@ -125,11 +126,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 /* $color: rgb(255,215,7); */
 /* $color: #6495ED; */
 /* $color: #836FFF; */
-$color: #ADD8E6;
+$color: #add8e6;
 /* $color:#ADFF2F; */
 /* $color: #DDA0DD; */
 $colorDark: darken($color, 10%) transparent;
@@ -141,21 +141,23 @@ $colorDark: darken($color, 10%) transparent;
   min-height: 15em;
   max-height: 15em;
   min-width: 13em;
+  border: 1px solid $color;
 }
 
 .postit:after {
-  content: "";
+  background: $color;
+  content: '';
   position: absolute;
   bottom: -1.5em;
-  left: 0;
+  left: -1px;
   right: 1.5em;
-  border-width: 1em;
+  border-width: 0.8em;
   border-style: solid;
   border-color: $color;
 }
 
 .postit:before {
-  content: "";
+  content: '';
   position: absolute;
   bottom: -1.5em;
   right: 0;
@@ -167,9 +169,13 @@ $colorDark: darken($color, 10%) transparent;
 .container-ideas {
   max-width: 80% !important;
   min-width: 80% !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
-h5, p, span {
+h5,
+p,
+span {
   font-family: 'comfortaa';
 }
 
@@ -181,5 +187,9 @@ h5, p, span {
 
 .date {
   color: #138496;
+}
+
+.text-date {
+  font-size: 18px;
 }
 </style>

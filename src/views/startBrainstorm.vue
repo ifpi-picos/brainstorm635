@@ -146,6 +146,11 @@ export default {
     }
   },
 
+  mounted () {
+    this.getData()
+    this.getHourOfStartRound()
+  },
+
   watch: {
     // listFinishWriteIdeas: function () {
     //   this.changeRound()
@@ -154,12 +159,12 @@ export default {
       if (this.hourOfStartRound) {
         this.createClock()
       }
+    },
+    $route (route) {
+      this.round = route.params.round
+      this.getData()
+      this.getHourOfStartRound()
     }
-  },
-
-  mounted () {
-    this.getData()
-    this.getHourOfStartRound()
   },
 
   computed: {
@@ -196,11 +201,11 @@ export default {
           this.participants = doc.data().listGuests.length
           if (!this.running && (this.$route.name !== 'brainstorm')) {
             this.$router.push({ name: 'brainstorm', params: { id: this.brainstormId } })
-          } else if (this.$route.params.round !== ('round' + doc.data().currentRound)) {
+          } else if (this.round !== ('round' + doc.data().currentRound)) {
             const round = 'round' + doc.data().currentRound
             this.saveIdeas().then(() => {
               this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: round } })
-              window.location.reload()
+              /* window.location.reload() */
             })
           }
         }
@@ -247,6 +252,14 @@ export default {
       /* (this.listFinishWriteIdeas > 0) && */
       /* (this.participants === this.listFinishWriteIdeas) && */
         (this.currentRound < this.participants)) {
+        this.ideas = []
+        /* this.$bvToast.toast('Changing to Round' + this.round[5], {
+          title: '',
+          toaster: 'b-toaster-top-center',
+          variant: 'success',
+          autoHideDelay: 1000,
+          appendToast: true
+        }) */
         const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
         database.update({
           currentRound: this.currentRound + 1,
@@ -273,45 +286,16 @@ export default {
           console.error(error)
         })
       await database.update({
-        listFinishWriteIdeas: firebase.firestore.FieldValue.arrayUnion(user),
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        listFinishWriteIdeas: firebase.firestore.FieldValue.arrayUnion(user)
+        /* currentDate: firebase.firestore.FieldValue.serverTimestamp() */
       })
     },
-
-    // timeForWriting () {
-    //   let time = 62000
-
-    //   const currentTime = new Date()
-    //   let timeDifference = currentTime - this.hourOfStartRound
-    //   timeDifference = Number(timeDifference)
-
-    //   if (timeDifference > 0) {
-    //     time = time - timeDifference
-    //   }
-
-    //   const clearTimeOut = (timeout) => {
-    //     if (!this.running) {
-    //       clearTimeout(timeout)
-    //       console.log('timeout limpo')
-    //     }
-    //   }
-    //   this.createClock().then(() => {
-    //     const timeout = setTimeout(() => {
-    //       this.changeRound()
-    //       this.verifyFinalRound()
-    //     }, time)
-    //     console.log('aeeeeeeeeeeee')
-    //     clearTimeOut(timeout)
-    //   })
-    // },
 
     verifyFinalRound () {
       if (this.currentRound === this.participants) {
         const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
         database.update({ concluded: true })
-      } // else {
-      //   this.concluded = false
-      // }
+      }
     }
   }
 }
