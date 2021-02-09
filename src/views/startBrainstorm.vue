@@ -197,10 +197,10 @@ export default {
           if (!this.running && (this.$route.name !== 'brainstorm')) {
             this.$router.push({ name: 'brainstorm', params: { id: this.brainstormId } })
           } else if (this.round !== ('round' + doc.data().currentRound)) {
-            const round = 'round' + doc.data().currentRound
+            /* const round = 'round' + doc.data().currentRound */
             this.saveIdeas().then(() => {
-              this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: round } })
-              window.location.reload()
+              /* this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: round } }) */
+              window.location.reload(true)
             })
           }
         }
@@ -273,8 +273,8 @@ export default {
           console.error(error)
         })
       await database.update({
-        listFinishWriteIdeas: firebase.firestore.FieldValue.arrayUnion(user),
-        currentDate: firebase.firestore.FieldValue.serverTimestamp()
+        listFinishWriteIdeas: firebase.firestore.FieldValue.arrayUnion(user)
+        /* currentDate: firebase.firestore.FieldValue.serverTimestamp() */
       })
     },
 

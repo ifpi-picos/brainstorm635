@@ -1,7 +1,7 @@
 <template>
   <b-container fluid class="container-loader text-center">
     <b-spinner style="width: 3rem; height: 3rem;" variant="info" type="grow"></b-spinner><br><br>
-    <h5 class="load">Loading...</h5>
+    <h5 class="load">Loading Ideas...</h5>
   </b-container>
 </template>
 

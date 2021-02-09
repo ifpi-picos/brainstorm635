@@ -52,7 +52,7 @@
       <b-row>
         <b-col md="9" class="ml-0 pl-0">
           <span class="text-date">
-            <b class="date"> Brainstorm date: </b> <i> {{ date }} </i>
+            <b class="date"> Brainstorm date: </b> <i> {{ brainstormDate }} </i>
           </span>
         </b-col>
         <b-col md="3" class="text-right pr-0">
@@ -73,12 +73,10 @@ export default {
     return {
       loading: true,
       brainstormId: this.$route.params.id,
-      datasOFBrainstorm: {},
-      date: '',
+      brainstormDate: '',
       rounds: [],
       ideasPerRound: [],
-      description: '',
-      guestNames: []
+      description: ''
     }
   },
 
@@ -95,18 +93,13 @@ export default {
           .get()
           .then(doc => {
             this.rounds = doc.data().listGuests
-            /* console.log(this.rounds.length) */
-            /* console.log(this.rounds) */
-            /*  this.datasOFBrainstorm = doc.data() */
-
-            this.date = doc.data().currentDate.toDate()
+            this.description = doc.data().description
+            this.brainstormDate = doc.data().brainstormDate.toDate()
             /* ? doc.data().currentDate.timestamp
             : '' */
-            this.description = doc.data().description
 
             for (let i = 0; i < this.rounds.length; i++) {
               const index = 'round' + (i + 1)
-              /* console.log(index) */
               try {
                 const rows = this.$firebase.firestore()
                 rows
@@ -121,22 +114,6 @@ export default {
               } catch (error) {
                 console.error(error)
               }
-              /* try {
-                const guestName = this.$firebase.firestore()
-                guestName
-                  .collection('brainstorms')
-                  .doc(this.brainstormId)
-                  .get()
-                  .then(doc => {
-                    for (let cont = this.rounds.length; cont > 1; cont--) {
-                      this.guestNames.push(doc.data().listGuests[i - 1].displayName)
-                      this.guestNames.push(doc.data().listGuests[i - 1].displayName)
-                      this.guestNames.push(doc.data().listGuests[i - 1].displayName)
-                    }
-                  })
-              } catch (error) {
-                console.error(error)
-              } */
             }
             this.loading = false
           })
