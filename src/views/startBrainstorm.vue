@@ -214,15 +214,18 @@ export default {
 
     createClock () {
       const currentTime = new Date()
-      let timeDifference = currentTime - this.hourOfStartRound
-      timeDifference = Number(timeDifference)
+      const timeSecondsDifference = Math.trunc(Number(currentTime - this.hourOfStartRound) / 1000)
 
+      let totalSeconds = 300
       let min = 0
-      let seg = 60
+      let seg = 0
 
-      if (timeDifference > 0 && (seg - (Math.trunc(timeDifference / 1000)) > 0)) {
-        seg = seg - (Math.trunc(timeDifference / 1000))
+      if (timeSecondsDifference > 0 && (totalSeconds - timeSecondsDifference > 0)) {
+        totalSeconds = totalSeconds - timeSecondsDifference
       }
+
+      min = Math.trunc(totalSeconds / 60)
+      seg = totalSeconds - (min * 60)
 
       const cron = setInterval(() => {
         if (seg < 0 && min > 0) {
