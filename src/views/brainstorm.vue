@@ -145,7 +145,9 @@
                   >Waiting Members...
                 </span>
                 <br /><br />
-                <span class="loading"
+                <span
+                  v-if="isLeader"
+                  class="loading"
                   >Start when all members are registered</span
                 >
                 <b-row align-h="center" class="pt-4">
