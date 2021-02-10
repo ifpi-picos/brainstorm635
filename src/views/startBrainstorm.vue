@@ -214,15 +214,18 @@ export default {
 
     createClock () {
       const currentTime = new Date()
-      let timeDifference = currentTime - this.hourOfStartRound
-      timeDifference = Number(timeDifference)
+      const timeSecondsDifference = Math.trunc((currentTime - this.hourOfStartRound) / 1000)
 
+      let totalSeconds = 300
       let min = 0
-      let seg = 60
+      let seg = 0
 
-      if (timeDifference > 0 && (seg - (Math.trunc(timeDifference / 1000)) > 0)) {
-        seg = seg - (Math.trunc(timeDifference / 1000))
+      if (timeSecondsDifference > 0 && (totalSeconds - timeSecondsDifference > 0)) {
+        totalSeconds = totalSeconds - timeSecondsDifference
       }
+
+      min = Math.trunc(totalSeconds / 60)
+      seg = totalSeconds - (min * 60)
 
       const cron = setInterval(() => {
         if (seg < 0 && min > 0) {
@@ -252,7 +255,7 @@ export default {
       /* (this.listFinishWriteIdeas > 0) && */
       /* (this.participants === this.listFinishWriteIdeas) && */
         (this.currentRound < this.participants)) {
-        this.ideas = ['', '', '']
+        this.ideas = []
         /* this.$bvToast.toast('Changing to Round' + this.round[5], {
           title: '',
           toaster: 'b-toaster-top-center',
@@ -291,40 +294,11 @@ export default {
       })
     },
 
-    // timeForWriting () {
-    //   let time = 62000
-
-    //   const currentTime = new Date()
-    //   let timeDifference = currentTime - this.hourOfStartRound
-    //   timeDifference = Number(timeDifference)
-
-    //   if (timeDifference > 0) {
-    //     time = time - timeDifference
-    //   }
-
-    //   const clearTimeOut = (timeout) => {
-    //     if (!this.running) {
-    //       clearTimeout(timeout)
-    //       console.log('timeout limpo')
-    //     }
-    //   }
-    //   this.createClock().then(() => {
-    //     const timeout = setTimeout(() => {
-    //       this.changeRound()
-    //       this.verifyFinalRound()
-    //     }, time)
-    //     console.log('aeeeeeeeeeeee')
-    //     clearTimeOut(timeout)
-    //   })
-    // },
-
     verifyFinalRound () {
       if (this.currentRound === this.participants) {
         const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
         database.update({ concluded: true })
-      } // else {
-      //   this.concluded = false
-      // }
+      }
     }
   }
 }

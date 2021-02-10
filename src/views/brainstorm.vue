@@ -133,14 +133,14 @@
               </b-col>
               <b-col md="4">
                 <b-spinner
-                  v-if="allInputsVerified"
+                  v-if="disabledButton"
                   variant="info"
                   label="Spinning"
                   style="width: 1.5rem; height: 1.5rem;"
                   type="grow"
                 ></b-spinner>
                 <span
-                  v-if="allInputsVerified"
+                  v-if="disabledButton"
                   class="text-spinner text-flashes"
                   >Waiting Members...
                 </span>
@@ -179,7 +179,6 @@ export default {
     return {
       disabledButton: true,
       activeMembers: 1,
-      allInputsVerified: true,
       brainstormId: this.$route.params.id,
       listGuests: [],
       isLeader: false,
@@ -220,7 +219,7 @@ export default {
                 const currentRound = 'round' + doc.data().currentRound
                 this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: currentRound } })
               }
-              if (this.activeMembers >= 2) {
+              if (this.activeMembers >= 3) {
                 this.disabledButton = false
               } else {
                 this.disabledButton = true
