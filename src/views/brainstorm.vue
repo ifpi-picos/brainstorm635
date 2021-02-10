@@ -141,7 +141,7 @@
                 <span
                   v-if="currentRound === 0"
                   class="text-spinner text-flashes"
-                  >Waiting Members...
+                  >Waiting for members to start...
                 </span>
                 <span
                   v-else
