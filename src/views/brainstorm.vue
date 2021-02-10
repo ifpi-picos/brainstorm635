@@ -139,8 +139,14 @@
                   type="grow"
                 ></b-spinner>
                 <span
+                  v-if="currentRound === 0"
                   class="text-spinner text-flashes"
                   >Waiting Members...
+                </span>
+                <span
+                  v-else
+                  class="text-spinner text-flashes"
+                  >Waiting for continue...
                 </span>
                 <br /><br />
                 <span
