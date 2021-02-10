@@ -133,14 +133,14 @@
               </b-col>
               <b-col md="4">
                 <b-spinner
-                  v-if="disabledButton"
+                  v-if="!disabledButton"
                   variant="info"
                   label="Spinning"
                   style="width: 1.5rem; height: 1.5rem;"
                   type="grow"
                 ></b-spinner>
                 <span
-                  v-if="disabledButton"
+                  v-if="!disabledButton"
                   class="text-spinner text-flashes"
                   >Waiting Members...
                 </span>
