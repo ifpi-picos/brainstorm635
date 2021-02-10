@@ -216,7 +216,7 @@ export default {
       const currentTime = new Date()
       const timeSecondsDifference = Math.trunc((currentTime - this.hourOfStartRound) / 1000)
 
-      let totalSeconds = 300
+      let totalSeconds = 10
       let min = 0
       let seg = 0
 
@@ -280,7 +280,10 @@ export default {
 
     async saveIdeas () {
       const user = this.$firebase.auth().currentUser.uid
-      const data = { [user]: this.ideas }
+      const removeEmptyIdeas = this.ideas.filter((index) => {
+        return this.ideas[index] !== ''
+      })
+      const data = { [user]: removeEmptyIdeas }
 
       const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
       await database.collection('ideas').doc(this.round).set(data, { merge: true })
