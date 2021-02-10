@@ -283,6 +283,7 @@ export default {
       const removeEmptyIdeas = this.ideas.filter((index) => {
         return this.ideas[index] !== ''
       })
+      console.log(removeEmptyIdeas)
       const data = { [user]: removeEmptyIdeas }
 
       const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)

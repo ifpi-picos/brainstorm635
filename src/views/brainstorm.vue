@@ -225,7 +225,7 @@ export default {
                 const currentRound = 'round' + doc.data().currentRound
                 this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: currentRound } })
               }
-              if (this.activeMembers >= 3) {
+              if (this.activeMembers >= 2) {
                 this.disabledButton = false
               } else {
                 this.disabledButton = true
