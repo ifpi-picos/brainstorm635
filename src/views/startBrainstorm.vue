@@ -218,7 +218,7 @@ export default {
       timeDifference = Number(timeDifference)
 
       let min = 0
-      let seg = 10
+      let seg = 60
 
       if (timeDifference > 0 && (seg - (Math.trunc(timeDifference / 1000)) > 0)) {
         seg = seg - (Math.trunc(timeDifference / 1000))
