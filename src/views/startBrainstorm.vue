@@ -214,7 +214,7 @@ export default {
 
     createClock () {
       const currentTime = new Date()
-      const timeSecondsDifference = Math.trunc(Number(currentTime - this.hourOfStartRound) / 1000)
+      const timeSecondsDifference = Math.trunc((currentTime - this.hourOfStartRound) / 1000)
 
       let totalSeconds = 300
       let min = 0
