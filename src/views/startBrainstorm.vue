@@ -291,10 +291,9 @@ export default {
         }
       }
       const data = { [user]: removeEmptyIdeas }
-      const round = this.$route.params.round
 
       const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
-      database.collection('ideas').doc(round).set(data, { merge: true })
+      database.collection('ideas').doc(this.round).set(data, { merge: true })
         .then(function () {})
         .catch(function (error) {
           console.error(error)
