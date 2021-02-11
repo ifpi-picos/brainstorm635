@@ -204,7 +204,6 @@ export default {
           } else if (this.round !== ('round' + doc.data().currentRound)) {
             const round = 'round' + doc.data().currentRound
             this.saveIdeas().then(() => {
-              this.ideas = []
               this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: round } })
               /* window.location.reload() */
             })
@@ -294,15 +293,17 @@ export default {
       const data = { [user]: removeEmptyIdeas }
 
       const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
-      database.collection('ideas').doc(this.round).set(data, { merge: true })
+      await database.collection('ideas').doc(this.round).set(data, { merge: true })
         .then(function () {})
         .catch(function (error) {
           console.error(error)
         })
-      database.update({
+      await database.update({
         listFinishWriteIdeas: firebase.firestore.FieldValue.arrayUnion(user)
         /* currentDate: firebase.firestore.FieldValue.serverTimestamp() */
       })
+
+      this.ideas = []
     }
     // verifyFinalRound () {
     //   if (this.currentRound === this.participants) {
