@@ -216,7 +216,7 @@ export default {
       const currentTime = new Date()
       const timeSecondsDifference = Math.trunc((currentTime - this.hourOfStartRound) / 1000)
 
-      let totalSeconds = 20
+      let totalSeconds = 30
       let min = 0
       let seg = 0
 
@@ -232,12 +232,11 @@ export default {
           min--
           seg = 59
         } else if ((seg === 0 && min === 0) || !this.running) {
-          clearInterval(cron)
           this.saveIdeas()
           if (seg === 0 && min === 0) {
-            this.verifyFinalRound()
             this.changeRound()
           }
+          clearInterval(cron)
         }
 
         this.time = (min < 10 ? '0' + min : min) + ' : ' + (seg < 10 ? '0' + seg : seg)
@@ -269,6 +268,9 @@ export default {
           listFinishWriteIdeas: [],
           hourOfStartRound: new Date()
         })
+      } else {
+        const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
+        database.update({ concluded: true })
       }
     },
 
@@ -287,9 +289,10 @@ export default {
         }
       }
       const data = { [user]: removeEmptyIdeas }
+      const round = this.$route.params.round
 
       const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
-      await database.collection('ideas').doc(this.round).set(data, { merge: true })
+      await database.collection('ideas').doc(round).set(data, { merge: true })
         .then(function () {})
         .catch(function (error) {
           console.error(error)
@@ -298,14 +301,11 @@ export default {
         listFinishWriteIdeas: firebase.firestore.FieldValue.arrayUnion(user)
         /* currentDate: firebase.firestore.FieldValue.serverTimestamp() */
       })
-    },
-
-    verifyFinalRound () {
-      if (this.currentRound === this.participants) {
-        const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
-        database.update({ concluded: true })
-      }
     }
+    // verifyFinalRound () {
+    //   if (this.currentRound === this.participants) {
+    //   }
+    // }
   }
 }
 </script>
