@@ -30,11 +30,11 @@
               :key="index"
             >
               <div class="postit">
-                <h5 class="text-center">
+                <h5 class="text-center pt-1 pb-3">
                   <b> Idea #{{ index + 1 }} </b>
                 </h5>
                 <b-card-text>
-                  <p style="font-size: 1rem">
+                  <p style="font-size: 1rem; text-align: justify;">
                     {{ value }}
                   </p>
                 </b-card-text>
@@ -125,16 +125,16 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="css" scoped>
 /* $color: rgb(255,215,7); */
 /* $color: #6495ED; */
 /* $color: #836FFF; */
-$color: #add8e6;
+/* $color: #add8e6; */
 /* $color:#ADFF2F; */
 /* $color: #DDA0DD; */
-$colorDark: darken($color, 10%) transparent;
+/* $colorDark: darken($color, 10%) transparent; */
 
-.postit {
+/* .postit {
   padding: 1.5rem;
   background: $color;
   position: relative;
@@ -164,6 +164,48 @@ $colorDark: darken($color, 10%) transparent;
   border-width: 1.5em 1.5em 0 0;
   border-style: solid;
   border-color: $colorDark;
+} */
+.postit {
+  line-height: 1;
+  text-align: center;
+  min-width: 300px;
+  max-width: 100%;
+  margin: 0px;
+  min-height: 250px;
+  max-height: 250px;
+  padding: 1rem;
+  position: relative;
+  border: 1px solid #E8E8E8;
+  /* border-top: 60px solid #fdfd86; */
+  font-family: 'Reenie Beanie';
+  font-size: 3em;
+  border-bottom-right-radius: 60px 5px;
+  display: inline-block;
+  background: #ffff88; /* Old browsers */
+  background: -moz-linear-gradient(-45deg, #ffff88 81%, #ffff88 82%, #ffff88 82%, #ffffc6 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(81%,#ffff88), color-stop(82%,#ffff88), color-stop(82%,#ffff88), color-stop(100%,#ffffc6)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(-45deg, #ffff88 81%,#ffff88 82%,#ffff88 82%,#ffffc6 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(-45deg, #ffff88 81%,#ffff88 82%,#ffff88 82%,#ffffc6 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(-45deg, #ffff88 81%,#ffff88 82%,#ffff88 82%,#ffffc6 100%); /* IE10+ */
+  background: linear-gradient(135deg, #ffff88 81%,#ffff88 82%,#ffff88 82%,#ffffc6 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffff88', endColorstr='#ffffc6',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+.postit:after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  right: -0px;
+  bottom: 20px;
+  width: 200px;
+  height: 25px;
+  background: rgba(0, 0, 0, 0.2);
+  box-shadow:2px 15px 5px rgba(0, 0, 0, 0.40);
+  -moz-transform: matrix(-1, -0.1, 0, 1, 0, 0);
+  -webkit-transform: matrix(-1, -0.1, 0, 1, 0, 0);
+  -o-transform: matrix(-1, -0.1, 0, 1, 0, 0);
+  -ms-transform: matrix(-1, -0.1, 0, 1, 0, 0);
+  transform: matrix(-1, -0.1, 0, 1, 0, 0);
 }
 
 .container-ideas {

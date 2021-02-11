@@ -214,27 +214,29 @@ export default {
 
     createClock () {
       const currentTime = new Date()
-      let timeDifference = currentTime - this.hourOfStartRound
-      timeDifference = Number(timeDifference)
+      const timeSecondsDifference = Math.trunc((currentTime - this.hourOfStartRound) / 1000)
 
+      let totalSeconds = 30
       let min = 0
-      let seg = 60
+      let seg = 0
 
-      if (timeDifference > 0 && (seg - (Math.trunc(timeDifference / 1000)) > 0)) {
-        seg = seg - (Math.trunc(timeDifference / 1000))
+      if (timeSecondsDifference > 0 && (totalSeconds - timeSecondsDifference > 0)) {
+        totalSeconds = totalSeconds - timeSecondsDifference
       }
+
+      min = Math.trunc(totalSeconds / 60)
+      seg = totalSeconds - (min * 60)
 
       const cron = setInterval(() => {
         if (seg < 0 && min > 0) {
           min--
           seg = 59
         } else if ((seg === 0 && min === 0) || !this.running) {
-          clearInterval(cron)
-          this.saveIdeas()
+          this.saveIdeas().then(() => {})
           if (seg === 0 && min === 0) {
-            this.verifyFinalRound()
             this.changeRound()
           }
+          clearInterval(cron)
         }
 
         this.time = (min < 10 ? '0' + min : min) + ' : ' + (seg < 10 ? '0' + seg : seg)
@@ -248,36 +250,47 @@ export default {
     },
 
     changeRound () {
-      if (
-      /* (this.listFinishWriteIdeas > 0) && */
-      /* (this.participants === this.listFinishWriteIdeas) && */
-        (this.currentRound < this.participants)) {
-        this.ideas = []
-        /* this.$bvToast.toast('Changing to Round' + this.round[5], {
-          title: '',
-          toaster: 'b-toaster-top-center',
-          variant: 'success',
-          autoHideDelay: 1000,
-          appendToast: true
-        }) */
-        const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
-        database.update({
-          currentRound: this.currentRound + 1,
-          listFinishWriteIdeas: [],
-          hourOfStartRound: new Date()
-        })
+      // this.ideas = []
+      if (this.isLeader) {
+        if (
+        /* (this.listFinishWriteIdeas > 0) && */
+        /* (this.participants === this.listFinishWriteIdeas) && */
+          (this.currentRound < this.participants)) {
+          /* this.$bvToast.toast('Changing to Round' + this.round[5], {
+            title: '',
+            toaster: 'b-toaster-top-center',
+            variant: 'success',
+            autoHideDelay: 1000,
+            appendToast: true
+          }) */
+          const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
+          database.update({
+            currentRound: this.currentRound + 1,
+            listFinishWriteIdeas: [],
+            hourOfStartRound: new Date()
+          })
+        } else {
+          const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
+          database.update({ concluded: true })
+        }
       }
     },
 
     finishWriteIdeas () {
       if (this.ideas.length === 3) {
-        this.saveIdeas()
+        this.saveIdeas().then(() => {})
       }
     },
 
     async saveIdeas () {
       const user = this.$firebase.auth().currentUser.uid
-      const data = { [user]: this.ideas }
+      const removeEmptyIdeas = []
+      for (const index in this.ideas) {
+        if (this.ideas[index] !== '') {
+          removeEmptyIdeas.push(this.ideas[index])
+        }
+      }
+      const data = { [user]: removeEmptyIdeas }
 
       const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
       await database.collection('ideas').doc(this.round).set(data, { merge: true })
@@ -289,14 +302,13 @@ export default {
         listFinishWriteIdeas: firebase.firestore.FieldValue.arrayUnion(user)
         /* currentDate: firebase.firestore.FieldValue.serverTimestamp() */
       })
-    },
 
-    verifyFinalRound () {
-      if (this.currentRound === this.participants) {
-        const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
-        database.update({ concluded: true })
-      }
+      this.ideas = []
     }
+    // verifyFinalRound () {
+    //   if (this.currentRound === this.participants) {
+    //   }
+    // }
   }
 }
 </script>

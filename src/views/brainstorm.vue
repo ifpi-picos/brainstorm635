@@ -133,19 +133,25 @@
               </b-col>
               <b-col md="4">
                 <b-spinner
-                  v-if="allInputsVerified"
                   variant="info"
                   label="Spinning"
                   style="width: 1.5rem; height: 1.5rem;"
                   type="grow"
                 ></b-spinner>
                 <span
-                  v-if="allInputsVerified"
+                  v-if="currentRound === 0"
                   class="text-spinner text-flashes"
-                  >Waiting Members...
+                  >Waiting for members to start...
+                </span>
+                <span
+                  v-else
+                  class="text-spinner text-flashes"
+                  >Waiting for continue...
                 </span>
                 <br /><br />
-                <span class="loading"
+                <span
+                  v-if="isLeader"
+                  class="loading"
                   >Start when all members are registered</span
                 >
                 <b-row align-h="center" class="pt-4">
@@ -179,7 +185,6 @@ export default {
     return {
       disabledButton: true,
       activeMembers: 1,
-      allInputsVerified: true,
       brainstormId: this.$route.params.id,
       listGuests: [],
       isLeader: false,
