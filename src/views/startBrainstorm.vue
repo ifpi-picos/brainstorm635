@@ -232,7 +232,7 @@ export default {
           min--
           seg = 59
         } else if ((seg === 0 && min === 0) || !this.running) {
-          this.saveIdeas()
+          this.saveIdeas().then(() => {})
           if (seg === 0 && min === 0) {
             this.changeRound()
           }
@@ -276,7 +276,7 @@ export default {
 
     finishWriteIdeas () {
       if (this.ideas.length === 3) {
-        this.saveIdeas()
+        this.saveIdeas().then(() => {})
       }
     },
 
@@ -292,12 +292,12 @@ export default {
       const round = this.$route.params.round
 
       const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
-      await database.collection('ideas').doc(round).set(data, { merge: true })
+      database.collection('ideas').doc(round).set(data, { merge: true })
         .then(function () {})
         .catch(function (error) {
           console.error(error)
         })
-      await database.update({
+      database.update({
         listFinishWriteIdeas: firebase.firestore.FieldValue.arrayUnion(user)
         /* currentDate: firebase.firestore.FieldValue.serverTimestamp() */
       })
