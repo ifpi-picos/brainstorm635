@@ -250,27 +250,29 @@ export default {
     },
 
     changeRound () {
-      if (
-      /* (this.listFinishWriteIdeas > 0) && */
-      /* (this.participants === this.listFinishWriteIdeas) && */
-        (this.currentRound < this.participants)) {
-        this.ideas = []
-        /* this.$bvToast.toast('Changing to Round' + this.round[5], {
-          title: '',
-          toaster: 'b-toaster-top-center',
-          variant: 'success',
-          autoHideDelay: 1000,
-          appendToast: true
-        }) */
-        const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
-        database.update({
-          currentRound: this.currentRound + 1,
-          listFinishWriteIdeas: [],
-          hourOfStartRound: new Date()
-        })
-      } else {
-        const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
-        database.update({ concluded: true })
+      if (this.isLeader) {
+        if (
+        /* (this.listFinishWriteIdeas > 0) && */
+        /* (this.participants === this.listFinishWriteIdeas) && */
+          (this.currentRound < this.participants)) {
+          this.ideas = []
+          /* this.$bvToast.toast('Changing to Round' + this.round[5], {
+            title: '',
+            toaster: 'b-toaster-top-center',
+            variant: 'success',
+            autoHideDelay: 1000,
+            appendToast: true
+          }) */
+          const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
+          database.update({
+            currentRound: this.currentRound + 1,
+            listFinishWriteIdeas: [],
+            hourOfStartRound: new Date()
+          })
+        } else {
+          const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
+          database.update({ concluded: true })
+        }
       }
     },
 
