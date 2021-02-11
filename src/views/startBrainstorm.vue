@@ -250,12 +250,12 @@ export default {
     },
 
     changeRound () {
+      this.ideas = []
       if (this.isLeader) {
         if (
         /* (this.listFinishWriteIdeas > 0) && */
         /* (this.participants === this.listFinishWriteIdeas) && */
           (this.currentRound < this.participants)) {
-          this.ideas = []
           /* this.$bvToast.toast('Changing to Round' + this.round[5], {
             title: '',
             toaster: 'b-toaster-top-center',
