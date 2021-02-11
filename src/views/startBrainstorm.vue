@@ -204,6 +204,7 @@ export default {
           } else if (this.round !== ('round' + doc.data().currentRound)) {
             const round = 'round' + doc.data().currentRound
             this.saveIdeas().then(() => {
+              this.ideas = []
               this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: round } })
               /* window.location.reload() */
             })
@@ -250,7 +251,7 @@ export default {
     },
 
     changeRound () {
-      this.ideas = []
+      // this.ideas = []
       if (this.isLeader) {
         if (
         /* (this.listFinishWriteIdeas > 0) && */
