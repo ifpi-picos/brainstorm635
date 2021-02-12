@@ -203,8 +203,8 @@ export default {
             this.$router.push({ name: 'brainstorm', params: { id: this.brainstormId } })
           } else if (this.round !== ('round' + doc.data().currentRound)) {
             const round = 'round' + doc.data().currentRound
-            this.saveIdeas().then(() => {
-              this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: round } })
+            this.saveIdeas().then(async () => {
+              await this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: round } })
               /* window.location.reload() */
             })
           }
@@ -213,6 +213,7 @@ export default {
     },
 
     createClock () {
+      this.ideas = []
       const currentTime = new Date()
       const timeSecondsDifference = Math.trunc((currentTime - this.hourOfStartRound) / 1000)
 
@@ -293,17 +294,16 @@ export default {
       const data = { [user]: removeEmptyIdeas }
 
       const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
-      await database.collection('ideas').doc(this.round).set(data, { merge: true })
+      database.collection('ideas').doc(this.round).set(data, { merge: true })
         .then(function () {})
         .catch(function (error) {
           console.error(error)
         })
-      await database.update({
+      database.update({
         listFinishWriteIdeas: firebase.firestore.FieldValue.arrayUnion(user)
         /* currentDate: firebase.firestore.FieldValue.serverTimestamp() */
       })
-
-      this.ideas = []
+      console.log('Saved!!!!!!!')
     }
     // verifyFinalRound () {
     //   if (this.currentRound === this.participants) {
