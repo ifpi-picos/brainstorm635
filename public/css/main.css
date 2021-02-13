@@ -168,3 +168,8 @@ $success: #18d26e;
 .icone-padd {
   padding-right: 3.5px !important;
 }
+
+.swal2-actions:not(.swal2-loading) .swal2-styled:hover {
+  box-shadow: 0 1px 3px 0 rgba(60,64,67,0.302),
+  0 4px 8px 3px rgba(60,64,67,0.149) !important;
+}

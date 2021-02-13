@@ -183,6 +183,7 @@ export default {
           'You are trying to access the Brainstorm, but it´s reached the number maximum of guests!',
         icon: 'error',
         confirmButtonText: 'OK',
+        confirmButtonColor: '#17a2b8',
         timer: 4000
       })
     },
@@ -194,6 +195,7 @@ export default {
           'You are trying to access a non-existent Brainstorm, try another code!',
         icon: 'error',
         confirmButtonText: 'OK',
+        confirmButtonColor: '#17a2b8',
         timer: 4000
       })
     }
