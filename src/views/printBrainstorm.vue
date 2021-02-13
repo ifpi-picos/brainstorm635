@@ -18,7 +18,7 @@
         v-for="(roundy, i) in ideasPerRound"
         :key="i"
       >
-        <b-col md="12" class="mb-1">
+        <b-col md="12" class="mb-2">
           <h5 class="round">Round {{ i + 1 }}</h5>
         </b-col>
         <b-col md="12">
@@ -34,7 +34,7 @@
                   <b> Idea #{{ index + 1 }} </b>
                 </h5>
                 <b-card-text>
-                  <p style="font-size: 2rem; text-align: justify;">
+                  <p style="font-size: 17.5px; text-align: justify;">
                     {{ value }}
                   </p>
                 </b-card-text>
@@ -168,8 +168,8 @@ export default {
 .postit {
   line-height: 1;
   text-align: center;
-  min-width: 300px;
-  max-width: 100%;
+  width: 98%;
+  max-width: 98%;
   margin: 0px;
   min-height: 250px;
   max-height: 250px;
@@ -177,18 +177,18 @@ export default {
   position: relative;
   border: 1px solid #E8E8E8;
   /* border-top: 60px solid #fdfd86; */
-  font-family: 'Reenie Beanie';
+  font-family: 'comfortaa';
   font-size: 3em;
-  border-bottom-right-radius: 60px 5px;
+  border-bottom-right-radius: 60px 6px;
   display: inline-block;
-  background: #ffff88; /* Old browsers */
-  background: -moz-linear-gradient(-45deg, #ffff88 81%, #ffff88 82%, #ffff88 82%, #ffffc6 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, right bottom, color-stop(81%,#ffff88), color-stop(82%,#ffff88), color-stop(82%,#ffff88), color-stop(100%,#ffffc6)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(-45deg, #ffff88 81%,#ffff88 82%,#ffff88 82%,#ffffc6 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(-45deg, #ffff88 81%,#ffff88 82%,#ffff88 82%,#ffffc6 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(-45deg, #ffff88 81%,#ffff88 82%,#ffff88 82%,#ffffc6 100%); /* IE10+ */
-  background: linear-gradient(135deg, #ffff88 81%,#ffff88 82%,#ffff88 82%,#ffffc6 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffff88', endColorstr='#ffffc6',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+  background: #ADD8E6; /* Old browsers */
+  background: -moz-linear-gradient(-45deg, #ADD8E6 81%, #ADD8E6 82%, #ADD8E6 82%, #e1f7ff 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(81%,#ADD8E6), color-stop(82%,#ADD8E6), color-stop(82%,#ADD8E6), color-stop(100%,#e1f7ff)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(-45deg, #ADD8E6 81%,#ADD8E6 82%#ADD8E6 82%,#e1f7ff 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(-45deg, #ADD8E6 81%,#ADD8E6 82%,#ADD8E6 82%,#e1f7ff 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(-45deg, #ADD8E6 81%,#ADD8E6 82%,#ADD8E6 82%,#e1f7ff 100%); /* IE10+ */
+  background: linear-gradient(135deg, #ADD8E6 81%,#ADD8E6 82%,#ADD8E6 82%,#e1f7ff 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffff88', endColorstr='#e1f7ff',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
 .postit:after {
