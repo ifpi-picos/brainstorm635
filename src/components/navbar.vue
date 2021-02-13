@@ -2,9 +2,9 @@
   <b-navbar fixed="top" toggleable="lg" type="light">
     <b-navbar-brand>
       <b-link
+        @click.prevent="verifyRoute()"
         class="sidebar-nav
-          navbar-brand ml-1"
-        to="/"
+        navbar-brand ml-1"
       >
         <b-img
           class="ml-3 mt-4"
@@ -79,11 +79,13 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2'
 import { EventBus } from '@/eventBus'
 
 export default {
   data () {
     return {
+      route: this.$route.name,
       load: false,
       verifyLocalStorage: false,
       user: {
@@ -123,6 +125,26 @@ export default {
       }
       if (this.user === null) {
         this.user = { photoURL: '', displayName: '' }
+      }
+    },
+
+    verifyRoute () {
+      if (this.route === 'brainstorm' || this.route === 'startBrainstorm' || this.route === 'printBrainstorm') {
+        Swal.fire({
+          title: 'Are you sure?',
+          text: 'You are trying to leave without finishing or saving data!',
+          icon: 'warning',
+          focusConfirm: false,
+          showCloseButton: true,
+          confirmButtonText: 'Confirm exit',
+          denyButtonText: 'Cancel',
+          showCancelButton: true,
+          confirmButtonColor: '#17a2b8',
+          cancelButtonColor: '#dc3545'
+        }).then((result) => {
+          console.log('deu')
+          if (result.isConfirmed) { this.$router.push({ name: 'default' }) }
+        })
       }
     }
   }
@@ -178,4 +200,9 @@ span,
   padding-right: 0.5rem;
   padding-left: 0 !important;
 }
+
+.swal2-close:focus {
+  box-shadow: none !important;
+}
+
 </style>

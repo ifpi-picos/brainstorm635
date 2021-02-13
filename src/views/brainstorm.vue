@@ -255,6 +255,7 @@ export default {
         text: 'You cant alread sent it to your friends!',
         icon: 'success',
         confirmButtonText: 'OK',
+        confirmButtonColor: '#17a2b8',
         timer: 1200
       })
     },

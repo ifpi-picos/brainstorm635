@@ -253,17 +253,14 @@ export default {
     changeRound () {
       // this.ideas = []
       if (this.isLeader) {
-        if (
-        /* (this.listFinishWriteIdeas > 0) && */
-        /* (this.participants === this.listFinishWriteIdeas) && */
-          (this.currentRound < this.participants)) {
-          /* this.$bvToast.toast('Changing to Round' + this.round[5], {
-            title: '',
+        if (this.currentRound < this.participants) {
+          this.$bvToast.toast('Changing to Round ' + (this.currentRound + 1), {
+            title: 'Round change alert!',
             toaster: 'b-toaster-top-center',
             variant: 'success',
-            autoHideDelay: 1000,
+            autoHideDelay: 3000,
             appendToast: true
-          }) */
+          })
           const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
           database.update({
             currentRound: this.currentRound + 1,
@@ -303,12 +300,7 @@ export default {
         listFinishWriteIdeas: firebase.firestore.FieldValue.arrayUnion(user)
         /* currentDate: firebase.firestore.FieldValue.serverTimestamp() */
       })
-      console.log('Saved!!!!!!!')
     }
-    // verifyFinalRound () {
-    //   if (this.currentRound === this.participants) {
-    //   }
-    // }
   }
 }
 </script>

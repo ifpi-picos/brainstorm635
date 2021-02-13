@@ -34,7 +34,7 @@
                   <b> Idea #{{ index + 1 }} </b>
                 </h5>
                 <b-card-text>
-                  <p style="font-size: 1rem; text-align: justify;">
+                  <p style="font-size: 2rem; text-align: justify;">
                     {{ value }}
                   </p>
                 </b-card-text>
@@ -216,7 +216,6 @@ export default {
 }
 
 h5,
-p,
 span {
   font-family: 'comfortaa';
 }
@@ -225,6 +224,7 @@ span {
   color: #138496;
   font-weight: 700;
   margin: 0 !important;
+  font-family: 'comfortaa';
 }
 
 .date {
