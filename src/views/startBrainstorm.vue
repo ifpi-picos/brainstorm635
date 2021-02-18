@@ -217,7 +217,7 @@ export default {
       const currentTime = new Date()
       const timeSecondsDifference = Math.trunc((currentTime - this.hourOfStartRound) / 1000)
 
-      let totalSeconds = 300
+      let totalSeconds = 30
       let min = 0
       let seg = 0
 
@@ -289,17 +289,18 @@ export default {
         }
       }
       const data = { [user]: removeEmptyIdeas }
-
-      const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
-      database.collection('ideas').doc(this.round).set(data, { merge: true })
-        .then(function () {})
-        .catch(function (error) {
-          console.error(error)
+      if (removeEmptyIdeas.length !== 0) {
+        const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
+        database.collection('ideas').doc(this.round).set(data, { merge: true })
+          .then(function () {})
+          .catch(function (error) {
+            console.error(error)
+          })
+        database.update({
+          listFinishWriteIdeas: firebase.firestore.FieldValue.arrayUnion(user)
+          /* currentDate: firebase.firestore.FieldValue.serverTimestamp() */
         })
-      database.update({
-        listFinishWriteIdeas: firebase.firestore.FieldValue.arrayUnion(user)
-        /* currentDate: firebase.firestore.FieldValue.serverTimestamp() */
-      })
+      }
     }
   }
 }
