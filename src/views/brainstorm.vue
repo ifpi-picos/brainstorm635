@@ -75,6 +75,17 @@
               </b-col>
               <b-col md="2">
                 <b-form-group
+                  label="Rounds time"
+                  class="input-with-prepend">
+                  <b-form-input
+                    class="input-code"
+                    type="time"
+                    v-model="roundsTime">
+                  </b-form-input>
+                </b-form-group>
+              </b-col>
+              <b-col md="2">
+                <b-form-group
                   id="input-group-3"
                   label="Active members"
                   label-for="input-3"
@@ -189,7 +200,8 @@ export default {
       listGuests: [],
       isLeader: false,
       description: '',
-      currentRound: 0
+      currentRound: 0,
+      roundsTime: ''
     }
   },
 
