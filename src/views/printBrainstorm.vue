@@ -90,8 +90,7 @@ export default {
         const db = this.$firebase.firestore()
         db.collection('brainstorms')
           .doc(this.brainstormId)
-          .get()
-          .then(doc => {
+          .onSnapshot(doc => {
             this.rounds = doc.data().listGuests
             this.description = doc.data().description
             this.brainstormDate = doc.data().brainstormDate.toDate()
