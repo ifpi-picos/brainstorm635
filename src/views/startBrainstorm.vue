@@ -223,26 +223,28 @@ export default {
 
       if (timeSecondsDifference > 0 && (totalSeconds - timeSecondsDifference > 0)) {
         totalSeconds = totalSeconds - timeSecondsDifference
-      }
+      } else if (timeSecondsDifference < 0) { totalSeconds = 0 }
 
       min = Math.trunc(totalSeconds / 60)
       seg = totalSeconds - (min * 60)
 
-      const cron = setInterval(() => {
-        if (seg < 0 && min > 0) {
-          min--
-          seg = 59
-        } else if ((seg === 0 && min === 0) || !this.running) {
-          this.saveIdeas().then(() => {})
-          if (seg === 0 && min === 0) {
-            this.changeRound()
+      if (totalSeconds > 0) {
+        const cron = setInterval(() => {
+          if (seg < 0 && min > 0) {
+            min--
+            seg = 59
+          } else if ((seg === 0 && min === 0) || !this.running) {
+            this.saveIdeas().then(() => {})
+            if (seg === 0 && min === 0) {
+              this.changeRound()
+            }
+            clearInterval(cron)
           }
-          clearInterval(cron)
-        }
 
-        this.time = (min < 10 ? '0' + min : min) + ' : ' + (seg < 10 ? '0' + seg : seg)
-        seg--
-      }, 1000)
+          this.time = (min < 10 ? '0' + min : min) + ' : ' + (seg < 10 ? '0' + seg : seg)
+          seg--
+        }, 1000)
+      }
     },
 
     pauseBrainstorm () {
