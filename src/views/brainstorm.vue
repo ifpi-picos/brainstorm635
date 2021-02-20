@@ -281,6 +281,7 @@ export default {
           currentRound = doc.data().currentRound === 0 ? 1 : doc.data().currentRound
           this.saveDescription()
           db.update({
+            roundsTime: this.roundsTime,
             running: true,
             currentRound: currentRound,
             listFinishWriteIdeas: [],

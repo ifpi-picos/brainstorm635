@@ -142,7 +142,8 @@ export default {
       participants: 0,
       // concluded: null,
       hourOfStartRound: '',
-      running: true
+      running: true,
+      roundsTime: ''
     }
   },
 
@@ -194,6 +195,7 @@ export default {
             this.$router.push({ name: 'printBrainstorm', params: { id: this.brainstormId } })
           })
         } else {
+          this.roundsTime = doc.data().roundsTime
           this.description = doc.data().description
           this.currentRound = doc.data().currentRound
           this.isLeader = doc.data().leader === this.$firebase.auth().currentUser.uid
@@ -217,32 +219,36 @@ export default {
       const currentTime = new Date()
       const timeSecondsDifference = Math.trunc((currentTime - this.hourOfStartRound) / 1000)
 
-      let totalSeconds = 30
-      let min = 0
-      let seg = 0
+      const time = this.roundsTime.split(':')
+
+      /* Calc to transfor minuts to seconds in time variable */
+      let min = parseInt(time[0])
+      let sec = parseInt(time[1])
+
+      let totalSeconds = (min * 60) + screenX
 
       if (timeSecondsDifference > 0 && (totalSeconds - timeSecondsDifference > 0)) {
         totalSeconds = totalSeconds - timeSecondsDifference
       } else if (timeSecondsDifference < 0) { totalSeconds = 0 }
 
       min = Math.trunc(totalSeconds / 60)
-      seg = totalSeconds - (min * 60)
+      sec = totalSeconds - (min * 60)
 
       if (totalSeconds > 0) {
         const cron = setInterval(() => {
-          if (seg < 0 && min > 0) {
+          if (sec < 0 && min > 0) {
             min--
-            seg = 59
-          } else if ((seg === 0 && min === 0) || !this.running) {
+            sec = 59
+          } else if ((sec === 0 && min === 0) || !this.running) {
             this.saveIdeas().then(() => {})
-            if (seg === 0 && min === 0) {
+            if (sec === 0 && min === 0) {
               this.changeRound()
             }
             clearInterval(cron)
           }
 
-          this.time = (min < 10 ? '0' + min : min) + ' : ' + (seg < 10 ? '0' + seg : seg)
-          seg--
+          this.time = (min < 10 ? '0' + min : min) + ' : ' + (sec < 10 ? '0' + sec : sec)
+          sec--
         }, 1000)
       }
     },
