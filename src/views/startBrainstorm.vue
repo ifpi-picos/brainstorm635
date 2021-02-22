@@ -235,7 +235,7 @@ export default {
       let min = parseInt(time[0])
       let sec = parseInt(time[1])
 
-      let totalSeconds = (min * 60) + screenX
+      let totalSeconds = (min * 60) + sec
 
       if (timeSecondsDifference > 0 && (totalSeconds - timeSecondsDifference > 0)) {
         totalSeconds = totalSeconds - timeSecondsDifference
