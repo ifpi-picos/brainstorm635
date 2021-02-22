@@ -199,9 +199,14 @@ export default {
         this.running = doc.data().running
 
         if (doc.data().concluded && (this.$route.name !== 'printBrainstorm')) {
-          this.saveIdeas().then(() => {
-            this.$router.push({ name: 'printBrainstorm', params: { id: this.brainstormId } })
-          })
+          this.saveIdeas()
+            .then(() => {
+              dispatchEvent(eventRoundChanged)
+              this.ideas = []
+            })
+            .then(() => {
+              this.$router.push({ name: 'printBrainstorm', params: { id: this.brainstormId } })
+            })
         } else {
           this.roundsTime = doc.data().roundsTime
           this.description = doc.data().description
@@ -209,15 +214,20 @@ export default {
           this.isLeader = doc.data().leader === this.$firebase.auth().currentUser.uid
           this.listFinishWriteIdeas = doc.data().listFinishWriteIdeas.length
           this.participants = doc.data().listGuests.length
+
           if (!this.running && (this.$route.name !== 'brainstorm')) {
-            this.$router.push({ name: 'brainstorm', params: { id: this.brainstormId } })
+            dispatchEvent(eventRoundChanged)
+            this.saveIdeas().then(() => {
+              this.$router.push({ name: 'brainstorm', params: { id: this.brainstormId } })
+            })
           } else if (this.round !== ('round' + doc.data().currentRound)) {
             const round = 'round' + doc.data().currentRound
             this.saveIdeas().then(() => {
+              this.ideas = []
               dispatchEvent(eventRoundChanged)
               /* window.location.reload() */
-            }).then(async () => {
-              await this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: round } })
+            }).then(() => {
+              this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: round } })
             })
           }
         }
@@ -315,11 +325,12 @@ export default {
           .then(function () {})
           .catch(function (error) {
             console.error(error)
+          }).then(() => {
+            database.update({
+              listFinishWriteIdeas: firebase.firestore.FieldValue.arrayUnion(user)
+              /* currentDate: firebase.firestore.FieldValue.serverTimestamp() */
+            })
           })
-        database.update({
-          listFinishWriteIdeas: firebase.firestore.FieldValue.arrayUnion(user)
-          /* currentDate: firebase.firestore.FieldValue.serverTimestamp() */
-        })
       }
     }
   }
