@@ -119,8 +119,13 @@
     <b-row align-v="center" align-h="center" class="mt-2">
       <b-button
         v-if="isLeader"
-        variant="outline-warning" class="buttonPause"
+        variant="outline-warning" class="buttonPauseNext"
         @click="pauseBrainstorm()">Pause
+      </b-button>
+      <b-button
+        v-if="isLeader"
+        variant="outline-info" class="buttonPauseNext ml-4"
+        @click="changeRound()">Next Round
       </b-button>
     </b-row>
   </b-container>
@@ -128,6 +133,9 @@
 
 <script>
 import firebase from 'firebase/app'
+
+const eventRoundChanged = new Event('eventRoundChanged')
+
 export default {
   data () {
     return {
@@ -205,9 +213,11 @@ export default {
             this.$router.push({ name: 'brainstorm', params: { id: this.brainstormId } })
           } else if (this.round !== ('round' + doc.data().currentRound)) {
             const round = 'round' + doc.data().currentRound
-            this.saveIdeas().then(async () => {
-              await this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: round } })
+            this.saveIdeas().then(() => {
+              dispatchEvent(eventRoundChanged)
               /* window.location.reload() */
+            }).then(async () => {
+              await this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: round } })
             })
           }
         }
@@ -241,11 +251,13 @@ export default {
             sec = 59
           } else if ((sec === 0 && min === 0) || !this.running) {
             this.saveIdeas().then(() => {})
-            if (sec === 0 && min === 0) {
-              this.changeRound()
-            }
+            // if (sec === 0 && min === 0) {
+            //   this.changeRound()
+            // }
             clearInterval(cron)
           }
+
+          addEventListener('eventRoundChanged', () => clearInterval(cron))
 
           this.time = (min < 10 ? '0' + min : min) + ' : ' + (sec < 10 ? '0' + sec : sec)
           sec--
@@ -315,7 +327,7 @@ export default {
 </script>
 
 <style lang="css" scoped>
-.buttonPause:hover {
+.buttonPauseNext:hover {
   color: #fff;
 }
 
