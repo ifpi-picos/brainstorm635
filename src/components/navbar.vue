@@ -142,7 +142,6 @@ export default {
           confirmButtonColor: '#17a2b8',
           cancelButtonColor: '#dc3545'
         }).then((result) => {
-          console.log('deu')
           if (result.isConfirmed) { this.$router.push({ name: 'default' }) }
         })
       }
