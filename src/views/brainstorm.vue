@@ -234,8 +234,10 @@ export default {
               this.currentRound = doc.data().currentRound
               const running = doc.data().running
               if (running) {
-                const currentRound = 'round' + doc.data().currentRound
-                this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: currentRound } })
+                this.createSheet().then(() => {
+                  const currentRound = 'round' + doc.data().currentRound
+                  this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: currentRound } })
+                })
               }
               if (this.activeMembers >= 2) {
                 this.disabledButton = false
@@ -249,6 +251,18 @@ export default {
       } catch (error) {
         console.error(error)
       }
+    },
+
+    async createSheet () {
+      const userUid = this.$firebase.auth().currentUser.uid
+      let indexGuest = this.listGuests.findIndex(guest => {
+        return guest.uid === userUid
+      })
+      indexGuest = indexGuest.toString()
+      const brainstorm = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
+      brainstorm.collection('ideas').doc(indexGuest).set({ owner: indexGuest }, { merge: true })
+        .then(() => {})
+        .catch(error => console.error(error))
     },
 
     codeSelect () {
