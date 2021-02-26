@@ -147,11 +147,13 @@ export default {
       currentRound: 0,
       isLeader: false,
       listFinishWriteIdeas: 0,
+      listGuests: [],
       participants: 0,
       // concluded: null,
       hourOfStartRound: '',
       running: true,
-      roundsTime: ''
+      roundsTime: '',
+      indexSheet: 0
     }
   },
 
@@ -214,6 +216,7 @@ export default {
           this.isLeader = doc.data().leader === this.$firebase.auth().currentUser.uid
           this.listFinishWriteIdeas = doc.data().listFinishWriteIdeas.length
           this.participants = doc.data().listGuests.length
+          this.listGuests = doc.data().listGuests
 
           if (!this.running && (this.$route.name !== 'brainstorm')) {
             dispatchEvent(eventRoundChanged)
@@ -232,6 +235,7 @@ export default {
           }
         }
       })
+      this.chooseSheet()
     },
 
     createClock () {
@@ -310,8 +314,35 @@ export default {
       }
     },
 
+    // Get Sheet for current user
+    chooseSheet () {
+      const currentRound = this.round[5]
+      const currentUser = this.$firebase.auth().currentUser.uid
+      const myPositon = this.listGuests.findIndex((guest) => guest.uid === currentUser)
+
+      let indexSheet = null
+
+      if (currentRound === 1) {
+        indexSheet = myPositon
+      } else {
+        indexSheet = myPositon + 1 - currentRound
+        if (indexSheet < 0) {
+          indexSheet = this.listGuests.length + indexSheet
+        }
+      }
+      // console.log('indexSheet', indexSheet)
+      this.indexSheet = indexSheet
+
+      // console.log(
+      //   `${this.$firebase.auth().currentUser.displayName} na rodada ${currentRound} escreve na folha de ${this.listGuests[indexSheet].displayName}`
+      // )
+    },
+
     async saveIdeas () {
-      const user = this.$firebase.auth().currentUser.uid
+      const uid = this.$firebase.auth().currentUser.uid
+      let user = this.listGuests.findIndex(guest => guest.uid === uid)
+      user = user.toString()
+      console.log(user, uid, this.ideas)
       const removeEmptyIdeas = []
       for (const index in this.ideas) {
         if (this.ideas[index] !== '') {
@@ -321,15 +352,16 @@ export default {
       const data = { [user]: removeEmptyIdeas }
       if (removeEmptyIdeas.length !== 0) {
         const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
-        database.collection('ideas').doc(this.round).set(data, { merge: true })
+        await database.collection('ideas').doc(this.indexSheet.toString()).set(data/*, /{ merge: true } */)
           .then(function () {})
-          .catch(function (error) {
-            console.error(error)
-          }).then(() => {
+          .then(() => {
             database.update({
               listFinishWriteIdeas: firebase.firestore.FieldValue.arrayUnion(user)
-              /* currentDate: firebase.firestore.FieldValue.serverTimestamp() */
+              // currentDate: firebase.firestore.FieldValue.serverTimestamp()
             })
+          })
+          .catch(function (error) {
+            console.error(error)
           })
       }
     }
