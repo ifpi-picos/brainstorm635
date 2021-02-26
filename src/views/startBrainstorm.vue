@@ -175,6 +175,14 @@ export default {
       this.round = route.params.round
       this.getData()
       this.getHourOfStartRound()
+    },
+    concluded: function () {
+      if (this.concluded) {
+        this.changeRoute()
+      }
+    },
+    running: function () {
+      this.changeRoute()
     }
   },
 
@@ -194,47 +202,51 @@ export default {
       })
     },
 
+    changeRoute () {
+      if (this.concluded) {
+        this.saveIdeas()
+          .then(() => {
+            dispatchEvent(eventRoundChanged)
+            this.ideas = []
+          })
+          .then(() => { this.$router.push({ name: 'printBrainstorm' }) })
+          .catch(error => console.error(error))
+      } else {
+        if (!this.running) {
+          dispatchEvent(eventRoundChanged)
+          this.saveIdeas()
+            .then(() => this.$router.push({ name: 'brainstorm', params: { id: this.brainstormId } }))
+            .catch(error => console.error(error))
+        }
+      }
+    },
+
     getData () {
       const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
 
       database.onSnapshot(doc => {
         this.running = doc.data().running
+        this.roundsTime = doc.data().roundsTime
+        this.description = doc.data().description
+        this.currentRound = doc.data().currentRound
+        this.isLeader = doc.data().leader === this.$firebase.auth().currentUser.uid
+        this.listFinishWriteIdeas = doc.data().listFinishWriteIdeas.length
+        this.participants = doc.data().listGuests.length
+        this.listGuests = doc.data().listGuests
 
-        if (doc.data().concluded && (this.$route.name !== 'printBrainstorm')) {
+        // Update round
+        if (!this.concluded && (this.round !== ('round' + doc.data().currentRound))) {
+          const newRound = 'round' + doc.data().currentRound
           this.saveIdeas()
             .then(() => {
-              dispatchEvent(eventRoundChanged)
-              this.ideas = []
-            })
-            .then(() => {
-              this.$router.push({ name: 'printBrainstorm', params: { id: this.brainstormId } })
-            })
-        } else {
-          this.roundsTime = doc.data().roundsTime
-          this.description = doc.data().description
-          this.currentRound = doc.data().currentRound
-          this.isLeader = doc.data().leader === this.$firebase.auth().currentUser.uid
-          this.listFinishWriteIdeas = doc.data().listFinishWriteIdeas.length
-          this.participants = doc.data().listGuests.length
-          this.listGuests = doc.data().listGuests
-
-          if (!this.running && (this.$route.name !== 'brainstorm')) {
-            dispatchEvent(eventRoundChanged)
-            this.saveIdeas().then(() => {
-              this.$router.push({ name: 'brainstorm', params: { id: this.brainstormId } })
-            })
-          } else if (this.round !== ('round' + doc.data().currentRound)) {
-            const round = 'round' + doc.data().currentRound
-            this.saveIdeas().then(() => {
               this.ideas = []
               dispatchEvent(eventRoundChanged)
-              /* window.location.reload() */
-            }).then(() => {
-              this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: round } })
             })
-          }
+            .then(() => { this.route.params.round = newRound })
+            .catch(error => console.error(error))
         }
       })
+      // moment when the sheet exchange occurs
       this.chooseSheet()
     },
 
