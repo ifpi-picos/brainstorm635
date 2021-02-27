@@ -116,16 +116,24 @@
         </b-card>
       </b-col>
     </b-row>
-    <b-row align-v="center" align-h="center" class="mt-2">
+    <b-row
+      v-if="isLeader"
+      align-v="center"
+      align-h="center"
+      class="mt-3 mb-3">
       <b-button
-        v-if="isLeader"
         variant="outline-warning" class="buttonPauseNext"
         @click="pauseBrainstorm()">Pause
       </b-button>
       <b-button
-        v-if="isLeader"
+        v-if="currentRound < participants"
         variant="outline-info" class="buttonPauseNext ml-4"
         @click="changeRound()">Next Round
+      </b-button>
+      <b-button
+        v-if="currentRound === participants"
+        variant="outline-info" class="buttonPauseNext ml-4"
+        @click="changeRound()">Finish Brainstorm
       </b-button>
     </b-row>
   </b-container>
@@ -281,16 +289,8 @@ export default {
     },
 
     changeRound () {
-      // this.ideas = []
       if (this.isLeader) {
         if (this.currentRound < this.participants) {
-          this.$bvToast.toast('Changing to Round ' + (this.currentRound + 1), {
-            title: 'Round change alert!',
-            toaster: 'b-toaster-top-center',
-            variant: 'success',
-            autoHideDelay: 3000,
-            appendToast: true
-          })
           const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
           database.update({
             currentRound: this.currentRound + 1,
@@ -302,6 +302,13 @@ export default {
           database.update({ concluded: true })
         }
       }
+      this.$bvToast.toast('Changing to Round ' + (this.currentRound + 1), {
+        title: 'Round change alert!',
+        toaster: 'b-toaster-top-center',
+        variant: 'success',
+        autoHideDelay: 3000,
+        appendToast: true
+      })
     },
 
     finishWriteIdeas () {
@@ -338,6 +345,7 @@ export default {
 </script>
 
 <style lang="css" scoped>
+
 .buttonPauseNext:hover {
   color: #fff;
 }

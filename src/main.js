@@ -1,5 +1,6 @@
 
 import Vue from 'vue'
+import Vuex from 'vuex'
 import BootstrapVue from 'bootstrap-vue'
 import Vuelidate from 'vuelidate'
 
@@ -10,6 +11,7 @@ import '@fortawesome/fontawesome-free/css/all.css'
 import '@fortawesome/fontawesome-free/js/all.js'
 import FirebaseApp from './firebase'
 
+Vue.use(Vuex)
 Vue.use(BootstrapVue)
 Vue.use(FirebaseApp)
 Vue.use(Vuelidate)

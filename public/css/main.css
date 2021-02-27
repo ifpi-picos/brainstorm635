@@ -155,6 +155,13 @@ $success: #18d26e;
   font-size: 14px;
 }
 
+.swal2-actions:not(.swal2-loading) .swal2-styled:hover {
+  box-shadow: 0 1px 3px 0 rgba(60,64,67,0.302),
+  0 4px 8px 3px rgba(60,64,67,0.149) !important;
+}
+
+
+/* Style for description icons of printBrainstorm and startBrainstorm screen */
 .icone {
   /* background: #17a2b8 !important;
   opacity: 0.95; */
@@ -162,14 +169,9 @@ $success: #18d26e;
   width: 38.38px !important;
   padding: 5.25px 7.5px;
   border-radius: 0.25rem 0 0 0.25rem !important;
-  color: #138496 !important;
+  color: #17a2b8 !important;
 }
 
 .icone-padd {
   padding-right: 3.5px !important;
-}
-
-.swal2-actions:not(.swal2-loading) .swal2-styled:hover {
-  box-shadow: 0 1px 3px 0 rgba(60,64,67,0.302),
-  0 4px 8px 3px rgba(60,64,67,0.149) !important;
 }

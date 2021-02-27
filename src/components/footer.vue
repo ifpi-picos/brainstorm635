@@ -1,5 +1,5 @@
 <template>
-  <b-container class="footer" >
+  <b-container class="footer" fixed="bottom" >
     <b-row class="text-center" no-gutters  >
       <b-col class="ml-auto mr-auto" xs="6" sm="12" md="8" lg="10" align-self="center">
         <b-row class="mt-4" no-gutters>
@@ -33,8 +33,6 @@
   min-width: 100% !important;
   max-width: 100% !important;
   box-shadow: 0px 5px 10px 0px rgba(153, 153, 153, 0.3) !important;
- /*  bottom: 0px !important;
-  position: fixed !important; */
   height: 75px !important;
   border-radius: 0 !important;
   background-color: #fff !important;

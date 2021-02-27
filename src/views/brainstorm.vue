@@ -29,6 +29,8 @@
                       </span>
                     </b-input-group-prepend>
                     <b-form-input
+                      v-b-tooltip.hover.topright.v-info
+                      title="Edit description"
                       type="text"
                       :disabled="!isLeader"
                       @blur="saveDescription"
@@ -41,7 +43,24 @@
                   </b-input-group>
                 </b-form-group>
               </b-col>
-              <b-col md="3">
+              <b-col md="2">
+                <b-form-group
+                  label-class="required"
+                  label="Rounds time"
+                  label-for="rounds-time"
+                  class="input-with-prepend">
+                  <b-form-timepicker
+                    v-b-tooltip.hover.topright.v-info
+                    title="Edit time"
+                    class="input-group-text"
+                    id="rounds-time"
+                    :disabled="!isLeader"
+                    v-model="roundsTime"
+                    variant="info"><!-- :state="false" -->
+                  </b-form-timepicker>
+                </b-form-group>
+              </b-col>
+              <b-col md="2">
                 <b-form-group
                   class="text-left"
                   id="input-group-2"
@@ -63,25 +82,14 @@
                       <b-button
                         v-b-tooltip.hover.v-info
                         title="Copy Code"
-                        class="line-button"
+                        class="copy-button  "
                         variant="light"
                         @click="copyCodeToClipboad()"
                       >
-                        <i class="fas fa-copy fa-lg" />
+                        <i class="fas fa-copy fa-lg"/>
                       </b-button>
                     </b-input-group-append>
                   </b-input-group>
-                </b-form-group>
-              </b-col>
-              <b-col md="2">
-                <b-form-group
-                  label="Rounds time"
-                  class="input-with-prepend">
-                  <b-form-input
-                    class="input-code"
-                    type="time"
-                    v-model="roundsTime">
-                  </b-form-input>
                 </b-form-group>
               </b-col>
               <b-col md="2">
@@ -122,7 +130,7 @@
                     v-for="user in listGuests"
                     :key="user.uid" class="mb-2">
                     <b-input-group-prepend>
-                      <span class="photo-guests" variant="light">
+                      <span class="photo-guests mr-1" variant="light">
                         <div v-if="user.photoURL === '46'">
                           <i class="fas fa-user fa-lg"></i>
                           1
@@ -201,7 +209,7 @@ export default {
       isLeader: false,
       description: '',
       currentRound: 0,
-      roundsTime: ''
+      roundsTime: '5:00'
     }
   },
 
@@ -298,23 +306,22 @@ export default {
 <style lang="css">
 
 /* Style for inputs from brainstorm scream */
-.line-button {
+.copy-button {
   border: none !important;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
+  padding: 0 !important;
   background-color: #fff !important;
   color: #17a2b8 !important;
 }
 
-.line-button:hover {
+.copy-button:hover {
   background-color: #fff !important;
   box-shadow: none !important;
 }
 
-.line-button:focus {
+.copy-button:focus {
   background-color: #fff !important;
-  box-shadow: none !important;
   border: none !important;
+  box-shadow: none !important;
 }
 
 .input-with-prepend:focus,   .input-code:focus {
@@ -361,7 +368,7 @@ export default {
 /* Changing the background color of input appends */
 .input-group-text, .photo-guests {
   background-color: #fff !important;
-  color: #138496 !important;
+  color: #17a2b8 !important; /* #1384968 */
   /*  opacity: 1.95 !important; */
   border: none !important;
 }
@@ -376,5 +383,9 @@ export default {
 
 .loading {
   font-size: 15.5px;
+}
+
+.btn .b-icon.bi, .nav-link .b-icon.bi, .dropdown-toggle .b-icon.bi, .dropdown-item .b-icon.bi, .input-group-text .b-icon.bi {
+  color: #17a2b8;
 }
 </style>

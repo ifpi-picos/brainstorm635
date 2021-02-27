@@ -81,6 +81,7 @@
 <script>
 import Swal from 'sweetalert2'
 import { EventBus } from '@/eventBus'
+import { mapState } from 'vuex'
 
 export default {
   data () {
@@ -93,6 +94,10 @@ export default {
         displayName: ''
       }
     }
+  },
+
+  computed: {
+    ...mapState([])
   },
 
   created () {
