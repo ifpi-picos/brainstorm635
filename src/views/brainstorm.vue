@@ -235,8 +235,9 @@ export default {
               const running = doc.data().running
               if (running) {
                 this.createSheet().then(() => {
-                  const currentRound = 'round' + doc.data().currentRound
+                  const currentRound = 'round' + this.currentRound
                   this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: currentRound } })
+                  console.log('fui chamado')
                 })
               }
               if (this.activeMembers >= 2) {

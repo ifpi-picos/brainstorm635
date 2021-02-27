@@ -145,6 +145,7 @@ export default {
       ideas: [],
       time: '',
       currentRound: 0,
+      concluded: false,
       isLeader: false,
       listFinishWriteIdeas: 0,
       listGuests: [],
@@ -183,6 +184,9 @@ export default {
     },
     running: function () {
       this.changeRoute()
+    },
+    currentRound: function () {
+      this.changeRoute()
     }
   },
 
@@ -217,6 +221,12 @@ export default {
           this.saveIdeas()
             .then(() => this.$router.push({ name: 'brainstorm', params: { id: this.brainstormId } }))
             .catch(error => console.error(error))
+        } else if (!this.concluded && (this.round !== ('round' + this.currentRound))) {
+          const newRound = 'round' + this.currentRound
+          dispatchEvent(eventRoundChanged)
+          this.saveIdeas()
+            .then(() => { this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: newRound } }) })
+            .catch(error => console.error(error))
         }
       }
     },
@@ -233,25 +243,15 @@ export default {
         this.listFinishWriteIdeas = doc.data().listFinishWriteIdeas.length
         this.participants = doc.data().listGuests.length
         this.listGuests = doc.data().listGuests
+        this.concluded = doc.data().concluded
 
-        // Update round
-        if (!this.concluded && (this.round !== ('round' + doc.data().currentRound))) {
-          const newRound = 'round' + doc.data().currentRound
-          this.saveIdeas()
-            .then(() => {
-              this.ideas = []
-              dispatchEvent(eventRoundChanged)
-            })
-            .then(() => { this.route.params.round = newRound })
-            .catch(error => console.error(error))
-        }
+        // moment when the sheet exchange occurs
+        this.chooseSheet()
       })
-      // moment when the sheet exchange occurs
-      this.chooseSheet()
     },
 
     createClock () {
-      this.ideas = []
+      // this.ideas = []
       const currentTime = new Date()
       const timeSecondsDifference = Math.trunc((currentTime - this.hourOfStartRound) / 1000)
 
@@ -283,7 +283,10 @@ export default {
             clearInterval(cron)
           }
 
-          addEventListener('eventRoundChanged', () => clearInterval(cron))
+          addEventListener('eventRoundChanged', () => {
+            clearInterval(cron)
+            console.log('cronometro limpo')
+          })
 
           this.time = (min < 10 ? '0' + min : min) + ' : ' + (sec < 10 ? '0' + sec : sec)
           sec--
@@ -333,7 +336,6 @@ export default {
       const myPositon = this.listGuests.findIndex((guest) => guest.uid === currentUser)
 
       let indexSheet = null
-
       if (currentRound === 1) {
         indexSheet = myPositon
       } else {
@@ -351,30 +353,29 @@ export default {
     },
 
     async saveIdeas () {
+      console.log('É pra ter salvo!!!')
       const uid = this.$firebase.auth().currentUser.uid
       let user = this.listGuests.findIndex(guest => guest.uid === uid)
       user = user.toString()
-      console.log(user, uid, this.ideas)
       const removeEmptyIdeas = []
+      console.log(removeEmptyIdeas)
       for (const index in this.ideas) {
         if (this.ideas[index] !== '') {
           removeEmptyIdeas.push(this.ideas[index])
         }
       }
       const data = { [user]: removeEmptyIdeas }
-      if (removeEmptyIdeas.length !== 0) {
+      if (removeEmptyIdeas.length !== 0 && this.indexSheet >= 0) {
         const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
-        await database.collection('ideas').doc(this.indexSheet.toString()).set(data/*, /{ merge: true } */)
-          .then(function () {})
-          .then(() => {
-            database.update({
-              listFinishWriteIdeas: firebase.firestore.FieldValue.arrayUnion(user)
-              // currentDate: firebase.firestore.FieldValue.serverTimestamp()
-            })
-          })
-          .catch(function (error) {
+        await database.collection('ideas').doc(this.indexSheet.toString()).set(data, { merge: true })
+          .then(() => { this.ideas = [] })
+          .catch((error) => {
             console.error(error)
           })
+        await database.update({
+          listFinishWriteIdeas: firebase.firestore.FieldValue.arrayUnion(user)
+          // currentDate: firebase.firestore.FieldValue.serverTimestamp()
+        })
       }
     }
   }
