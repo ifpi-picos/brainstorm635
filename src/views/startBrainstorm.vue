@@ -207,7 +207,8 @@ export default {
     },
 
     changeRoute () {
-      if (this.concluded) {
+      const route = this.$route
+      if (this.concluded && route.name !== 'printBrainstorm') {
         this.saveIdeas()
           .then(() => {
             dispatchEvent(eventRoundChanged)
@@ -216,7 +217,7 @@ export default {
           .then(() => { this.$router.push({ name: 'printBrainstorm' }) })
           .catch(error => console.error(error))
       } else {
-        if (!this.running) {
+        if (!this.running && route.name !== 'brainstorm') {
           dispatchEvent(eventRoundChanged)
           this.saveIdeas()
             .then(() => this.$router.push({ name: 'brainstorm', params: { id: this.brainstormId } }))
@@ -251,7 +252,6 @@ export default {
     },
 
     createClock () {
-      // this.ideas = []
       const currentTime = new Date()
       const timeSecondsDifference = Math.trunc((currentTime - this.hourOfStartRound) / 1000)
 
@@ -285,7 +285,6 @@ export default {
 
           addEventListener('eventRoundChanged', () => {
             clearInterval(cron)
-            console.log('cronometro limpo')
           })
 
           this.time = (min < 10 ? '0' + min : min) + ' : ' + (sec < 10 ? '0' + sec : sec)
@@ -300,7 +299,6 @@ export default {
     },
 
     changeRound () {
-      // this.ideas = []
       if (this.isLeader) {
         if (this.currentRound < this.participants) {
           this.$bvToast.toast('Changing to Round ' + (this.currentRound + 1), {
@@ -353,12 +351,10 @@ export default {
     },
 
     async saveIdeas () {
-      console.log('É pra ter salvo!!!')
       const uid = this.$firebase.auth().currentUser.uid
       let user = this.listGuests.findIndex(guest => guest.uid === uid)
       user = user.toString()
       const removeEmptyIdeas = []
-      console.log(removeEmptyIdeas)
       for (const index in this.ideas) {
         if (this.ideas[index] !== '') {
           removeEmptyIdeas.push(this.ideas[index])
