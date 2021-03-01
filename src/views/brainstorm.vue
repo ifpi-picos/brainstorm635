@@ -210,7 +210,7 @@ export default {
       description: '',
       currentRound: 0,
       roundsTime: '5:00',
-      runnig: false
+      running: false
     }
   },
 
