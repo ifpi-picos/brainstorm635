@@ -41,6 +41,32 @@
         </b-card>
       </b-col>
     </b-row>
+    <b-container align-v="center">
+      <b-row align-v="center" v-for="(field, index) in oldIdeas" :key="index">
+        <b-col
+              v-for="(idea, ind) in field" :key="ind"
+              class="mb-4 pl-1 pr-1"
+              md="4"
+            >
+              <div class="postit">
+                <h5 class="text-center pt-1 pb-3">
+                  <b> Idea #{{ ind + 1 }} </b>
+                </h5>
+                <b-card-text>
+                  <p style="font-size: 17.5px; text-align: justify;">
+                    {{ idea }}
+                  </p>
+                </b-card-text>
+                <!-- <p
+                  class="text-muted"
+                  style="position: absolute; bottom: -10px">
+                  Editado por:
+                  <b>{{ guestNames[index] }}</b>
+                </p> -->
+              </div>
+            </b-col>
+      </b-row>
+    </b-container>
     <b-row align-v="center">
       <b-col
         class="align-items-center justify-content-center ml-auto mr-auto mb-2 h-100">
@@ -52,7 +78,7 @@
                 @blur="finishWriteIdeas()"
                 id="ideia1"
                 placeholder="Write your idea..."
-                v-model="ideas[0]"
+                v-model="newIdeas[0]"
                 class="entradaTexto">
               </b-form-textarea>
             </b-form-group>
@@ -76,7 +102,7 @@
                 @blur="finishWriteIdeas()"
                 id="ideia2"
                 placeholder="Write your idea..."
-                v-model="ideas[1]"
+                v-model="newIdeas[1]"
                 class="entradaTexto"
               ></b-form-textarea>
             </b-form-group>
@@ -100,7 +126,7 @@
                 @blur="finishWriteIdeas()"
                 id="ideia3"
                 placeholder="Write your idea..."
-                v-model="ideas[2]"
+                v-model="newIdeas[2]"
                 class="entradaTexto"
                 wrap="hard">
               </b-form-textarea>
@@ -150,16 +176,20 @@ export default {
       brainstormId: this.$route.params.id,
       round: this.$route.params.round,
       description: '',
-      ideas: [],
+      newIdeas: [],
+      oldIdeas: {},
       time: '',
       currentRound: 0,
+      concluded: false,
       isLeader: false,
       listFinishWriteIdeas: 0,
+      listGuests: [],
       participants: 0,
       // concluded: null,
       hourOfStartRound: '',
       running: true,
-      roundsTime: ''
+      roundsTime: '',
+      indexSheet: 0
     }
   },
 
@@ -181,6 +211,17 @@ export default {
       this.round = route.params.round
       this.getData()
       this.getHourOfStartRound()
+    },
+    concluded: function () {
+      if (this.concluded) {
+        this.changeRoute()
+      }
+    },
+    running: function () {
+      this.changeRoute()
+    },
+    currentRound: function () {
+      this.changeRoute()
     }
   },
 
@@ -198,6 +239,49 @@ export default {
       database.get().then(doc => {
         this.hourOfStartRound = new Date(doc.data().hourOfStartRound)
       })
+      this.getOldIdeas()
+    },
+
+    getOldIdeas () {
+      if (this.indexSheet >= 0) {
+        const sheet = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
+          .collection('ideas').doc(this.indexSheet.toString())
+        sheet.get().then(doc => {
+          this.oldIdeas = (doc.data())
+          delete this.oldIdeas.owner
+        })
+      }
+    },
+
+    changeRoute () {
+      const route = this.$route
+      if (this.concluded && route.name !== 'printBrainstorm') {
+        this.saveIdeas()
+          .then(() => dispatchEvent(eventRoundChanged))
+          .then(() => {
+            this.newIdeas = []
+            this.oldIdeas = {}
+          })
+          .then(() => { this.$router.push({ name: 'printBrainstorm' }) })
+          .catch(error => console.error(error))
+      } else {
+        if (!this.running && route.name !== 'brainstorm') {
+          dispatchEvent(eventRoundChanged)
+          this.saveIdeas()
+            .then(() => this.$router.push({ name: 'brainstorm', params: { id: this.brainstormId } }))
+            .catch(error => console.error(error))
+        } else if (!this.concluded && (this.round !== ('round' + this.currentRound))) {
+          const newRound = 'round' + this.currentRound
+          dispatchEvent(eventRoundChanged)
+          this.saveIdeas()
+            .then(() => {
+              this.newIdeas = []
+              this.oldIdeas = {}
+            })
+            .then(() => { this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: newRound } }) })
+            .catch(error => console.error(error))
+        }
+      }
     },
 
     getData () {
@@ -205,45 +289,21 @@ export default {
 
       database.onSnapshot(doc => {
         this.running = doc.data().running
+        this.roundsTime = doc.data().roundsTime
+        this.description = doc.data().description
+        this.currentRound = doc.data().currentRound
+        this.isLeader = doc.data().leader === this.$firebase.auth().currentUser.uid
+        this.listFinishWriteIdeas = doc.data().listFinishWriteIdeas.length
+        this.participants = doc.data().listGuests.length
+        this.listGuests = doc.data().listGuests
+        this.concluded = doc.data().concluded
 
-        if (doc.data().concluded && (this.$route.name !== 'printBrainstorm')) {
-          this.saveIdeas()
-            .then(() => {
-              dispatchEvent(eventRoundChanged)
-              this.ideas = []
-            })
-            .then(() => {
-              this.$router.push({ name: 'printBrainstorm', params: { id: this.brainstormId } })
-            })
-        } else {
-          this.roundsTime = doc.data().roundsTime
-          this.description = doc.data().description
-          this.currentRound = doc.data().currentRound
-          this.isLeader = doc.data().leader === this.$firebase.auth().currentUser.uid
-          this.listFinishWriteIdeas = doc.data().listFinishWriteIdeas.length
-          this.participants = doc.data().listGuests.length
-
-          if (!this.running && (this.$route.name !== 'brainstorm')) {
-            dispatchEvent(eventRoundChanged)
-            this.saveIdeas().then(() => {
-              this.$router.push({ name: 'brainstorm', params: { id: this.brainstormId } })
-            })
-          } else if (this.round !== ('round' + doc.data().currentRound)) {
-            const round = 'round' + doc.data().currentRound
-            this.saveIdeas().then(() => {
-              this.ideas = []
-              dispatchEvent(eventRoundChanged)
-              /* window.location.reload() */
-            }).then(() => {
-              this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: round } })
-            })
-          }
-        }
+        // moment when the sheet exchange occurs
+        this.chooseSheet()
       })
     },
 
     createClock () {
-      this.ideas = []
       const currentTime = new Date()
       const timeSecondsDifference = Math.trunc((currentTime - this.hourOfStartRound) / 1000)
 
@@ -275,7 +335,9 @@ export default {
             clearInterval(cron)
           }
 
-          addEventListener('eventRoundChanged', () => clearInterval(cron))
+          addEventListener('eventRoundChanged', () => {
+            clearInterval(cron)
+          })
 
           this.time = (min < 10 ? '0' + min : min) + ' : ' + (sec < 10 ? '0' + sec : sec)
           sec--
@@ -312,32 +374,56 @@ export default {
     },
 
     finishWriteIdeas () {
-      if (this.ideas.length === 3) {
+      if (this.newIdeas.length === 3) {
         this.saveIdeas().then(() => {})
       }
     },
 
+    // Get Sheet for current user
+    chooseSheet () {
+      const currentRound = this.round[5]
+      const currentUser = this.$firebase.auth().currentUser.uid
+      const myPositon = this.listGuests.findIndex((guest) => guest.uid === currentUser)
+
+      let indexSheet = null
+      if (currentRound === 1) {
+        indexSheet = myPositon
+      } else {
+        indexSheet = myPositon + 1 - currentRound
+        if (indexSheet < 0) {
+          indexSheet = this.listGuests.length + indexSheet
+        }
+      }
+      // console.log('indexSheet', indexSheet)
+      this.indexSheet = indexSheet
+
+      // console.log(
+      //   `${this.$firebase.auth().currentUser.displayName} na rodada ${currentRound} escreve na folha de ${this.listGuests[indexSheet].displayName}`
+      // )
+    },
+
     async saveIdeas () {
-      const user = this.$firebase.auth().currentUser.uid
+      const uid = this.$firebase.auth().currentUser.uid
+      let user = this.listGuests.findIndex(guest => guest.uid === uid)
+      user = user.toString()
       const removeEmptyIdeas = []
-      for (const index in this.ideas) {
-        if (this.ideas[index] !== '') {
-          removeEmptyIdeas.push(this.ideas[index])
+      for (const index in this.newIdeas) {
+        if (this.newIdeas[index] !== '') {
+          removeEmptyIdeas.push(this.newIdeas[index])
         }
       }
       const data = { [user]: removeEmptyIdeas }
-      if (removeEmptyIdeas.length !== 0) {
+      if (removeEmptyIdeas.length !== 0 && this.indexSheet >= 0) {
         const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
-        database.collection('ideas').doc(this.round).set(data, { merge: true })
-          .then(function () {})
-          .catch(function (error) {
+        await database.collection('ideas').doc(this.indexSheet.toString()).set(data, { merge: true })
+          .then(() => {})
+          .catch((error) => {
             console.error(error)
-          }).then(() => {
-            database.update({
-              listFinishWriteIdeas: firebase.firestore.FieldValue.arrayUnion(user)
-              /* currentDate: firebase.firestore.FieldValue.serverTimestamp() */
-            })
           })
+        await database.update({
+          listFinishWriteIdeas: firebase.firestore.FieldValue.arrayUnion(user)
+          // currentDate: firebase.firestore.FieldValue.serverTimestamp()
+        })
       }
     }
   }
@@ -431,5 +517,67 @@ export default {
   .round {
     margin-left: -0.1rem;
   }
+}
+
+.postit {
+  line-height: 1;
+  text-align: center;
+  width: 98%;
+  max-width: 98%;
+  margin: 0px;
+  min-height: 250px;
+  max-height: 250px;
+  padding: 1rem;
+  position: relative;
+  border: 1px solid #E8E8E8;
+  /* border-top: 60px solid #fdfd86; */
+  font-family: 'comfortaa';
+  font-size: 3em;
+  border-bottom-right-radius: 60px 6px;
+  display: inline-block;
+  background: #ADD8E6; /* Old browsers */
+  background: -moz-linear-gradient(-45deg, #b6dae6 81%, #b6dae6 82%, #b6dae6 82%, #e1f7ff 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(81%,#b6dae6), color-stop(82%,#b6dae6), color-stop(82%,#b6dae6), color-stop(100%,#e1f7ff)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(-45deg, #b6dae6 81%,#b6dae6 82%#b6dae6 82%,#e1f7ff 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(-45deg, hsl(195, 53%, 79%) 81%,#b6dae6 82%,#b6dae6 82%,#e1f7ff 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(-45deg, #b6dae6 81%,#b6dae6 82%,#b6dae6 82%,#e1f7ff 100%); /* IE10+ */
+  background: linear-gradient(135deg, #b6dae6 81%,#b6dae6 82%,#b6dae6 82%,#e1f7ff 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffff88', endColorstr='#e1f7ff',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+.postit:after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  right: -0px;
+  bottom: 20px;
+  width: 200px;
+  height: 25px;
+  background: rgba(0, 0, 0, 0.2);
+  box-shadow:2px 15px 5px rgba(0, 0, 0, 0.40);
+  -moz-transform: matrix(-1, -0.1, 0, 1, 0, 0);
+  -webkit-transform: matrix(-1, -0.1, 0, 1, 0, 0);
+  -o-transform: matrix(-1, -0.1, 0, 1, 0, 0);
+  -ms-transform: matrix(-1, -0.1, 0, 1, 0, 0);
+  transform: matrix(-1, -0.1, 0, 1, 0, 0);
+}
+
+.container-ideas {
+  max-width: 80% !important;
+  min-width: 80% !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+h5,
+span {
+  font-family: 'comfortaa';
+}
+
+.round {
+  color: #138496;
+  font-weight: 700;
+  margin: 0 !important;
+  font-family: 'comfortaa';
 }
 </style>

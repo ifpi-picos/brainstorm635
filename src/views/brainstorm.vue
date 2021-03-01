@@ -209,7 +209,8 @@ export default {
       isLeader: false,
       description: '',
       currentRound: 0,
-      roundsTime: '5:00'
+      roundsTime: '5:00',
+      runnig: false
     }
   },
 
@@ -220,12 +221,39 @@ export default {
     this.getData()
   },
 
+  watch: {
+    running: function () {
+      this.initBrainstorm()
+    },
+    activeMembers: function () {
+      this.activeDisableButtonInit()
+    }
+  },
+
   methods: {
     saveDescription () {
       const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
       database.update({
         description: this.description
       })
+    },
+
+    initBrainstorm () {
+      const currentRoute = this.$route.name
+      if (this.running && currentRoute !== 'startBrainstorm') {
+        this.createSheet().then(() => {
+          const currentRound = 'round' + this.currentRound
+          this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: currentRound } })
+        })
+      }
+    },
+
+    activeDisableButtonInit () {
+      if (this.activeMembers >= 2) {
+        this.disabledButton = false
+      } else {
+        this.disabledButton = true
+      }
     },
 
     getData () {
@@ -240,16 +268,7 @@ export default {
               this.activeMembers = doc.data().listGuests.length
               this.description = doc.data().description
               this.currentRound = doc.data().currentRound
-              const running = doc.data().running
-              if (running) {
-                const currentRound = 'round' + doc.data().currentRound
-                this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: currentRound } })
-              }
-              if (this.activeMembers >= 2) {
-                this.disabledButton = false
-              } else {
-                this.disabledButton = true
-              }
+              this.running = doc.data().running
             } else {
               console.log('The Brainstorm not exist!')
             }
@@ -257,6 +276,18 @@ export default {
       } catch (error) {
         console.error(error)
       }
+    },
+
+    async createSheet () {
+      const userUid = this.$firebase.auth().currentUser.uid
+      let indexGuest = this.listGuests.findIndex(guest => {
+        return guest.uid === userUid
+      })
+      indexGuest = indexGuest.toString()
+      const brainstorm = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
+      brainstorm.collection('ideas').doc(indexGuest).set({ owner: indexGuest }, { merge: true })
+        .then(() => {})
+        .catch(error => console.error(error))
     },
 
     codeSelect () {
