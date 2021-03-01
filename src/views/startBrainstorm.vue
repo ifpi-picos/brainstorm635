@@ -211,6 +211,7 @@ export default {
       this.round = route.params.round
       this.getData()
       this.getHourOfStartRound()
+      this.getOldIdeas()
     },
     concluded: function () {
       if (this.concluded) {
@@ -240,9 +241,9 @@ export default {
         this.hourOfStartRound = new Date(doc.data().hourOfStartRound)
       })
       // tempo
-      setTimeout(() => {
-        this.getOldIdeas()
-      }, 3000)
+      // setTimeout(() => {
+      //   this.getOldIdeas()
+      // }, 3000)
     },
 
     getOldIdeas () {
