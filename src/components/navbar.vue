@@ -1,5 +1,9 @@
 <template>
-  <b-navbar fixed="top" toggleable="lg" type="light">
+  <b-navbar
+    fixed="top"
+    toggleable="lg"
+    type="light"
+  >
     <b-navbar-brand>
       <b-link
         @click.prevent="verifyRoute()"
@@ -15,7 +19,10 @@
       </b-link>
     </b-navbar-brand>
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-    <b-collapse id="nav-collapse" is-nav>
+    <b-collapse
+      id="nav-collapse"
+      is-nav
+    >
       <b-navbar-nav class="ml-auto">
         <!-- <b-spinner
           v-if="load"
@@ -24,9 +31,16 @@
           variant="info"
           label="Spinning">
         </b-spinner> -->
-        <div v-if="verifyLocalStorage" class="d-flex mr-3">
+        <div
+          v-if="verifyLocalStorage"
+          class="d-flex mr-3"
+        >
           <b-nav-item right>
-            <b-avatar circle :src="user.photoURL" alt="Foto do usuário">
+            <b-avatar
+              circle
+              :src="user.photoURL"
+              alt="Foto do usuário"
+            >
             </b-avatar>
             <span class="user ml-2">{{ user.displayName }}</span>
           </b-nav-item>
@@ -38,9 +52,11 @@
             <b-dropdown-item @click="logout()">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
         </div>
-        <b-nav-item-dropdown text="Lang" right>
-          <b-dropdown-item href="#"
-            >PT
+        <b-nav-item-dropdown
+          text="Lang"
+          right
+        >
+          <b-dropdown-item href="#">PT
             <b-img
               class="ml-1"
               rounded="circle"
@@ -50,8 +66,7 @@
             >
             </b-img>
           </b-dropdown-item>
-          <b-dropdown-item href="#"
-            >EN
+          <b-dropdown-item href="#">EN
             <b-img
               class="usa"
               :src="require('../../public/img/eua.png')"
@@ -61,8 +76,7 @@
             >
             </b-img>
           </b-dropdown-item>
-          <b-dropdown-item href="#"
-            >ES
+          <b-dropdown-item href="#">ES
             <b-img
               class="ml-1"
               rounded="circle"
@@ -86,7 +100,6 @@ import { mapState } from 'vuex'
 export default {
   data () {
     return {
-      route: this.$route.name,
       load: false,
       verifyLocalStorage: false,
       user: {
@@ -134,7 +147,7 @@ export default {
     },
 
     verifyRoute () {
-      if (this.route === 'brainstorm' || this.route === 'startBrainstorm' || this.route === 'printBrainstorm') {
+      if (this.$route.name === 'brainstorm' || this.$route.name === 'startBrainstorm' || this.$route.name === 'printBrainstorm') {
         Swal.fire({
           title: 'Are you sure?',
           text: 'You are trying to leave without finishing or saving data!',
@@ -208,5 +221,4 @@ span,
 .swal2-close:focus {
   box-shadow: none !important;
 }
-
 </style>
