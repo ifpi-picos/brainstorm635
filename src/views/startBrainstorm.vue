@@ -577,7 +577,7 @@ span {
 }
 
 .round {
-  color: #138496;
+  /* color: #138496; */
   font-weight: 700;
   margin: 0 !important;
   font-family: 'comfortaa';
