@@ -239,7 +239,9 @@ export default {
       database.get().then(doc => {
         this.hourOfStartRound = new Date(doc.data().hourOfStartRound)
       })
-      this.getOldIdeas()
+      setTimeout(() => {
+        this.getOldIdeas()
+      }, 2000)
     },
 
     getOldIdeas () {
