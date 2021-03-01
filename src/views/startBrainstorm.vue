@@ -239,9 +239,10 @@ export default {
       database.get().then(doc => {
         this.hourOfStartRound = new Date(doc.data().hourOfStartRound)
       })
+      // tempo
       setTimeout(() => {
         this.getOldIdeas()
-      }, 2000)
+      }, 3000)
     },
 
     getOldIdeas () {
