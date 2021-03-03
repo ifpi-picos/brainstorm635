@@ -211,7 +211,6 @@ export default {
       this.round = route.params.round
       this.getData()
       this.getHourOfStartRound()
-      this.getOldIdeas()
     },
     concluded: function () {
       if (this.concluded) {
@@ -223,6 +222,9 @@ export default {
     },
     currentRound: function () {
       this.changeRoute()
+    },
+    indexSheet: function () {
+      this.getOldIdeas()
     }
   },
 
