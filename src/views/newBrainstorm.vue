@@ -99,8 +99,9 @@ export default {
   },
 
   methods: {
+
+    // This function create a new brainstorm
     createNewBrainstorm () {
-      /* EventBus.$emit('updateList') */
       const id = this.codeGenerator(6)
       const currentUser = this.$firebase.auth().currentUser
       const user = {
@@ -113,6 +114,7 @@ export default {
         .collection('brainstorms')
         .doc(id.toString())
         .set({
+          roundsTime: '5:00',
           running: false,
           leader: user.uid,
           description: 'Brainstorm description',
@@ -126,6 +128,7 @@ export default {
         .catch(error => console.error(error))
     },
 
+    // This function generate a ramdom code for the brainstorm
     codeGenerator (length) {
       let result = ''
       const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
@@ -138,6 +141,7 @@ export default {
       return result
     },
 
+    // This function is async, it enables the user get in the brainstorm using the code
     async joinWithCode (coderoom) {
       coderoom = coderoom.trim()
       coderoom = coderoom.toUpperCase()
@@ -159,14 +163,12 @@ export default {
                 /* currentDate: firebase.firestore.FieldValue.serverTimestamp(), */
                 listGuests: firebase.firestore.FieldValue.arrayUnion(userGuest)
               })
-              console.log('Você entrou!!!')
               this.$router.push({
                 name: 'brainstorm',
                 params: { id: coderoom }
               })
             } else {
               this.fullBrainstorm()
-              console.log('Já está lotado!')
             }
           })
           .catch((error) => {
@@ -176,6 +178,7 @@ export default {
       }
     },
 
+    // This function warning to user that the brainstorm is full
     fullBrainstorm () {
       Swal.fire({
         title: 'The Brainstorm is full!',
@@ -184,10 +187,11 @@ export default {
         icon: 'error',
         confirmButtonText: 'OK',
         confirmButtonColor: '#17a2b8',
-        timer: 4000
+        timer: 2500
       })
     },
 
+    // This function warning to user that the brainstorm don't exist
     nonExistentBrainstorm () {
       Swal.fire({
         title: 'Brainstorm not existent!',
@@ -196,7 +200,7 @@ export default {
         icon: 'error',
         confirmButtonText: 'OK',
         confirmButtonColor: '#17a2b8',
-        timer: 4000
+        timer: 2500
       })
     }
   }

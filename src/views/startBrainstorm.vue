@@ -355,6 +355,16 @@ export default {
     },
 
     changeRound () {
+      // Changing round alert
+      if (this.currentRound < this.participants) {
+        this.$bvToast.toast('Changing to Round ' + (this.currentRound + 1), {
+          title: 'Round change alert!',
+          toaster: 'b-toaster-top-center',
+          variant: 'success',
+          autoHideDelay: 2500,
+          appendToast: true
+        })
+      }
       if (this.isLeader) {
         if (this.currentRound < this.participants) {
           const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
@@ -368,13 +378,17 @@ export default {
           database.update({ concluded: true })
         }
       }
-      this.$bvToast.toast('Changing to Round ' + (this.currentRound + 1), {
-        title: 'Round change alert!',
-        toaster: 'b-toaster-top-center',
-        variant: 'success',
-        autoHideDelay: 3000,
-        appendToast: true
-      })
+
+      // Changing to print braisntorm screen alert
+      /* if (this.currentRound === this.participants) {
+        this.$bvToast.toast('Changing to print brainstorm screen', {
+          title: 'Round change alert!',
+          toaster: 'b-toaster-top-center',
+          variant: 'success',
+          autoHideDelay: 5000,
+          appendToast: true
+        })
+      } */
     },
 
     finishWriteIdeas () {
@@ -578,10 +592,10 @@ span {
   font-family: 'comfortaa';
 }
 
-.round {
-  /* color: #138496; */
+/* .round {
+  color: #138496;
   font-weight: 700;
   margin: 0 !important;
   font-family: 'comfortaa';
-}
+} */
 </style>
