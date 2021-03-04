@@ -166,7 +166,7 @@
 </template>
 
 <script>
-import firebase from 'firebase/app'
+// import firebase from 'firebase/app'
 
 const eventRoundChanged = new Event('eventRoundChanged')
 
@@ -182,7 +182,7 @@ export default {
       currentRound: 0,
       concluded: false,
       isLeader: false,
-      listFinishWriteIdeas: 0,
+      // listFinishWriteIdeas: 0,
       listGuests: [],
       participants: 0,
       // concluded: null,
@@ -299,7 +299,7 @@ export default {
         this.description = doc.data().description
         this.currentRound = doc.data().currentRound
         this.isLeader = doc.data().leader === this.$firebase.auth().currentUser.uid
-        this.listFinishWriteIdeas = doc.data().listFinishWriteIdeas.length
+        // this.listFinishWriteIdeas = doc.data().listFinishWriteIdeas.length
         this.participants = doc.data().listGuests.length
         this.listGuests = doc.data().listGuests
         this.concluded = doc.data().concluded
@@ -372,7 +372,7 @@ export default {
           const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
           database.update({
             currentRound: this.currentRound + 1,
-            listFinishWriteIdeas: [],
+            // listFinishWriteIdeas: [],
             hourOfStartRound: new Date()
           })
         } else {
@@ -440,10 +440,10 @@ export default {
           .catch((error) => {
             console.error(error)
           })
-        await database.update({
-          listFinishWriteIdeas: firebase.firestore.FieldValue.arrayUnion(user)
-          // currentDate: firebase.firestore.FieldValue.serverTimestamp()
-        })
+        // await database.update({
+        //   listFinishWriteIdeas: firebase.firestore.FieldValue.arrayUnion(user)
+        //   currentDate: firebase.firestore.FieldValue.serverTimestamp()
+        // })
       }
     }
   }
