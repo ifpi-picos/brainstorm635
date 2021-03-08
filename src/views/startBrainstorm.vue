@@ -42,13 +42,13 @@
       </b-col>
     </b-row>
     <b-container align-v="center">
-      <b-row align-v="center" v-for="(field, index) in oldIdeas" :key="index">
+      <b-row align-v="center" v-for="(field) in oldIdeas" :key="field.id">
         <b-col
               v-for="(idea, ind) in field" :key="ind"
               class="mb-4 pl-1 pr-1"
               md="4"
             >
-              <div class="postit" v-if="ind !== 'owner'">
+              <div class="postit">
                 <h5 class="text-center pt-1 pb-3">
                   <b> {{ ind }} </b>
                 </h5>
@@ -171,6 +171,7 @@ const eventRoundChanged = new Event('eventRoundChanged')
 export default {
   data () {
     return {
+      keyList: 0,
       brainstormId: this.$route.params.id,
       round: this.$route.params.round,
       description: '',
@@ -207,6 +208,7 @@ export default {
 
   mounted () {
     this.getData()
+    this.getOldIdeas()
     this.getHourOfStartRound()
   },
 
@@ -246,7 +248,7 @@ export default {
   },
 
   methods: {
-    async getHourOfStartRound () {
+    getHourOfStartRound () {
       const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
       database.get().then(doc => {
         this.hourOfStartRound = new Date(doc.data().hourOfStartRound)
@@ -261,8 +263,14 @@ export default {
         docSheet.get().then(doc => {
           this.oldIdeas = doc.data()
           delete this.oldIdeas.owner
+          for (const campo in this.oldIdeas) {
+            for (const campo2 in this.oldIdeas[campo]) {
+              if (campo2 === 'owner') {
+                delete this.oldIdeas[campo][campo2]
+              }
+            }
+          }
         })
-        console.log(sheet)
       }
     },
 
@@ -350,6 +358,7 @@ export default {
     createClock () {
       const currentTime = new Date()
       const timeSecondsDifference = Math.trunc((currentTime - this.hourOfStartRound) / 1000)
+      console.log(timeSecondsDifference)
 
       const time = this.roundsTime.split(':')
 
@@ -361,11 +370,12 @@ export default {
 
       if (timeSecondsDifference > 0 && (totalSeconds - timeSecondsDifference > 0)) {
         totalSeconds = totalSeconds - timeSecondsDifference
-      } else if (timeSecondsDifference < 0) { totalSeconds = 0 }
+      } else if (timeSecondsDifference > totalSeconds) { totalSeconds = 0 }
 
       min = Math.trunc(totalSeconds / 60)
       sec = totalSeconds - (min * 60)
 
+      this.time = (min < 10 ? '0' + min : min) + ' : ' + (sec < 10 ? '0' + sec : sec)
       if (totalSeconds > 0) {
         const cron = setInterval(() => {
           if (sec < 0 && min > 0) {
@@ -376,6 +386,7 @@ export default {
             // if (sec === 0 && min === 0) {
             //   this.changeRound()
             // }
+            this.time = (min < 10 ? '0' + min : min) + ' : ' + (sec < 10 ? '0' + sec : sec)
             clearInterval(cron)
           }
 
@@ -410,7 +421,7 @@ export default {
           const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
           database.update({
             currentRound: this.currentRound + 1,
-            hourOfStartRound: new Date()
+            hourOfStartRound: Date()
           })
         } else {
           const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
@@ -438,6 +449,18 @@ export default {
       }
     },
 
+    codeGenerator (length) {
+      let result = ''
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+      const charactersLength = characters.length
+      for (let i = 0; i < length; i++) {
+        result += characters.charAt(
+          Math.floor(Math.random() * charactersLength)
+        )
+      }
+      return result
+    },
+
     // Get Sheet for current user
     chooseSheet () {
       const currentRound = this.round[5]
@@ -460,6 +483,7 @@ export default {
     async saveIdeas () {
       const userId = this.$firebase.auth().currentUser.uid
       for (const campo in this.newIdeas) {
+        this.newIdeas[campo].id = this.codeGenerator(8)
         if (!this.newIdeas[campo].description) { delete this.newIdeas[campo] }
       }
 
