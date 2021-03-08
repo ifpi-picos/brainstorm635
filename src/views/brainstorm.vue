@@ -297,12 +297,15 @@ export default {
     // This function is async and create the user sheet to write ideas
     async createSheet () {
       const userUid = this.$firebase.auth().currentUser.uid
-      let indexGuest = this.listGuests.findIndex(guest => {
+      const indexGuest = this.listGuests.findIndex(guest => {
         return guest.uid === userUid
       })
-      indexGuest = indexGuest.toString()
+      const sheet = 'sheet' + (indexGuest + 1)
+      const dataSheet = {
+        owner: userUid
+      }
       const brainstorm = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
-      brainstorm.collection('ideas').doc(indexGuest).set({ owner: indexGuest }, { merge: true })
+      brainstorm.collection('sheets').doc(sheet).set(dataSheet, { merge: true })
         .then(() => {})
         .catch(error => console.error(error))
     },
