@@ -84,7 +84,6 @@
             </b-form-group>
             <div class="cor"></div>
             <b-button
-              hidden="true"
               v-b-tooltip.hover.v-info title="Continue idea... [M]"
               variant="outline-info" class="continueIdea">
               Continue
@@ -108,7 +107,6 @@
             </b-form-group>
             <div class="cor"></div>
             <b-button
-              hidden="true"
               v-b-tooltip.hover.v-info title="Continue idea... [M]"
               variant="outline-info" class="continueIdea"
               >Continue
@@ -133,7 +131,6 @@
             </b-form-group>
             <div class="cor"></div>
             <b-button
-              hidden="true"
               v-b-tooltip.hover.v-info title="Continue idea... [M]"
               variant="outline-info" class="continueIdea"
               >Continue
@@ -358,7 +355,6 @@ export default {
     createClock () {
       const currentTime = new Date()
       const timeSecondsDifference = Math.trunc((currentTime - this.hourOfStartRound) / 1000)
-      console.log(timeSecondsDifference)
 
       const time = this.roundsTime.split(':')
 
