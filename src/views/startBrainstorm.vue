@@ -42,7 +42,7 @@
       </b-col>
     </b-row>
     <b-container align-v="center">
-      <b-row align-v="center" v-for="(field) in oldIdeas" :key="field.id">
+      <b-row align-v="center" v-for="(field, name, index) in oldIdeas" :key="index">
         <b-col
               v-for="(idea, name, index) in field" :key="index"
               class="mb-4 pl-1 pr-1"
@@ -50,7 +50,7 @@
             >
               <div class="postit">
                 <h5 class="text-center pt-1 pb-3">
-                  <b> idea {{ index + 1 }}</b>
+                  <b> idea {{ name[4] }}</b>
                 </h5>
                 <b-card-text>
                   <p style="font-size: 17.5px; text-align: justify;">
