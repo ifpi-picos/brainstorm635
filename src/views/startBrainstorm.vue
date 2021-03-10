@@ -44,13 +44,13 @@
     <b-container align-v="center">
       <b-row align-v="center" v-for="(field) in oldIdeas" :key="field.id">
         <b-col
-              v-for="(idea, ind) in field" :key="ind"
+              v-for="(idea, name, index) in field" :key="index"
               class="mb-4 pl-1 pr-1"
               md="4"
             >
               <div class="postit">
                 <h5 class="text-center pt-1 pb-3">
-                  <b> {{ ind }} </b>
+                  <b> idea {{ index + 1 }}</b>
                 </h5>
                 <b-card-text>
                   <p style="font-size: 17.5px; text-align: justify;">
@@ -445,7 +445,7 @@ export default {
       }
     },
 
-    codeGenerator (length) {
+    async codeGenerator (length) {
       let result = ''
       const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
       const charactersLength = characters.length
@@ -479,7 +479,9 @@ export default {
     async saveIdeas () {
       const userId = this.$firebase.auth().currentUser.uid
       for (const campo in this.newIdeas) {
-        this.newIdeas[campo].id = this.codeGenerator(8)
+        if (Object.prototype.hasOwnProperty.call(this.newIdeas[campo], 'id')) {
+          this.newIdeas[campo].id = await this.codeGenerator(8)
+        }
         if (!this.newIdeas[campo].description) { delete this.newIdeas[campo] }
       }
 
