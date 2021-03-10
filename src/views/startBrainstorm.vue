@@ -199,7 +199,7 @@ export default {
       hourOfStartRound: '',
       running: true,
       roundsTime: '',
-      indexSheet: 0
+      indexSheet: undefined
     }
   },
 
