@@ -130,7 +130,9 @@
               </b-form-textarea>
             </b-form-group>
             <div class="cor"></div>
+            <div class="d-inline mr-2">Continue</div>
             <select name="continueIdea" id="continueIdea">
+              <option value="---">---</option>
               <option :value="idea.id" v-for="(idea, key) in populeteSelect()" :key="key">Idea {{ key + 1 }}</option>
             </select>
           </b-card-body>
@@ -253,10 +255,8 @@ export default {
     populeteSelect () {
       const listIdeas = []
       for (const round in this.oldIdeas) {
-        console.log(round)
         for (const idea in this.oldIdeas[round]) {
           listIdeas.push(this.oldIdeas[round][idea])
-          console.log(this.oldIdeas[round][idea].description)
         }
       }
       return listIdeas
