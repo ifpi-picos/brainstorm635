@@ -130,11 +130,9 @@
               </b-form-textarea>
             </b-form-group>
             <div class="cor"></div>
-            <b-button
-              v-b-tooltip.hover.v-info title="Continue idea... [M]"
-              variant="outline-info" class="continueIdea"
-              >Continue
-            </b-button>
+            <select name="continueIdea" id="continueIdea">
+              <option :value="idea.id" v-for="(idea, key) in populeteSelect()" :key="key">Idea {{ key + 1 }}</option>
+            </select>
           </b-card-body>
         </b-card>
       </b-col>
@@ -250,6 +248,18 @@ export default {
       database.get().then(doc => {
         this.hourOfStartRound = new Date(doc.data().hourOfStartRound)
       })
+    },
+
+    populeteSelect () {
+      const listIdeas = []
+      for (const round in this.oldIdeas) {
+        console.log(round)
+        for (const idea in this.oldIdeas[round]) {
+          listIdeas.push(this.oldIdeas[round][idea])
+          console.log(this.oldIdeas[round][idea].description)
+        }
+      }
+      return listIdeas
     },
 
     getOldIdeas () {
