@@ -131,9 +131,11 @@
             </b-form-group>
             <div class="cor"></div>
             <div class="d-inline mr-2">Continue</div>
-            <select name="continueIdea" id="continueIdea">
+            <select name="continueIdea" id="continueIdea" @change="setContinueIdea(newIdeas.idea3)">
               <option value="---">---</option>
-              <option :value="idea.id" v-for="(idea, key) in populeteSelect()" :key="key">Idea {{ key + 1 }}</option>
+              <option :value="idea.id"
+              v-for="(idea, key) in populeteSelect()"
+              :key="key">Idea {{ key + 1 }}</option>
             </select>
           </b-card-body>
         </b-card>
@@ -260,6 +262,13 @@ export default {
         }
       }
       return listIdeas
+    },
+
+    setContinueIdea (idea) {
+      const select = document.getElementById('continueIdea')
+      const indexIdea = select.options.selectedIndex
+      const idIdeacontinued = this.populeteSelect()[indexIdea - 1].id
+      idea.idContinueIdea = idIdeacontinued
     },
 
     getOldIdeas () {
