@@ -15,18 +15,16 @@
       </b-col>
       <b-row
         class="mb-4 text-center"
-        v-for="(roundy, i) in ideasPerRound"
-        :key="i"
       >
         <b-col md="12" class="mb-2">
-          <h5 class="round">Round {{ i + 1 }}</h5>
+          <!-- <h5 class="round">Round {{ i + 1 }}</h5> -->
         </b-col>
         <b-col md="12">
-          <b-row v-for="(values, key) in roundy" :key="key">
+          <b-row>
             <b-col
               class="mb-4 pl-1 pr-1"
               md="4"
-              v-for="(value, index) in values"
+              v-for="(idea, index) in ideasToPrint"
               :key="index"
             >
               <div class="postit">
@@ -35,7 +33,7 @@
                 </h5>
                 <b-card-text>
                   <p style="font-size: 17.5px; text-align: justify;">
-                    {{ value }}
+                    {{ idea }}
                   </p>
                 </b-card-text>
                 <!-- <p
@@ -74,17 +72,60 @@ export default {
       loading: true,
       brainstormId: this.$route.params.id,
       brainstormDate: '',
-      rounds: [],
+      numberRounds: [],
       ideasPerRound: [],
-      description: ''
+      description: '',
+      ideasToPrint: []
     }
   },
 
   mounted () {
-    this.getData()
+    this.printIdeas()
   },
 
   methods: {
+    printIdeas () {
+      try {
+        // Geting every brainstorm datas by id
+        const ideas = this.$firebase.firestore()
+          .collection('brainstorms')
+          .doc(this.brainstormId)
+
+        // Geting datas to show brainstorm -
+        ideas.onSnapshot(doc => {
+          this.numberRounds = doc.data().listGuests
+          this.description = doc.data().description
+          this.brainstormDate = doc.data().brainstormDate.toDate()
+
+          for (let index = 0; index < this.numberRounds.length; index++) {
+            const indexSheet = 'sheet' + (index + 1)
+            try {
+              ideas.collection('sheets')
+                .doc(indexSheet)
+                .get()
+                .then(doc => {
+                  /* console.log(`%c${indexSheet}`, 'color: red')
+                  console.log(`%c${indexRound}`, 'color: green') */
+
+                  for (let round = 0; round < this.numberRounds.length; round++) {
+                    const indexRound = 'round' + (round + 1)
+                    for (const sheet in doc.data()[indexRound]) {
+                      if (sheet !== 'owner') this.ideasToPrint.push(doc.data()[indexRound][sheet].description)
+                    }
+                  }
+                })
+            } catch (error) {
+              console.error(error)
+            }
+          }
+          // console.log(this.roundsInSheets)
+        })
+        this.loading = false
+      } catch (error) {
+        console.error(error)
+      }
+    },
+
     getData () {
       try {
         const db = this.$firebase.firestore()
@@ -98,14 +139,14 @@ export default {
             : '' */
 
             for (let i = 0; i < this.rounds.length; i++) {
-              const index = 'round' + (i + 1)
+              const indexSheet = 'sheet' + (i + 1)
               try {
                 const rows = this.$firebase.firestore()
                 rows
                   .collection('brainstorms')
                   .doc(this.brainstormId)
-                  .collection('ideas')
-                  .doc(index)
+                  .collection('sheets')
+                  .doc(indexSheet)
                   .get()
                   .then(doc => {
                     this.ideasPerRound.push(doc.data())
@@ -114,7 +155,6 @@ export default {
                 console.error(error)
               }
             }
-            this.loading = false
           })
       } catch (error) {
         console.error(error)
@@ -164,6 +204,7 @@ export default {
   border-style: solid;
   border-color: $colorDark;
 } */
+
 .postit {
   line-height: 1;
   text-align: center;
