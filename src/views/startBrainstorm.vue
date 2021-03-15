@@ -42,19 +42,19 @@
       </b-col>
     </b-row>
     <b-container align-v="center">
-      <b-row align-v="center" v-for="(field, name, index) in oldIdeas" :key="index">
+      <b-row align-v="center" v-for="(round, index) of oldIdeas" :key="index">
         <b-col
-              v-for="(idea, name, index) in field" :key="index"
+              v-for="(idea, ind) in round[`round${index + 1}`]" :key="ind"
               class="mb-4 pl-1 pr-1"
               md="4"
             >
               <div class="postit">
                 <h5 class="text-center pt-1 pb-3">
-                  <b> idea {{ name[4] }}</b>
+                  <b>idea#{{ index > 0 ? round[`round${index + 1}`].length + ind : ind + 1 }} </b>
                 </h5>
                 <b-card-text>
                   <p style="font-size: 17.5px; text-align: justify;">
-                    {{ idea.description }}
+                    {{ idea[`idea${ind + 1}`].description }}
                   </p>
                 </b-card-text>
                 <!-- <p
@@ -83,11 +83,13 @@
               </b-form-textarea>
             </b-form-group>
             <div class="cor"></div>
-            <b-button
-              v-b-tooltip.hover.v-info title="Continue idea... [M]"
-              variant="outline-info" class="continueIdea">
-              Continue
-            </b-button>
+            <div class="d-inline mr-2">Continue</div>
+            <select name="continueIdea" id="continueIdea" @change="setContinueIdea(newIdeas.idea1)">
+              <option value="---">---</option>
+              <option :value="idea.id"
+              v-for="(idea, key) in populeteSelect()"
+              :key="key">Idea {{ key + 1 }}</option>
+            </select>
           </b-card-body>
         </b-card>
       </b-col>
@@ -106,11 +108,13 @@
               ></b-form-textarea>
             </b-form-group>
             <div class="cor"></div>
-            <b-button
-              v-b-tooltip.hover.v-info title="Continue idea... [M]"
-              variant="outline-info" class="continueIdea"
-              >Continue
-            </b-button>
+            <div class="d-inline mr-2">Continue</div>
+            <select name="continueIdea" id="continueIdea" @change="setContinueIdea(newIdeas.idea2)">
+              <option value="---">---</option>
+              <option :value="idea.id"
+              v-for="(idea, key) in populeteSelect()"
+              :key="key">Idea {{ key + 1 }}</option>
+            </select>
           </b-card-body>
         </b-card>
       </b-col>
@@ -168,9 +172,9 @@
 const eventRoundChanged = new Event('eventRoundChanged')
 
 export default {
+  name: 'StartBrainstorm',
   data () {
     return {
-      keyList: 0,
       brainstormId: this.$route.params.id,
       round: this.$route.params.round,
       description: '',
@@ -254,11 +258,13 @@ export default {
       })
     },
 
-    populeteSelect () {
+    populeteSelect: function () {
       const listIdeas = []
       for (const round in this.oldIdeas) {
-        for (const idea in this.oldIdeas[round]) {
-          listIdeas.push(this.oldIdeas[round][idea])
+        const currentRound = this.oldIdeas[round]
+        for (const idea in currentRound[`round${Number(round) + 1}`]) {
+          const currentIdea = currentRound[`round${Number(round) + 1}`]
+          listIdeas.push(currentIdea[idea][`idea${Number(idea) + 1}`])
         }
       }
       return listIdeas
@@ -267,8 +273,29 @@ export default {
     setContinueIdea (idea) {
       const select = document.getElementById('continueIdea')
       const indexIdea = select.options.selectedIndex
-      const idIdeacontinued = this.populeteSelect()[indexIdea - 1].id
+      const idIdeacontinued = this.populeteSelect[indexIdea - 1].id
       idea.idContinueIdea = idIdeacontinued
+    },
+
+    organizeIdeasForRender (data) {
+      this.oldIdeas = []
+      let countRound = 0
+      let countIdeas = 0
+      let ideasPerRound = []
+      for (const key in data) {
+        if (key !== 'owner') {
+          for (const key2 in data[`round${countRound + 1}`]) {
+            if (key2 !== 'owner') {
+              ideasPerRound.push({ [`idea${countIdeas + 1}`]: data[`round${countRound + 1}`][`idea${countIdeas + 1}`] })
+              countIdeas++
+            }
+          }
+          this.oldIdeas.push({ [`round${countRound + 1}`]: ideasPerRound })
+          ideasPerRound = []
+          countRound++
+          countIdeas = 0
+        }
+      }
     },
 
     getOldIdeas () {
@@ -277,15 +304,7 @@ export default {
         const docSheet = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
           .collection('sheets').doc(sheet)
         docSheet.get().then(doc => {
-          this.oldIdeas = doc.data()
-          delete this.oldIdeas.owner
-          for (const campo in this.oldIdeas) {
-            for (const campo2 in this.oldIdeas[campo]) {
-              if (campo2 === 'owner') {
-                delete this.oldIdeas[campo][campo2]
-              }
-            }
-          }
+          this.organizeIdeasForRender(doc.data())
         })
       }
     },
@@ -495,21 +514,33 @@ export default {
       this.indexSheet = indexSheet
     },
 
-    async saveIdeas () {
-      const userId = this.$firebase.auth().currentUser.uid
+    async organizeIdeasForSave () {
       for (const campo in this.newIdeas) {
         if (Object.prototype.hasOwnProperty.call(this.newIdeas[campo], 'id')) {
           this.newIdeas[campo].id = await this.codeGenerator(8)
         }
         if (!this.newIdeas[campo].description) { delete this.newIdeas[campo] }
       }
+      const organizedIdeas = {}
+      let countIdea = 0
+      for (const idea in this.newIdeas) {
+        if (idea) {
+          organizedIdeas[`idea${countIdea + 1}`] = this.newIdeas[idea]
+          countIdea++
+        }
+      }
+      return organizedIdeas
+    },
 
-      this.newIdeas.owner = userId
+    async saveIdeas () {
+      const userId = this.$firebase.auth().currentUser.uid
+      const organizedIdeas = await this.organizeIdeasForSave()
+      organizedIdeas.owner = userId
 
-      if (Object.keys(this.newIdeas).length !== 0 && this.indexSheet >= 0) {
+      if (Object.keys(organizedIdeas).length !== 0 && this.indexSheet >= 0) {
         const round = this.round
         const sheet = 'sheet' + (this.indexSheet + 1)
-        const dataSheet = { [round]: this.newIdeas }
+        const dataSheet = { [round]: organizedIdeas }
         const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
         await database.collection('sheets').doc(sheet).set(dataSheet, { merge: true })
           .then(() => {})
