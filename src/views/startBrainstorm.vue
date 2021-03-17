@@ -84,7 +84,7 @@
             </b-form-group>
             <div class="cor"></div>
             <div class="d-inline mr-2">Continue</div>
-            <select name="continueIdea" id="continueIdea" @change="setContinueIdea(newIdeas.idea1)">
+            <select name="continueIdea1" id="continueIdea1" @change="setContinueIdea(1)">
               <option value="---">---</option>
               <option :value="idea.id"
               v-for="(idea, key) in populeteSelect()"
@@ -109,7 +109,7 @@
             </b-form-group>
             <div class="cor"></div>
             <div class="d-inline mr-2">Continue</div>
-            <select name="continueIdea" id="continueIdea" @change="setContinueIdea(newIdeas.idea2)">
+            <select name="continueIdea2" id="continueIdea2" @change="setContinueIdea(2)">
               <option value="---">---</option>
               <option :value="idea.id"
               v-for="(idea, key) in populeteSelect()"
@@ -135,7 +135,7 @@
             </b-form-group>
             <div class="cor"></div>
             <div class="d-inline mr-2">Continue</div>
-            <select name="continueIdea" id="continueIdea" @change="setContinueIdea(newIdeas.idea3)">
+            <select name="continueIdea3" id="continueIdea3" @change="setContinueIdea(3)">
               <option value="---">---</option>
               <option :value="idea.id"
               v-for="(idea, key) in populeteSelect()"
@@ -271,10 +271,16 @@ export default {
     },
 
     setContinueIdea (idea) {
-      const select = document.getElementById('continueIdea')
+      const select = document.getElementById(`continueIdea${idea}`)
       const indexIdea = select.options.selectedIndex
-      const idIdeacontinued = this.populeteSelect[indexIdea - 1].id
-      idea.idContinueIdea = idIdeacontinued
+      const idIdeacontinued = indexIdea > 0
+        ? this.populeteSelect()[indexIdea - 1].id
+        : false
+      if (idIdeacontinued) {
+        this.newIdeas[`idea${idea}`].idContinueIdea = idIdeacontinued
+      } else {
+        this.newIdeas[`idea${idea}`].idContinueIdea = ''
+      }
     },
 
     organizeIdeasForRender (data) {
@@ -332,7 +338,7 @@ export default {
                 idContinueIdea: ''
               }
             }
-            this.oldIdeas = {}
+            this.oldIdeas = []
           })
           .then(() => { this.$router.push({ name: 'printBrainstorm' }) })
           .catch(error => console.error(error))
@@ -364,7 +370,7 @@ export default {
                   idContinueIdea: ''
                 }
               }
-              this.oldIdeas = {}
+              this.oldIdeas = []
             })
             .then(() => { this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: newRound } }) })
             .catch(error => console.error(error))
