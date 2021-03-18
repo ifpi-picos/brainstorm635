@@ -50,12 +50,15 @@
             >
               <div class="postit">
                 <h5 class="text-center pt-1 pb-3">
-                  <b>idea#{{ index > 0 ? round[`round${index + 1}`].length + ind : ind + 1 }} </b>
+                  <b>idea #{{ setNumberIdea(idea[`idea${ind + 1}`].id) + 1 }}</b>
                 </h5>
                 <b-card-text>
                   <p style="font-size: 17.5px; text-align: justify;">
                     {{ idea[`idea${ind + 1}`].description }}
                   </p>
+                  <span class="ideaTagging" v-if="idea[`idea${ind + 1}`].idContinueIdea !== ''">
+                    Continue <strong>Idea #{{ setNumberIdea(idea[`idea${ind + 1}`].idContinueIdea) + 1 }}</strong>
+                  </span>
                 </b-card-text>
                 <!-- <p
                   class="text-muted"
@@ -68,74 +71,23 @@
       </b-row>
     </b-container>
     <b-row align-v="center">
-      <b-col
+      <b-col v-for="(idea, value, index) in newIdeas" :key="index"
         class="align-items-center justify-content-center ml-auto mr-auto mb-2 h-100">
         <b-card class="cartao text-center pr-0 pl-0 pb-0 pt-0">
           <b-card-body class="pb-0">
             <b-form-group>
-              <label for="ideia1" class="idea-label"><strong>Idea #1</strong></label>
+              <label for="ideia1" class="idea-label"><strong>Idea #{{ populeteSelect().length + (index + 1) }}</strong></label>
               <b-form-textarea
                 @blur="finishWriteIdeas()"
                 id="ideia1"
                 placeholder="Write your idea..."
-                v-model="newIdeas.idea1.description"
+                v-model="newIdeas[`idea${index + 1}`].description"
                 class="entradaTexto">
               </b-form-textarea>
             </b-form-group>
             <div class="cor"></div>
-            <div class="d-inline mr-2">Continue</div>
-            <select name="continueIdea1" id="continueIdea1" @change="setContinueIdea(1)">
-              <option value="---">---</option>
-              <option :value="idea.id"
-              v-for="(idea, key) in populeteSelect()"
-              :key="key">Idea {{ key + 1 }}</option>
-            </select>
-          </b-card-body>
-        </b-card>
-      </b-col>
-      <b-col
-        class="align-items-center justify-content-center ml-auto mr-auto mb-2 h-100">
-        <b-card class="cartao text-center pr-0 pl-0 pb-0 pt-0">
-          <b-card-body class="pb-0">
-            <b-form-group>
-              <label for="ideia2" class="idea-label"><strong>Idea #2</strong></label>
-              <b-form-textarea
-                @blur="finishWriteIdeas()"
-                id="ideia2"
-                placeholder="Write your idea..."
-                v-model="newIdeas.idea2.description"
-                class="entradaTexto"
-              ></b-form-textarea>
-            </b-form-group>
-            <div class="cor"></div>
-            <div class="d-inline mr-2">Continue</div>
-            <select name="continueIdea2" id="continueIdea2" @change="setContinueIdea(2)">
-              <option value="---">---</option>
-              <option :value="idea.id"
-              v-for="(idea, key) in populeteSelect()"
-              :key="key">Idea {{ key + 1 }}</option>
-            </select>
-          </b-card-body>
-        </b-card>
-      </b-col>
-      <b-col
-        class="align-items-center justify-content-center ml-auto mr-auto mb-2 h-100">
-        <b-card class="cartao text-center pr-0 pl-0 pb-0 pt-0">
-          <b-card-body class="pb-0 pl-0">
-            <b-form-group>
-              <label for="ideia3" class="idea-label"><strong>Idea #3</strong></label>
-              <b-form-textarea
-                @blur="finishWriteIdeas()"
-                id="ideia3"
-                placeholder="Write your idea..."
-                v-model="newIdeas.idea3.description"
-                class="entradaTexto"
-                wrap="hard">
-              </b-form-textarea>
-            </b-form-group>
-            <div class="cor"></div>
-            <div class="d-inline mr-2">Continue</div>
-            <select name="continueIdea3" id="continueIdea3" @change="setContinueIdea(3)">
+            <label :for="`continueIdea${index + 1}`" class="d-inline mr-2">Continue</label>
+            <select :name="`continueIdea${index + 1}`" :id="`continueIdea${index + 1}`" @change="setContinueIdea(index + 1)">
               <option value="---">---</option>
               <option :value="idea.id"
               v-for="(idea, key) in populeteSelect()"
@@ -283,13 +235,18 @@ export default {
       }
     },
 
+    setNumberIdea: function (id) {
+      const indexIdeaContinued = this.populeteSelect().findIndex(idea => idea.id === id)
+      return indexIdeaContinued
+    },
+
     organizeIdeasForRender (data) {
       this.oldIdeas = []
       let countRound = 0
       let countIdeas = 0
       let ideasPerRound = []
       for (const key in data) {
-        if (key !== 'owner') {
+        if (key !== 'owner' && key !== `round${this.currentRound}`) {
           for (const key2 in data[`round${countRound + 1}`]) {
             if (key2 !== 'owner') {
               ideasPerRound.push({ [`idea${countIdeas + 1}`]: data[`round${countRound + 1}`][`idea${countIdeas + 1}`] })
@@ -692,6 +649,14 @@ export default {
   -o-transform: matrix(-1, -0.1, 0, 1, 0, 0);
   -ms-transform: matrix(-1, -0.1, 0, 1, 0, 0);
   transform: matrix(-1, -0.1, 0, 1, 0, 0);
+}
+
+.ideaTagging{
+  position: absolute;
+  bottom: 5% !important;
+  left: 20%;
+  right: auto;
+  color: rgb(236, 56, 56);
 }
 
 .container-ideas {
