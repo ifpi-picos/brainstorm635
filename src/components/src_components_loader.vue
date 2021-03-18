@@ -16,15 +16,15 @@ export default {
   props: {
     visivel: {
       type: Boolean,
-      required: true,
+      required: true
     },
     text: {
       type: String,
       required: false,
-      default: '',
-    },
-  },
-};
+      default: ''
+    }
+  }
+}
 </script>
 <style lang="scss">
 </style>
