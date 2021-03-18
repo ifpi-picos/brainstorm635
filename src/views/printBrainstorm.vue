@@ -33,8 +33,11 @@
                 </h5>
                 <b-card-text>
                   <p style="font-size: 17.5px; text-align: justify;">
-                    {{ idea }}
+                    {{ idea.description }}
                   </p>
+                  <span class="ideaTagging" v-if="idea.idContinueIdea !== ''">
+                    Continue Idea #{{ setNumberIdea(idea.idContinueIdea) + 1 }}
+                  </span>
                 </b-card-text>
                 <!-- <p
                   class="text-muted"
@@ -109,8 +112,12 @@ export default {
 
                   for (let round = 0; round < this.numberRounds.length; round++) {
                     const indexRound = 'round' + (round + 1)
+                    let count = 1
                     for (const sheet in doc.data()[indexRound]) {
-                      if (sheet !== 'owner') this.ideasToPrint.push(doc.data()[indexRound][sheet].description)
+                      if (sheet !== 'owner') {
+                        this.ideasToPrint.push(doc.data()[indexRound][`idea${count}`])
+                        count++
+                      }
                     }
                   }
                 })
@@ -126,39 +133,9 @@ export default {
       }
     },
 
-    getData () {
-      try {
-        const db = this.$firebase.firestore()
-        db.collection('brainstorms')
-          .doc(this.brainstormId)
-          .onSnapshot(doc => {
-            this.rounds = doc.data().listGuests
-            this.description = doc.data().description
-            this.brainstormDate = doc.data().brainstormDate.toDate()
-            /* ? doc.data().currentDate.timestamp
-            : '' */
-
-            for (let i = 0; i < this.rounds.length; i++) {
-              const indexSheet = 'sheet' + (i + 1)
-              try {
-                const rows = this.$firebase.firestore()
-                rows
-                  .collection('brainstorms')
-                  .doc(this.brainstormId)
-                  .collection('sheets')
-                  .doc(indexSheet)
-                  .get()
-                  .then(doc => {
-                    this.ideasPerRound.push(doc.data())
-                  })
-              } catch (error) {
-                console.error(error)
-              }
-            }
-          })
-      } catch (error) {
-        console.error(error)
-      }
+    setNumberIdea: function (id) {
+      const indexIdeaContinued = this.ideasToPrint.findIndex(idea => idea.id === id)
+      return indexIdeaContinued
     }
   }
 }
@@ -246,6 +223,14 @@ export default {
   -o-transform: matrix(-1, -0.1, 0, 1, 0, 0);
   -ms-transform: matrix(-1, -0.1, 0, 1, 0, 0);
   transform: matrix(-1, -0.1, 0, 1, 0, 0);
+}
+
+.ideaTagging{
+  position: absolute;
+  bottom: 5% !important;
+  left: 25%;
+  right: auto;
+  font-size: 1.1rem;
 }
 
 .container-ideas {

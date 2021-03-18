@@ -57,7 +57,7 @@
                     {{ idea[`idea${ind + 1}`].description }}
                   </p>
                   <span class="ideaTagging" v-if="idea[`idea${ind + 1}`].idContinueIdea !== ''">
-                    Continue <strong>Idea #{{ setNumberIdea(idea[`idea${ind + 1}`].idContinueIdea) + 1 }}</strong>
+                    Continue Idea #{{ setNumberIdea(idea[`idea${ind + 1}`].idContinueIdea) + 1 }}
                   </span>
                 </b-card-text>
                 <!-- <p
@@ -654,9 +654,9 @@ export default {
 .ideaTagging{
   position: absolute;
   bottom: 5% !important;
-  left: 20%;
+  left: 25%;
   right: auto;
-  color: rgb(236, 56, 56);
+  font-size: 1.1rem;
 }
 
 .container-ideas {
