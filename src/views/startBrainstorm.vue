@@ -549,12 +549,12 @@ export default {
 }
 
 .entradaTexto::-webkit-scrollbar-thumb {
-  background: rgb(112, 112, 231);
+  background: #15b4cc;
   border-radius: 3px;
 }
 
 .entradaTexto::-webkit-scrollbar-thumb:hover {
-  background: blue;
+  background: #17a2b8;
 }
 
 .cor {
