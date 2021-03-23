@@ -335,7 +335,6 @@ export default {
     },
 
     saveRoundsTime () {
-      console.log('teste')
       const db = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
       db.update({
         roundsTime: this.roundsTime
