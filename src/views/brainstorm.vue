@@ -52,7 +52,7 @@
                     label-for="rounds-time"
                     class="input-with-prepend">
                     <b-form-timepicker
-                      @input="saveRoundsTime()"
+                      @hidden="saveRoundsTime()"
                       v-b-tooltip.hover.topright.v-info
                       title="Edit time"
                       class="input-group-text"
@@ -335,6 +335,7 @@ export default {
     },
 
     saveRoundsTime () {
+      console.log('teste')
       const db = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
       db.update({
         roundsTime: this.roundsTime
