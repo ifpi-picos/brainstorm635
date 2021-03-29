@@ -19,13 +19,8 @@ const routes = [
     path: '/',
     name: 'default',
     component: defaultTemplate,
-    redirect: 'home',
+    redirect: 'newBrainstorm',
     children: [
-      {
-        path: '/home',
-        name: 'home',
-        component: () => import('@/views/home.vue')
-      },
 
       {
         path: '/newbrainstorm',
@@ -57,6 +52,12 @@ const routes = [
     path: '*',
     name: '404',
     component: () => import('@/views/404.vue')
+  },
+
+  {
+    path: '/home',
+    name: 'home',
+    component: () => import('@/views/home.vue')
   }
 
   /* {

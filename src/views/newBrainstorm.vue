@@ -1,14 +1,13 @@
 <template>
-  <b-container fluid>
-    <br />
+  <b-container fluid style="height: 61.3vh">
     <b-row align-v="end">
       <b-col
         class="brain-card align-items-center justify-content-center ml-auto mr-auto"
         md="7">
-        <b-card class="text-center pr-5 pl-5 pb-5 pt-0 mt-3">
+        <b-card class="text-center pr-5 pl-5 pb-5 ">
           <b-row>
             <b-col>
-              <h4 class="page-tittle mb-5 mt-4">Brainstorm</h4>
+              <h4 class="page-tittle mb-5">Brainstorm</h4>
             </b-col>
           </b-row>
           <b-row class="text-center mt-4">

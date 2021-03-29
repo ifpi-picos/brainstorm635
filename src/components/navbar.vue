@@ -1,6 +1,6 @@
 <template>
   <b-navbar
-    fixed="top"
+    class="nav-footer-bar"
     toggleable="lg"
     type="light"
   >

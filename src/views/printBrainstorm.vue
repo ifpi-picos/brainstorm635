@@ -126,8 +126,8 @@ export default {
             }
           }
           // console.log(this.roundsInSheets)
+          this.loading = false
         })
-        this.loading = false
       } catch (error) {
         console.error(error)
       }

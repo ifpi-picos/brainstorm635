@@ -7,9 +7,7 @@
       @click="login()"
     >
       <img
-        class="img-fluid"
-        height="30"
-        width="30"
+        class="img-fluid img-google"
         src="/img/google.png"
         alt="Google logo"
       />
@@ -139,5 +137,24 @@ export default {
   background-color: #fff;
   color: #138496;
   font-weight: 300;
+}
+
+.text-login {
+  font-size: 1rem;
+}
+
+/* @media screen and (max-width: 1015px) {
+  .text-login {
+    font-size: 12px;
+  }
+  .img-google {
+    height: 20px !important;
+    width: 20px !important;
+  }
+} */
+
+.img-google {
+  height: 30px;
+  width: 30px;
 }
 </style>

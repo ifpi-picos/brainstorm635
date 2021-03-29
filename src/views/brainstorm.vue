@@ -7,10 +7,10 @@
           class="align-items-center justify-content-center ml-auto mr-auto"
           md="10"
         >
-          <b-card class="text-center pr-3 pl-3 pb-3 pt-0">
+          <b-card class="text-center pr-3 pl-3 pb-3">
             <b-row>
               <b-col>
-                <h4 class="page-tittle mb-5 mt-3">Create Brainstorm</h4>
+                <h4 class="page-tittle mb-5">Create Brainstorm</h4>
               </b-col>
             </b-row>
             <b-form @submit.prevent="startBrainstorm()">
