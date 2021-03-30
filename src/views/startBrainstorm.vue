@@ -442,7 +442,7 @@ export default {
           confirmButtonColor: '#17a2b8',
           cancelButtonColor: '#dc3545'
         }).then((result) => {
-          if (result.isConfirmed) {
+          if (result.isConfirmed && !this.isLeader) {
             if (this.currentRound < this.participants) {
               this.$bvToast.toast('Changing to Round ' + (this.currentRound + 1), {
                 title: 'Round change alert!',
