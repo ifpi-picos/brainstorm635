@@ -324,7 +324,7 @@ export default {
                   title: 'Round change alert!',
                   toaster: 'b-toaster-top-center',
                   variant: 'success',
-                  autoHideDelay: 2500,
+                  autoHideDelay: 3000,
                   appendToast: true
                 })
               }
