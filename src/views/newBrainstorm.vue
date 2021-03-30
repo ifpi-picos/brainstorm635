@@ -16,7 +16,7 @@
                 @click="createNewBrainstorm()"
                 class="new-brain-button mt-5"
                 variant="outline-info">
-                New Brainstorm
+                  New Brainstorm
                 <i class="fas fa-plus"></i>
               </b-button>
             </b-col>
