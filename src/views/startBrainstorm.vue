@@ -281,15 +281,6 @@ export default {
     },
 
     changeRoute () {
-      if (!this.isLeader) {
-        this.$bvToast.toast('Changing to Round ' + (this.currentRound + 1), {
-          title: 'Round change alert!',
-          toaster: 'b-toaster-top-center',
-          variant: 'success',
-          autoHideDelay: 2500,
-          appendToast: true
-        })
-      }
       const route = this.$route
       if (this.concluded && route.name !== 'printBrainstorm') {
         this.saveIdeas()
@@ -327,6 +318,16 @@ export default {
           dispatchEvent(eventRoundChanged)
           this.saveIdeas()
             .then(() => {
+              // Changing round alert
+              if (!this.isLeader) {
+                this.$bvToast.toast('Changing to Round ' + (this.currentRound + 1), {
+                  title: 'Round change alert!',
+                  toaster: 'b-toaster-top-center',
+                  variant: 'success',
+                  autoHideDelay: 2500,
+                  appendToast: true
+                })
+              }
               this.newIdeas = {
                 idea1: {
                   description: '',
