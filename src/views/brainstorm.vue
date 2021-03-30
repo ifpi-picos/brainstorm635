@@ -26,7 +26,7 @@
                     <b-input-group>
                       <b-input-group-prepend
                         class="input-with-prepend">
-                        <span class="input-group-text"
+                        <span class="input-group-text color-icon"
                           ><i class="fas fa-file-signature fa-lg"></i>
                         </span>
                       </b-input-group-prepend>
@@ -36,7 +36,8 @@
                         type="text"
                         :disabled="!isLeader"
                         @blur="saveDescription"
-                        class="input-with-prepend input-code"
+                        class="input-with-prepend"
+                        autofocus
                         id="input-1"
                         v-model="description"
                         placeholder="Describe the brainstorm"
@@ -50,7 +51,7 @@
                     label-class="required"
                     label="Rounds time"
                     label-for="rounds-time"
-                    class="input-with-prepend">
+                  >
                     <b-form-timepicker
                       @hidden="saveRoundsTime()"
                       v-b-tooltip.hover.topright.v-info
@@ -104,7 +105,7 @@
                   >
                     <b-input-group>
                       <b-input-group-prepend>
-                        <span class="input-group-text"
+                        <span class="input-group-text active-members"
                           ><i class="fas fa-users fa-lg"></i
                         ></span>
                       </b-input-group-prepend>
@@ -386,9 +387,10 @@ export default {
   box-shadow: none !important;
 }
 
-.input-with-prepend:focus,   .input-code:focus {
+.input-with-prepend:focus, .input-code:focus {
+  background-color: #e9ecef;
   box-shadow: none !important;
-  border: none !important;
+  border-color: #ced4da !important;
 }
 
 .input-code, .form-control:disabled {
@@ -428,14 +430,24 @@ export default {
 }
 
 /* Changing the background color of input appends */
-.input-group-text, .photo-guests {
+
+.color-icon {
+  color: #17a2b8 !important;
+}
+
+.photo-guests, .active-members {
   background-color: #fff !important;
   color: #17a2b8 !important; /* #1384968 */
   /*  opacity: 1.95 !important; */
   border: none !important;
 }
 
-.guests, .input-with-prepend, .input-with-append, .input-code{
+.input-with-prepend {
+  border-left: none;
+  background: #e9ecef !important;
+}
+
+.guests, .input-code{
   border: none !important;
 }
 
