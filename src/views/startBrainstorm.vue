@@ -281,7 +281,7 @@ export default {
     },
 
     changeRoute () {
-      if (result.isConfirmed && !this.isLeader) {
+      if (!this.isLeader) {
         this.$bvToast.toast('Changing to Round ' + (this.currentRound + 1), {
           title: 'Round change alert!',
           toaster: 'b-toaster-top-center',
