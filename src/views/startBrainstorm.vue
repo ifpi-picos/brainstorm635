@@ -412,7 +412,7 @@ export default {
         icon: 'warning',
         focusConfirm: false,
         showCloseButton: true,
-        confirmButtonText: 'Confirm exit',
+        confirmButtonText: 'Confirm pause',
         denyButtonText: 'Cancel',
         showCancelButton: true,
         confirmButtonColor: '#17a2b8',
@@ -436,13 +436,14 @@ export default {
           icon: 'warning',
           focusConfirm: false,
           showCloseButton: true,
-          confirmButtonText: 'Confirm exit',
+          confirmButtonText: 'Confirm change',
           denyButtonText: 'Cancel',
           showCancelButton: true,
           confirmButtonColor: '#17a2b8',
           cancelButtonColor: '#dc3545'
         }).then((result) => {
-          if (result.isConfirmed && !this.isLeader) {
+          if (result.isConfirmed && this.isLeader === false) {
+            console.log('dasd', this.isLeader)
             if (this.currentRound < this.participants) {
               this.$bvToast.toast('Changing to Round ' + (this.currentRound + 1), {
                 title: 'Round change alert!',
