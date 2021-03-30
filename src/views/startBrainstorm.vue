@@ -281,6 +281,15 @@ export default {
     },
 
     changeRoute () {
+      if (result.isConfirmed && !this.isLeader) {
+        this.$bvToast.toast('Changing to Round ' + (this.currentRound + 1), {
+          title: 'Round change alert!',
+          toaster: 'b-toaster-top-center',
+          variant: 'success',
+          autoHideDelay: 2500,
+          appendToast: true
+        })
+      }
       const route = this.$route
       if (this.concluded && route.name !== 'printBrainstorm') {
         this.saveIdeas()
@@ -429,56 +438,42 @@ export default {
 
     changeRound () {
       // Changing round alert
-      if (this.isLeader) {
-        Swal.fire({
-          title: 'Are you sure?',
-          text: 'You and yours friends are ready to change for the next round?',
-          icon: 'warning',
-          focusConfirm: false,
-          showCloseButton: true,
-          confirmButtonText: 'Confirm change',
-          denyButtonText: 'Cancel',
-          showCancelButton: true,
-          confirmButtonColor: '#17a2b8',
-          cancelButtonColor: '#dc3545'
-        }).then((result) => {
-          if (result.isConfirmed && this.isLeader === false) {
-            console.log('dasd', this.isLeader)
-            if (this.currentRound < this.participants) {
-              this.$bvToast.toast('Changing to Round ' + (this.currentRound + 1), {
-                title: 'Round change alert!',
-                toaster: 'b-toaster-top-center',
-                variant: 'success',
-                autoHideDelay: 2500,
-                appendToast: true
-              })
-            }
-            if (this.isLeader) {
-              if (this.currentRound < this.participants) {
-                const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
-                database.update({
-                  currentRound: this.currentRound + 1,
-                  hourOfStartRound: Date()
-                })
-              } else {
-                const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
-                database.update({ concluded: true })
-              }
-            }
-
-            // Changing to print braisntorm screen alert
-            /* if (this.currentRound === this.participants) {
-              this.$bvToast.toast('Changing to print brainstorm screen', {
-                title: 'Round change alert!',
-                toaster: 'b-toaster-top-center',
-                variant: 'success',
-                autoHideDelay: 5000,
-                appendToast: true
-              })
-            } */
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'You and yours friends are ready to change for the next round?',
+        icon: 'warning',
+        focusConfirm: false,
+        showCloseButton: true,
+        confirmButtonText: 'Confirm change',
+        denyButtonText: 'Cancel',
+        showCancelButton: true,
+        confirmButtonColor: '#17a2b8',
+        cancelButtonColor: '#dc3545'
+      }).then((result) => {
+        if (result.isConfirmed && this.isLeader) {
+          if (this.currentRound < this.participants) {
+            const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
+            database.update({
+              currentRound: this.currentRound + 1,
+              hourOfStartRound: Date()
+            })
+          } else {
+            const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
+            database.update({ concluded: true })
           }
-        })
-      }
+        }
+
+        // Changing to print braisntorm screen alert
+        /* if (this.currentRound === this.participants) {
+            this.$bvToast.toast('Changing to print brainstorm screen', {
+              title: 'Round change alert!',
+              toaster: 'b-toaster-top-center',
+              variant: 'success',
+              autoHideDelay: 5000,
+              appendToast: true
+            })
+          } */
+      })
     },
 
     finishWriteIdeas () {
