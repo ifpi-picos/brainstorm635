@@ -54,23 +54,24 @@
         <b-nav-item-dropdown
           text="Lang"
           right
-        >
-          <b-dropdown-item href="#">PT
-            <b-img
-              class="ml-1"
-              rounded="circle"
-              :src="require('../../public/img/brasil.png')"
-              alt="PT"
-              height="17"
-            >
-            </b-img>
-          </b-dropdown-item>
+          >
           <b-dropdown-item href="#">EN
             <b-img
               class="usa"
               :src="require('../../public/img/eua.png')"
               rounded="circle"
               alt="EN"
+              height="17"
+            >
+            </b-img>
+          </b-dropdown-item>
+        <!--
+          <b-dropdown-item href="#">PT
+            <b-img
+              class="ml-1"
+              rounded="circle"
+              :src="require('../../public/img/brasil.png')"
+              alt="PT"
               height="17"
             >
             </b-img>
@@ -85,7 +86,8 @@
             >
             </b-img>
           </b-dropdown-item>
-        </b-nav-item-dropdown>
+         -->
+         </b-nav-item-dropdown>
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>

@@ -46,30 +46,30 @@
       <b-container align-v="center">
         <b-row align-v="center" v-for="(round, index) of oldIdeas" :key="index">
           <b-col
-                v-for="(idea, ind) in round[`round${index + 1}`]" :key="ind"
-                class="mb-4 pl-1 pr-1"
-                md="4"
-              >
-                <div class="postit">
-                  <h5 class="text-center pt-1 pb-3">
-                    <b>idea #{{ setNumberIdea(idea[`idea${ind + 1}`].id) + 1 }}</b>
-                  </h5>
-                  <b-card-text>
-                    <p style="font-size: 17.5px; text-align: justify;">
-                      {{ idea[`idea${ind + 1}`].description }}
-                    </p>
-                    <span class="ideaTagging" v-if="idea[`idea${ind + 1}`].idContinueIdea !== ''">
-                      Continue Idea #{{ setNumberIdea(idea[`idea${ind + 1}`].idContinueIdea) + 1 }}
-                    </span>
-                  </b-card-text>
-                  <!-- <p
-                    class="text-muted"
-                    style="position: absolute; bottom: -10px">
-                    Editado por:
-                    <b>{{ guestNames[index] }}</b>
-                  </p> -->
-                </div>
-              </b-col>
+              v-for="(idea, ind) in round[`round${index + 1}`]" :key="ind"
+              class="mb-4 pl-1 pr-1"
+              md="4"
+            >
+              <div class="postit">
+                <h5 class="text-center pt-1 pb-3">
+                  <b>idea #{{ setNumberIdea(idea[`idea${ind + 1}`].id) + 1 }}</b>
+                </h5>
+                <b-card-text>
+                  <p style="font-size: 17.5px; text-align: justify;">
+                    {{ idea[`idea${ind + 1}`].description }}
+                  </p>
+                  <span class="ideaTagging" v-if="idea[`idea${ind + 1}`].idContinueIdea !== ''">
+                    Continue Idea #{{ setNumberIdea(idea[`idea${ind + 1}`].idContinueIdea) + 1 }}
+                  </span>
+                </b-card-text>
+                <!-- <p
+                  class="text-muted"
+                  style="position: absolute; bottom: -10px">
+                  Editado por:
+                  <b>{{ guestNames[index] }}</b>
+                </p> -->
+              </div>
+            </b-col>
         </b-row>
       </b-container>
       <b-row align-v="center">
@@ -80,6 +80,7 @@
               <b-form-group>
                 <label for="ideia1" class="idea-label"><strong>Idea #{{ populeteSelect().length + (index + 1) }}</strong></label>
                 <b-form-textarea
+                  :autofocus="index===0"
                   @blur="finishWriteIdeas()"
                   id="ideia1"
                   placeholder="Write your idea..."
@@ -583,7 +584,7 @@ export default {
   min-width: 200px !important;
   border: none !important;
   flex-wrap: wrap;
-  margin-left: 1rem;
+  /* margin-left: 1rem; */
 }
 
 .entradaTexto:focus {
