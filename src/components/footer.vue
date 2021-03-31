@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid  class="footer">
+  <b-container fluid class="footer">
     <b-row class="text-center justify-content-md-center" align-v="end" style="padding-top: 10px" >
       <b-col md="6" xs="5" sm="6" align-self="center">
         <span class="span">
@@ -24,6 +24,7 @@
 
 .footer {
   display: block !important;
+  min-height: 75px !important;
   max-height: 80px !important;
   border-top: rgb(0, 0, 0, 0.125 ) 0.2px solid !important;
 }

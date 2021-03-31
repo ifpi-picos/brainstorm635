@@ -191,7 +191,6 @@ html {
 /* Media queries for responsive card body */
 @media only screen and (max-width: 990px) {
   .card-body {
-    
     padding-left: 0 !important;
     padding-right: 0 !important;
   }

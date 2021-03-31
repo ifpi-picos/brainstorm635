@@ -111,12 +111,12 @@
         <b-button
           v-if="currentRound < participants"
           variant="outline-info" class="buttonPauseNext ml-4"
-          @click="changeRound()">Next Round
+          @click="changeRound(true)">Next Round
         </b-button>
         <b-button
           v-if="currentRound === participants"
           variant="outline-info" class="buttonPauseNext ml-4"
-          @click="changeRound()">Finish Brainstorm
+          @click="changeRound(false)">Finish Brainstorm
         </b-button>
       </b-row>
     </b-container>
@@ -165,7 +165,10 @@ export default {
       running: true,
       roundsTime: '',
       indexSheet: undefined,
-      loading: false
+      loading: false,
+      title: '',
+      text: '',
+      confirmButtonText: ''
     }
   },
 
@@ -437,15 +440,25 @@ export default {
       })
     },
 
-    changeRound () {
+    changeRound (nextRound) {
+      // Verify end of brainstorm or next round
+      if (nextRound) {
+        this.title = 'Are you sure?'
+        this.text = 'You and yours friends are ready to change for the next round?'
+        this.confirmButtonText = 'Confirm Change'
+      } else {
+        this.title = 'Are you sure?'
+        this.text = 'You and yours friends are ready to finish the brainstorm?'
+        this.confirmButtonText = 'Confirm Finish'
+      }
       // Changing round alert
       Swal.fire({
-        title: 'Are you sure?',
-        text: 'You and yours friends are ready to change for the next round?',
+        title: this.title,
+        text: this.text,
         icon: 'warning',
         focusConfirm: false,
         showCloseButton: true,
-        confirmButtonText: 'Confirm change',
+        confirmButtonText: this.confirmButtonText,
         denyButtonText: 'Cancel',
         showCancelButton: true,
         confirmButtonColor: '#17a2b8',

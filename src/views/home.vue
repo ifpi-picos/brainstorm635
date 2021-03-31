@@ -8,7 +8,7 @@
         <b-card class="text-center">
           <b-row>
             <b-col>
-              <h4 class="page-tittle mb-5 mt-4">
+              <h4 class="page-tittle mb-5 mt-2">
                 Welcome to Brainstorm 635 online
               </h4>
             </b-col>

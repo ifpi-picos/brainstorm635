@@ -10,7 +10,7 @@
           <b-card class="text-center pr-3 pl-3 pb-3">
             <b-row>
               <b-col>
-                <h4 class="page-tittle page-tittle-text mb-5">Create Brainstorm</h4>
+                <h4 class="page-tittle page-tittle-text mb-5">Brainstorm</h4>
               </b-col>
             </b-row>
             <b-form @submit.prevent="startBrainstorm()">
@@ -466,7 +466,7 @@ export default {
 }
 
 .input-group-text {
-  background-color: #fff;
+  background-color: #fff !important;
 }
 
 </style>
