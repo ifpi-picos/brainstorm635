@@ -144,6 +144,7 @@ html {
   display: inline-block !important;
 }
 .required::after {
+  font-size: 1.1rem;
   content: "*";
   font-weight: bold;/* 
   // position: absolute; */
@@ -180,4 +181,17 @@ html {
 
 .icone-padd {
   padding-right: 3.5px !important;
+}
+
+/* Removing box shadow of buttons on click*/
+.btn:focus {
+  box-shadow: none !important;
+}
+
+/* Media queries for responsive card body */
+@media only screen and (max-width: 990px) {
+  .card-body {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
 }

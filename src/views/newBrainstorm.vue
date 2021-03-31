@@ -14,7 +14,7 @@
             <b-col md="6">
               <b-button
                 @click="createNewBrainstorm()"
-                class="new-brain-button mt-5"
+                class="new-brain-button mt-5 focus-button"
                 variant="outline-info">
                   New Brainstorm
                 <i class="fas fa-plus"></i>
@@ -31,7 +31,9 @@
                       maxlength="10"
                     >
                     </b-form-input>
-                    <b-button type="submit" variant="info">
+                    <b-button
+                      class="focus-button"
+                      type="submit" variant="info">
                       Join
                     </b-button>
                   </b-col>
@@ -213,6 +215,11 @@ export default {
 
 .input-for-code {
   padding: 1.2rem 0.5rem !important;
+}
+
+.input-for-code:focus {
+  box-shadow: none !important;
+  border: 1px solid #17a2b8 !important;
 }
 
 /* Changes for Modal */

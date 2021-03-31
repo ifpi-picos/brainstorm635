@@ -1,8 +1,8 @@
 <template>
   <div class="default">
-    <NavBar class="fixed-to"/>
+    <NavBar class="ixed-top"/>
     <router-view class="main-content"></router-view>
-    <Footer class="ixed-bottom footer" />
+    <Footer class="ixed-bottom" />
   </div>
 </template>
 <script>
@@ -21,12 +21,9 @@ export default {
 </script>
 
 <style lang="css">
-  #app div .main-content {
+  .main-content {
     margin-top: 60px;
     margin-bottom: 60px;
   }
 
-  .nav-footer-bar {
-    min-height: 100% !important;
-  }
 </style>

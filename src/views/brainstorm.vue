@@ -10,7 +10,7 @@
           <b-card class="text-center pr-3 pl-3 pb-3">
             <b-row>
               <b-col>
-                <h4 class="page-tittle mb-5">Create Brainstorm</h4>
+                <h4 class="page-tittle page-tittle-text mb-5">Create Brainstorm</h4>
               </b-col>
             </b-row>
             <b-form @submit.prevent="startBrainstorm()">
@@ -66,7 +66,7 @@
                 </b-col>
                 <b-col md="2">
                   <b-form-group
-                    class="text-left"
+                    class="text-left mt-1"
                     id="input-group-2"
                     label="Brainstorm code"
                     label-for="copyCode"
@@ -86,7 +86,7 @@
                         <b-button
                           v-b-tooltip.hover.v-info
                           title="Copy Code"
-                          class="copy-button  "
+                          class="copy-button"
                           variant="light"
                           @click="copyCodeToClipboad()"
                         >
@@ -101,7 +101,7 @@
                     id="input-group-3"
                     label="Active members"
                     label-for="input-3"
-                    class="text-left "
+                    class="text-left mt-1"
                   >
                     <b-input-group>
                       <b-input-group-prepend>
@@ -387,8 +387,13 @@ export default {
   box-shadow: none !important;
 }
 
+.input-with-prepend {
+  border-left: none;
+  /* background: #e9ecef !important; */
+}
+
 .input-with-prepend:focus, .input-code:focus {
-  background-color: #e9ecef;
+  /* background-color: #e9ecef; */
   box-shadow: none !important;
   border-color: #ced4da !important;
 }
@@ -433,6 +438,7 @@ export default {
 
 .color-icon {
   color: #17a2b8 !important;
+  background-color: #fff;
 }
 
 .photo-guests, .active-members {
@@ -440,11 +446,6 @@ export default {
   color: #17a2b8 !important; /* #1384968 */
   /*  opacity: 1.95 !important; */
   border: none !important;
-}
-
-.input-with-prepend {
-  border-left: none;
-  background: #e9ecef !important;
 }
 
 .guests, .input-code{
@@ -462,6 +463,10 @@ export default {
 /* Change the color of watch in rounds time input */
 .btn .b-icon.bi, .nav-link .b-icon.bi, .dropdown-toggle .b-icon.bi, .dropdown-item .b-icon.bi, .input-group-text .b-icon.bi {
   color: #17a2b8 !important;
+}
+
+.input-group-text {
+  background-color: #fff;
 }
 
 </style>
