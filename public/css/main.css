@@ -87,6 +87,11 @@ html {
   font-family: Comfortaa !important;
 }
 
+/* Removing box shadow of buttons on click*/
+.btn:focus {
+  box-shadow: none !important;
+}
+
 /* Shadow for standard buttons */
 .btn:hover {
   box-shadow: 0 1px 3px 0 rgba(60,64,67,0.302),
@@ -181,11 +186,6 @@ html {
 
 .icone-padd {
   padding-right: 3.5px !important;
-}
-
-/* Removing box shadow of buttons on click*/
-.btn:focus {
-  box-shadow: none !important;
 }
 
 /* Media queries for responsive card body */
