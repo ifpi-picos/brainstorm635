@@ -1,12 +1,12 @@
 <template>
   <b-container fluid class="footer">
-    <b-row class="text-center justify-content-md-center" align-v="end" style="padding-top: 10px" >
-      <b-col md="6" xs="5" sm="6" align-self="center">
+    <b-row class="text-center justify-content-md-center" align-v="end" style="padding-top: 10px">
+      <b-col class="cols-footer" md="6" lg="6" sm="6" align-self="center">
         <span class="span">
           &copy; CopyRight, Brainstorm635 2020
         </span>
       </b-col>
-      <b-col md="6" xs="5" sm="6" align-self="center" class="sidebar-footer"  style="padding-top: 15px">
+      <b-col class="cols-footer sidebar-footer" md="6" lg="6" sm="6" align-self="center" style="padding-top: 15px">
         <span class="span">
           All Rights Reserved
         </span>
@@ -27,6 +27,8 @@
   min-height: 75px !important;
   max-height: 80px !important;
   border-top: rgb(0, 0, 0, 0.125 ) 0.2px solid !important;
+  margin-left: none !important;
+  margin-right: none !important;
 }
 
 /* .footer {
@@ -48,6 +50,9 @@
 @media only screen and (max-width: 576px) {
   .span {
     font-size: 13px !important;
+  }
+  .cols-footer {
+    width: 50% !important;
   }
 }
 </style>
