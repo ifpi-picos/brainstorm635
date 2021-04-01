@@ -41,7 +41,7 @@
 } */
 
 .sidebar-footer {
-  position: absolute;
+  /* position: absolute; */
   height: 55px;
   border-left: 4px solid #17a2b8;
 }
