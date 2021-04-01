@@ -1,49 +1,51 @@
 <template>
-  <b-container align-v="center" style="margin-bottom: 8%">
-    <b-row class="align-items-center justify-content-center ml-auto mr-auto">
-      <b-col class="pr-0 pl-0">
-        <b-card no-body>
-          <b-row>
-            <b-col>
-              <h4 class="page-tittle mb-4 mt-2">Brainstorm 635 online</h4>
-            </b-col>
-          </b-row>
-          <br>
-          <b-row >
-            <b-col xs="12" sm="4" md="4" class="text-center culums">
-              <span class="corpoInfo">
-                <span class="icone icone-padd">
-                  <i class="fa fa-file-signature fa-lg"></i>
+  <div>
+    <load v-if="loading"/>
+    <b-container v-else align-v="center" style="margin-bottom: 8%">
+      <b-row class="align-items-center justify-content-center ml-auto mr-auto">
+        <b-col class="pr-0 pl-0">
+          <b-card no-body>
+            <b-row>
+              <b-col>
+                <h4 class="page-tittle mb-4 mt-2">Brainstorm 635 online</h4>
+              </b-col>
+            </b-row>
+            <br>
+            <b-row >
+              <b-col xs="12" sm="4" md="4" class="text-center culums">
+                <span class="corpoInfo">
+                  <span class="icone icone-padd">
+                    <i class="fa fa-file-signature fa-lg"></i>
+                  </span>
+                  {{ description }}
                 </span>
-                {{ description }}
+              </b-col>
+              <b-col xs="12" sm="4" md="4" class="text-center culums">
+                <span class="corpoInfo round">
+                  <span class="icone">
+                    <i
+                      class="fa fa-circle-notch fa-lg">
+                    </i>
+                  </span>
+                  {{ returnRound }}
+                </span>
+              </b-col>
+              <b-col xs="12" sm="4" md="4" class="text-center culums">
+                <span class="corpoInfo">
+                  <span class="icone">
+                    <i class="fa fa-clock fa-lg"></i>
+                  </span>
+                  {{ time }}
               </span>
-            </b-col>
-            <b-col xs="12" sm="4" md="4" class="text-center culums">
-              <span class="corpoInfo round">
-                <span class="icone">
-                  <i
-                    class="fa fa-circle-notch fa-lg">
-                  </i>
-                </span>
-                {{ returnRound }}
-              </span>
-            </b-col>
-            <b-col xs="12" sm="4" md="4" class="text-center culums">
-              <span class="corpoInfo">
-                <span class="icone">
-                  <i class="fa fa-clock fa-lg"></i>
-                </span>
-                {{ time }}
-            </span>
-            </b-col>
-          </b-row>
-          <br><br>
-        </b-card>
-      </b-col>
-    </b-row>
-    <b-container align-v="center">
-      <b-row align-v="center" v-for="(round, index) of oldIdeas" :key="index">
-        <b-col
+              </b-col>
+            </b-row>
+            <br><br>
+          </b-card>
+        </b-col>
+      </b-row>
+      <b-container align-v="center">
+        <b-row align-v="center" v-for="(round, index) of oldIdeas" :key="index">
+          <b-col
               v-for="(idea, ind) in round[`round${index + 1}`]" :key="ind"
               class="mb-4 pl-1 pr-1"
               md="4"
@@ -68,63 +70,69 @@
                 </p> -->
               </div>
             </b-col>
+        </b-row>
+      </b-container>
+      <b-row align-v="center">
+        <b-col v-for="(idea, value, index) in newIdeas" :key="index"
+          class="align-items-center justify-content-center ml-auto mr-auto mb-2 h-100">
+          <b-card class="cartao text-center pr-0 pl-0 pb-0 pt-0">
+            <b-card-body class="pb-0">
+              <b-form-group>
+                <label for="ideia1" class="idea-label"><strong>Idea #{{ populeteSelect().length + (index + 1) }}</strong></label>
+                <b-form-textarea
+                  :autofocus="index===0"
+                  @blur="finishWriteIdeas()"
+                  id="ideia1"
+                  placeholder="Write your idea..."
+                  v-model="newIdeas[`idea${index + 1}`].description"
+                  class="entradaTexto">
+                </b-form-textarea>
+              </b-form-group>
+              <div class="cor"></div>
+              <label :for="`continueIdea${index + 1}`" class="d-inline mr-2">Continue</label>
+              <select :name="`continueIdea${index + 1}`" :id="`continueIdea${index + 1}`" @change="setContinueIdea(index + 1)">
+                <option value="---">---</option>
+                <option :value="idea.id"
+                v-for="(idea, key) in populeteSelect()"
+                :key="key">Idea {{ key + 1 }}</option>
+              </select>
+            </b-card-body>
+          </b-card>
+        </b-col>
+      </b-row>
+      <b-row
+        v-if="isLeader"
+        align-v="center"
+        align-h="center"
+        class="mt-3 mb-3">
+        <b-button
+          variant="outline-warning" class="buttonPauseNext"
+          @click="pauseBrainstorm()">Pause
+        </b-button>
+        <b-button
+          v-if="currentRound < participants"
+          variant="outline-info" class="buttonPauseNext ml-4"
+          @click="changeRound(true)">Next Round
+        </b-button>
+        <b-button
+          v-if="currentRound === participants"
+          variant="outline-info" class="buttonPauseNext ml-4"
+          @click="changeRound(false)">Finish Brainstorm
+        </b-button>
       </b-row>
     </b-container>
-    <b-row align-v="center">
-      <b-col v-for="(idea, value, index) in newIdeas" :key="index"
-        class="align-items-center justify-content-center ml-auto mr-auto mb-2 h-100">
-        <b-card class="cartao text-center pr-0 pl-0 pb-0 pt-0">
-          <b-card-body class="pb-0">
-            <b-form-group>
-              <label for="ideia1" class="idea-label"><strong>Idea #{{ populeteSelect().length + (index + 1) }}</strong></label>
-              <b-form-textarea
-                @blur="finishWriteIdeas()"
-                id="ideia1"
-                placeholder="Write your idea..."
-                v-model="newIdeas[`idea${index + 1}`].description"
-                class="entradaTexto">
-              </b-form-textarea>
-            </b-form-group>
-            <div class="cor"></div>
-            <label :for="`continueIdea${index + 1}`" class="d-inline mr-2">Continue</label>
-            <select :name="`continueIdea${index + 1}`" :id="`continueIdea${index + 1}`" @change="setContinueIdea(index + 1)">
-              <option value="---">---</option>
-              <option :value="idea.id"
-              v-for="(idea, key) in populeteSelect()"
-              :key="key">Idea {{ key + 1 }}</option>
-            </select>
-          </b-card-body>
-        </b-card>
-      </b-col>
-    </b-row>
-    <b-row
-      v-if="isLeader"
-      align-v="center"
-      align-h="center"
-      class="mt-3 mb-3">
-      <b-button
-        variant="outline-warning" class="buttonPauseNext"
-        @click="pauseBrainstorm()">Pause
-      </b-button>
-      <b-button
-        v-if="currentRound < participants"
-        variant="outline-info" class="buttonPauseNext ml-4"
-        @click="changeRound()">Next Round
-      </b-button>
-      <b-button
-        v-if="currentRound === participants"
-        variant="outline-info" class="buttonPauseNext ml-4"
-        @click="changeRound()">Finish Brainstorm
-      </b-button>
-    </b-row>
-  </b-container>
+  </div>
 </template>
 
 <script>
+import Swal from 'sweetalert2'
+import load from '../components/loader'
+
 const eventRoundChanged = new Event('eventRoundChanged')
 
 export default {
   name: 'StartBrainstorm',
+  components: { load },
   data () {
     return {
       brainstormId: this.$route.params.id,
@@ -157,7 +165,11 @@ export default {
       hourOfStartRound: '',
       running: true,
       roundsTime: '',
-      indexSheet: undefined
+      indexSheet: undefined,
+      loading: false,
+      title: '',
+      text: '',
+      confirmButtonText: ''
     }
   },
 
@@ -310,6 +322,16 @@ export default {
           dispatchEvent(eventRoundChanged)
           this.saveIdeas()
             .then(() => {
+              // Changing round alert
+              if (!this.isLeader && this.currentRound !== 1) {
+                this.$bvToast.toast('Changing to Round ' + (this.currentRound), {
+                  title: 'Round change alert!',
+                  toaster: 'b-toaster-top-center',
+                  variant: 'success',
+                  autoHideDelay: 3000,
+                  appendToast: true
+                })
+              }
               this.newIdeas = {
                 idea1: {
                   description: '',
@@ -398,44 +420,75 @@ export default {
     },
 
     pauseBrainstorm () {
-      const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
-      database.update({ running: false })
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'You are trying to leave without finishing or saving data!',
+        icon: 'warning',
+        focusConfirm: false,
+        showCloseButton: true,
+        confirmButtonText: 'Confirm pause',
+        denyButtonText: 'Cancel',
+        showCancelButton: true,
+        confirmButtonColor: '#17a2b8',
+        cancelButtonColor: '#dc3545'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.loading = true
+          const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
+          database.update({ running: false })
+          this.loading = false
+        }
+      })
     },
 
-    changeRound () {
+    changeRound (nextRound) {
+      // Verify end of brainstorm or next round
+      if (nextRound) {
+        this.title = 'Are you sure?'
+        this.text = 'You and yours friends are ready to change for the next round?'
+        this.confirmButtonText = 'Confirm Change'
+      } else {
+        this.title = 'Are you sure?'
+        this.text = 'You and yours friends are ready to finish the brainstorm?'
+        this.confirmButtonText = 'Confirm Finish'
+      }
       // Changing round alert
-      if (this.currentRound < this.participants) {
-        this.$bvToast.toast('Changing to Round ' + (this.currentRound + 1), {
-          title: 'Round change alert!',
-          toaster: 'b-toaster-top-center',
-          variant: 'success',
-          autoHideDelay: 2500,
-          appendToast: true
-        })
-      }
-      if (this.isLeader) {
-        if (this.currentRound < this.participants) {
-          const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
-          database.update({
-            currentRound: this.currentRound + 1,
-            hourOfStartRound: Date()
-          })
-        } else {
-          const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
-          database.update({ concluded: true })
+      Swal.fire({
+        title: this.title,
+        text: this.text,
+        icon: 'warning',
+        focusConfirm: false,
+        showCloseButton: true,
+        confirmButtonText: this.confirmButtonText,
+        denyButtonText: 'Cancel',
+        showCancelButton: true,
+        confirmButtonColor: '#17a2b8',
+        cancelButtonColor: '#dc3545'
+      }).then((result) => {
+        if (result.isConfirmed && this.isLeader) {
+          if (this.currentRound < this.participants) {
+            const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
+            database.update({
+              currentRound: this.currentRound + 1,
+              hourOfStartRound: Date()
+            })
+          } else {
+            const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
+            database.update({ concluded: true })
+          }
         }
-      }
 
-      // Changing to print braisntorm screen alert
-      /* if (this.currentRound === this.participants) {
-        this.$bvToast.toast('Changing to print brainstorm screen', {
-          title: 'Round change alert!',
-          toaster: 'b-toaster-top-center',
-          variant: 'success',
-          autoHideDelay: 5000,
-          appendToast: true
-        })
-      } */
+        // Changing to print braisntorm screen alert
+        /* if (this.currentRound === this.participants) {
+            this.$bvToast.toast('Changing to print brainstorm screen', {
+              title: 'Round change alert!',
+              toaster: 'b-toaster-top-center',
+              variant: 'success',
+              autoHideDelay: 5000,
+              appendToast: true
+            })
+          } */
+      })
     },
 
     finishWriteIdeas () {
@@ -531,7 +584,7 @@ export default {
   min-width: 200px !important;
   border: none !important;
   flex-wrap: wrap;
-  margin-left: 1rem;
+  /* margin-left: 1rem; */
 }
 
 .entradaTexto:focus {
@@ -549,12 +602,12 @@ export default {
 }
 
 .entradaTexto::-webkit-scrollbar-thumb {
-  background: rgb(112, 112, 231);
+  background: #15b4cc;
   border-radius: 3px;
 }
 
 .entradaTexto::-webkit-scrollbar-thumb:hover {
-  background: blue;
+  background: #17a2b8;
 }
 
 .cor {

@@ -7,10 +7,10 @@
           class="align-items-center justify-content-center ml-auto mr-auto"
           md="10"
         >
-          <b-card class="text-center pr-3 pl-3 pb-3 pt-0">
+          <b-card class="text-center pr-3 pl-3 pb-3">
             <b-row>
               <b-col>
-                <h4 class="page-tittle mb-5 mt-3">Create Brainstorm</h4>
+                <h4 class="page-tittle page-tittle-text mb-5">Brainstorm</h4>
               </b-col>
             </b-row>
             <b-form @submit.prevent="startBrainstorm()">
@@ -26,7 +26,7 @@
                     <b-input-group>
                       <b-input-group-prepend
                         class="input-with-prepend">
-                        <span class="input-group-text"
+                        <span class="input-group-text color-icon"
                           ><i class="fas fa-file-signature fa-lg"></i>
                         </span>
                       </b-input-group-prepend>
@@ -36,7 +36,8 @@
                         type="text"
                         :disabled="!isLeader"
                         @blur="saveDescription"
-                        class="input-with-prepend input-code"
+                        class="input-with-prepend"
+                        autofocus
                         id="input-1"
                         v-model="description"
                         placeholder="Describe the brainstorm"
@@ -50,8 +51,9 @@
                     label-class="required"
                     label="Rounds time"
                     label-for="rounds-time"
-                    class="input-with-prepend">
+                  >
                     <b-form-timepicker
+                      @hidden="saveRoundsTime()"
                       v-b-tooltip.hover.topright.v-info
                       title="Edit time"
                       class="input-group-text"
@@ -64,7 +66,7 @@
                 </b-col>
                 <b-col md="2">
                   <b-form-group
-                    class="text-left"
+                    class="text-left mt-1"
                     id="input-group-2"
                     label="Brainstorm code"
                     label-for="copyCode"
@@ -84,7 +86,7 @@
                         <b-button
                           v-b-tooltip.hover.v-info
                           title="Copy Code"
-                          class="copy-button  "
+                          class="copy-button"
                           variant="light"
                           @click="copyCodeToClipboad()"
                         >
@@ -99,11 +101,11 @@
                     id="input-group-3"
                     label="Active members"
                     label-for="input-3"
-                    class="text-left "
+                    class="text-left mt-1"
                   >
                     <b-input-group>
                       <b-input-group-prepend>
-                        <span class="input-group-text"
+                        <span class="input-group-text active-members"
                           ><i class="fas fa-users fa-lg"></i
                         ></span>
                       </b-input-group-prepend>
@@ -333,6 +335,13 @@ export default {
       })
     },
 
+    saveRoundsTime () {
+      const db = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
+      db.update({
+        roundsTime: this.roundsTime
+      })
+    },
+
     // This function start up the brainstorm
     startBrainstorm () {
       let currentRound
@@ -378,9 +387,15 @@ export default {
   box-shadow: none !important;
 }
 
-.input-with-prepend:focus,   .input-code:focus {
+.input-with-prepend {
+  border-left: none;
+  /* background: #e9ecef !important; */
+}
+
+.input-with-prepend:focus, .input-code:focus {
+  /* background-color: #e9ecef; */
   box-shadow: none !important;
-  border: none !important;
+  border-color: #ced4da !important;
 }
 
 .input-code, .form-control:disabled {
@@ -420,14 +435,20 @@ export default {
 }
 
 /* Changing the background color of input appends */
-.input-group-text, .photo-guests {
+
+.color-icon {
+  color: #17a2b8 !important;
+  background-color: #fff;
+}
+
+.photo-guests, .active-members {
   background-color: #fff !important;
   color: #17a2b8 !important; /* #1384968 */
   /*  opacity: 1.95 !important; */
   border: none !important;
 }
 
-.guests, .input-with-prepend, .input-with-append, .input-code{
+.guests, .input-code{
   border: none !important;
 }
 
@@ -442,6 +463,10 @@ export default {
 /* Change the color of watch in rounds time input */
 .btn .b-icon.bi, .nav-link .b-icon.bi, .dropdown-toggle .b-icon.bi, .dropdown-item .b-icon.bi, .input-group-text .b-icon.bi {
   color: #17a2b8 !important;
+}
+
+.input-group-text {
+  background-color: #fff !important;
 }
 
 </style>

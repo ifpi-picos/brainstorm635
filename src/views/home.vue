@@ -1,24 +1,24 @@
 <template>
-  <b-container fluid>
-    <b-row align-v="center">
+  <b-container fluid >
+    <b-row align-v="center" style="height: 100vh">
       <b-col
         class="align-items-center justify-content-center ml-auto mr-auto"
         md="7"
       >
-        <b-card class="text-center pr-5 pl-5 pb-5 pt-0 mt-3">
+        <b-card class="text-center">
           <b-row>
             <b-col>
-              <h4 class="page-tittle mb-5 mt-4">
+              <h4 class="page-tittle mb-5 mt-2">
                 Welcome to Brainstorm 635 online
               </h4>
             </b-col>
           </b-row>
           <b-row
-            class="text-center justify-content-md-center mt-5 pt-4"
+            class="text-center justify-content-md-center mt-5"
             align-h="center"
             align-v="end"
           >
-            <b-col md="3">
+            <b-col lg="3" md="3" sm="4" xs="3">
               <!-- <router-link> -->
               <b-button
                 class="inicial-buttons"
@@ -28,7 +28,7 @@
                 About
               </b-button>
             </b-col>
-            <b-col md="6">
+            <b-col lg="6" md="8" sm="7" xs="5" >
               <Login> </Login>
             </b-col>
           </b-row>

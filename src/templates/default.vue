@@ -1,8 +1,8 @@
 <template>
-  <div>
-    <NavBar />
-    <router-view></router-view>
-    <Footer class="ixed-bottom foot" />
+  <div class="default">
+    <NavBar class="ixed-top"/>
+    <router-view class="main-content"></router-view>
+    <Footer class="ixed-bottom" />
   </div>
 </template>
 <script>
@@ -21,14 +21,9 @@ export default {
 </script>
 
 <style lang="css">
-#app div .container-fluid {
-  margin-top: 90px;
-  margin-bottom: 90px;
-}
+  .main-content {
+    margin-top: 60px;
+    margin-bottom: 60px;
+  }
 
-.foot {
-  position:fixed;
-  bottom:0;
-  width:100%;
-}
 </style>

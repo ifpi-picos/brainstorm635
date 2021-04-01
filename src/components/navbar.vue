@@ -1,6 +1,5 @@
 <template>
   <b-navbar
-    fixed="top"
     toggleable="lg"
     type="light"
   >
@@ -55,23 +54,24 @@
         <b-nav-item-dropdown
           text="Lang"
           right
-        >
-          <b-dropdown-item href="#">PT
-            <b-img
-              class="ml-1"
-              rounded="circle"
-              :src="require('../../public/img/brasil.png')"
-              alt="PT"
-              height="17"
-            >
-            </b-img>
-          </b-dropdown-item>
+          >
           <b-dropdown-item href="#">EN
             <b-img
               class="usa"
               :src="require('../../public/img/eua.png')"
               rounded="circle"
               alt="EN"
+              height="17"
+            >
+            </b-img>
+          </b-dropdown-item>
+        <!--
+          <b-dropdown-item href="#">PT
+            <b-img
+              class="ml-1"
+              rounded="circle"
+              :src="require('../../public/img/brasil.png')"
+              alt="PT"
               height="17"
             >
             </b-img>
@@ -86,7 +86,8 @@
             >
             </b-img>
           </b-dropdown-item>
-        </b-nav-item-dropdown>
+         -->
+         </b-nav-item-dropdown>
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>
@@ -179,15 +180,6 @@ export default {
   padding: 0 !important;
 }
 
-.navbar {
-  background-color: #fff !important;
-  border-bottom: 1px solid rgb(0, 0, 0, 0.125);
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 5px 0px;
-  width: 100%;
-  height: 75px !important;
-  padding: 0 7rem 0 7rem !important;
-}
-
 .usa {
   margin-left: 1px;
 }
@@ -195,12 +187,6 @@ export default {
 span,
 .user {
   font-size: 1.2rem;
-}
-/* Media queries for responsive nav bar */
-@media only screen and (max-width: 576px) {
-  .navbar {
-    padding: 0 !important;
-  }
 }
 
 /* .navbar-brand {
@@ -220,5 +206,22 @@ span,
 
 .swal2-close:focus {
   box-shadow: none !important;
+}
+
+/* Adicional CSS for navbar */
+.navbar {
+  background-color: #fff !important;
+  border-bottom: 1px solid rgb(0, 0, 0, 0.125);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 5px 0px;
+  min-width: 100%;
+  min-height: 75px !important;
+  padding: 0 7rem 0 7rem !important;
+}
+
+/* Media queries for responsive nav bar */
+@media only screen and (max-width: 576px) {
+  .navbar {
+    padding: 0 !important;
+  }
 }
 </style>
