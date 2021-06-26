@@ -19,7 +19,7 @@
                   <b-form-group
                     class="text-left"
                     id="input-group-1"
-                    label="Description"
+                    label="Description theme"
                     label-for="input-1"
                     label-class="required"
                   >

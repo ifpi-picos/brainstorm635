@@ -11,7 +11,7 @@
               </b-col>
             </b-row>
             <br>
-            <b-row >
+            <b-row>
               <b-col xs="12" sm="4" md="4" class="text-center culums">
                 <span class="corpoInfo">
                   <span class="icone icone-padd">
@@ -62,12 +62,6 @@
                     Continue Idea #{{ setNumberIdea(idea[`idea${ind + 1}`].idContinueIdea) + 1 }}
                   </span>
                 </b-card-text>
-                <!-- <p
-                  class="text-muted"
-                  style="position: absolute; bottom: -10px">
-                  Editado por:
-                  <b>{{ guestNames[index] }}</b>
-                </p> -->
               </div>
             </b-col>
         </b-row>
@@ -351,7 +345,15 @@ export default {
               }
               this.oldIdeas = []
             })
-            .then(() => { this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: newRound } }) })
+            .then(() => {
+              this.$router.replace({
+                name: 'startBrainstorm',
+                params: {
+                  id: this.brainstormId,
+                  round: newRound
+                }
+              })
+            })
             .catch(error => console.error(error))
         }
       }
@@ -402,9 +404,6 @@ export default {
             sec = 59
           } else if ((sec === 0 && min === 0) || !this.running) {
             this.saveIdeas().then(() => {})
-            // if (sec === 0 && min === 0) {
-            //   this.changeRound()
-            // }
             this.time = (min < 10 ? '0' + min : min) + ' : ' + (sec < 10 ? '0' + sec : sec)
             clearInterval(cron)
           }
@@ -467,27 +466,18 @@ export default {
       }).then((result) => {
         if (result.isConfirmed && this.isLeader) {
           if (this.currentRound < this.participants) {
+            this.loading = true
             const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
             database.update({
               currentRound: this.currentRound + 1,
               hourOfStartRound: Date()
-            })
+            }).then(() => { this.loading = false })
           } else {
+            this.loading = true
             const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
-            database.update({ concluded: true })
+            database.update({ concluded: true }).then(() => { this.loading = false })
           }
         }
-
-        // Changing to print braisntorm screen alert
-        /* if (this.currentRound === this.participants) {
-            this.$bvToast.toast('Changing to print brainstorm screen', {
-              title: 'Round change alert!',
-              toaster: 'b-toaster-top-center',
-              variant: 'success',
-              autoHideDelay: 5000,
-              appendToast: true
-            })
-          } */
       })
     },
 
@@ -563,9 +553,6 @@ export default {
           .catch((error) => {
             console.error(error)
           })
-        // await database.update({
-        //   currentDate: firebase.firestore.FieldValue.serverTimestamp()
-        // })
       }
     }
   }
@@ -723,11 +710,4 @@ h5,
 span {
   font-family: 'comfortaa';
 }
-
-/* .round {
-  color: #138496;
-  font-weight: 700;
-  margin: 0 !important;
-  font-family: 'comfortaa';
-} */
 </style>

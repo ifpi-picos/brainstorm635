@@ -62,8 +62,14 @@
       "parser": "babel-eslint"
     },
     "rules": {
-      "quotes": ["error", "single"],
-      "semi": ["error", "never"]
+      "quotes": [
+        "error",
+        "single"
+      ],
+      "semi": [
+        "error",
+        "never"
+      ]
     },
     "overrides": [
       {
