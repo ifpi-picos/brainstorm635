@@ -233,7 +233,7 @@ export default {
       const indexIdea = select.options.selectedIndex
       const idIdeacontinued = indexIdea > 0
         ? this.populeteSelect()[indexIdea - 1].id
-        : false
+        : ''
       if (idIdeacontinued) {
         this.newIdeas[`idea${idea}`].idContinueIdea = idIdeacontinued
       } else {
