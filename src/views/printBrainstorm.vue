@@ -183,6 +183,7 @@ export default {
 } */
 
 .postit {
+  overflow: auto;
   line-height: 1;
   text-align: center;
   width: 98%;

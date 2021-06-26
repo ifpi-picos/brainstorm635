@@ -151,7 +151,7 @@ export default {
       if (this.$route.name === 'brainstorm' || this.$route.name === 'startBrainstorm' || this.$route.name === 'printBrainstorm') {
         Swal.fire({
           title: 'Are you sure?',
-          text: 'You are trying to leave without finishing or saving data!',
+          text: 'You are trying to get out without finishing or saving data!',
           icon: 'warning',
           focusConfirm: false,
           showCloseButton: true,

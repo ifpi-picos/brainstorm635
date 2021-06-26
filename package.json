@@ -19,6 +19,7 @@
     "bootstrap-vue": "^2.18.1",
     "core-js": "^3.6.5",
     "firebase": "^8.1.1",
+    "firebaseauth": "^1.0.0",
     "register-service-worker": "^1.7.1",
     "sweetalert2": "^10.10.4",
     "vue": "^2.6.12",
@@ -62,8 +63,14 @@
       "parser": "babel-eslint"
     },
     "rules": {
-      "quotes": ["error", "single"],
-      "semi": ["error", "never"]
+      "quotes": [
+        "error",
+        "single"
+      ],
+      "semi": [
+        "error",
+        "never"
+      ]
     },
     "overrides": [
       {

@@ -422,7 +422,7 @@ export default {
     pauseBrainstorm () {
       Swal.fire({
         title: 'Are you sure?',
-        text: 'You are trying to leave without finishing or saving data!',
+        text: 'You are trying to get out without finishing or saving data. If you pause the session, you and your friends will lost all ideas informed and the round will be restarted.',
         icon: 'warning',
         focusConfirm: false,
         showCloseButton: true,
@@ -563,9 +563,6 @@ export default {
           .catch((error) => {
             console.error(error)
           })
-        // await database.update({
-        //   currentDate: firebase.firestore.FieldValue.serverTimestamp()
-        // })
       }
     }
   }
@@ -662,6 +659,7 @@ export default {
 }
 
 .postit {
+  overflow: auto;
   line-height: 1;
   text-align: center;
   width: 98%;
