@@ -37,7 +37,7 @@ export default {
   },
 
   methods: {
-    login () {
+    async login () {
       this.$firebase
         .auth()
         .signInWithPopup(googleProvider)
@@ -69,8 +69,8 @@ export default {
           }
           EventBus.$emit('user')
         })
-        .catch(function (error) {
-          console.error(error)
+        .catch(function (erro) {
+          console.error(erro)
         })
     },
 
@@ -83,8 +83,8 @@ export default {
         .then(() => {
           this.user = user
         })
-        .catch(function (error) {
-          console.error('Error adding document: ', error)
+        .catch(function (erro) {
+          console.error('Error adding document: ', erro)
         })
     },
 
@@ -96,17 +96,6 @@ export default {
       const doc = await docRef.get()
       return doc.exists
     },
-
-    /* saveLocalStorage (user) {
-      let usersLocalStorage = localStorage.getItem('users')
-
-      if (usersLocalStorage) {
-        /* dadsda  } else {
-        usersLoca
-        Storage = [user]
-      }
-      localStorage.setItem('users', JSON.stringify(usersLocalStorage))
-    }, */
 
     geraUrlDaFoto (photoURL) {
       const letter = photoURL.substring(0, 2)
@@ -142,16 +131,6 @@ export default {
 .text-login {
   font-size: 1rem;
 }
-
-/* @media screen and (max-width: 1015px) {
-  .text-login {
-    font-size: 12px;
-  }
-  .img-google {
-    height: 20px !important;
-    width: 20px !important;
-  }
-} */
 
 .img-google {
   height: 30px;
