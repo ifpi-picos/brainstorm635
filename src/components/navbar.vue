@@ -23,13 +23,6 @@
       is-nav
     >
       <b-navbar-nav class="ml-auto">
-        <!-- <b-spinner
-          v-if="load"
-          style="width: 1.5rem; height: 1.5rem;"
-          type="grow"
-          variant="info"
-          label="Spinning">
-        </b-spinner> -->
         <div
           v-if="verifyLocalStorage"
           class="d-flex mr-3"
