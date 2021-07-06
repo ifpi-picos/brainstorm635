@@ -35,7 +35,8 @@
                     </b-form-input>
                     <b-button
                       class="focus-button"
-                      type="submit" variant="info">
+                      type="submit"
+                      variant="info">
                       Join
                     </b-button>
                   </b-col>
@@ -44,40 +45,6 @@
             </b-col>
           </b-row>
         </b-card>
-        <!--         <b-modal
-          centered
-          id="modal"
-          title="Informe seu nome">
-          <template v-slot:modal-footer="{ hide }">
-            <form  @submit.prevent="checkForm()">
-              <b-form-group
-                label="Nome"
-                label-for="name-input"
-                label-class="required"
-                invalid-feedback="Name is required">
-                <b-form-input
-                  placeholder="Informe seu nome"
-                  id="name-input"
-                  v-model="name"
-                  @change="$v.name.$touch()"
-                  required>
-                </b-form-input>
-                <span
-                  class="warning-input-forms"
-                  v-if="$v.name.$error">
-                  O campo nome é obrigatório ter no mínimo 4 caracteres.
-                </span>
-              </b-form-group>
-              <br>
-              <b-row>
-                <b-col class="ml-auto mr-auto" sm="6">
-                  <b-button size="sm" variant="outline-danger" @click="hide()">Cancelar</b-button>
-                  <b-button class="ml-4 pl-4 pr-4" type="submit" size="sm" variant="outline-success">Ok</b-button>
-                </b-col>
-              </b-row>
-             </form>
-          </template>
-        </b-modal> -->
       </b-col>
     </b-row>
   </b-container>
@@ -210,10 +177,7 @@ export default {
 }
 </script>
 
-<style lang="css">
-* {
-  box-sizing: border-box;
-}
+<style lang="scss">
 
 .input-for-code {
   padding: 1.2rem 0.5rem !important;
@@ -223,50 +187,6 @@ export default {
   box-shadow: none !important;
   border: 1px solid #17a2b8 !important;
 }
-
-/* Changes for Modal */
-.modal-title {
-  font-weight: bold;
-  text-transform: uppercase;
-}
-
-.modal-body {
-  padding: 0 !important;
-}
-
-.modal-footer {
-  border-top: none !important;
-  display: inline-block !important;
-  padding: 0 0 0.75rem 0 !important;
-}
-
-.modal-footer > * {
-  margin: 1rem 1.5rem !important;
-}
-
-.modal-content {
-  box-shadow: 0px 5px 10px 0px rgba(230, 230, 230, 0.2) !important;
-}
-
-/* Chancge colors for class button .btn-secondary */
-/* .btn-outline-danger {
-  background-color: transparent !important;
-  border-color: #ce242a !important;
-  color: #bd2130 !important;
-}
-
-.btn-outline-danger:hover {
-  color: #fff !important;
-  background-color: #bd2130 !important;
-  border-color: #a94442 !important;
-}
-
-.btn-outline-danger:focus {
-  color: #fff !important;
-  background-color: #a94442 !important;
-  border-color: #a94442 !important;
-  box-shadow: 0 0 0 0.2rem rgba(225,83,97,.5) !important;
-} */
 
 /* Media queries for responsive new brainstorm card */
 @media only screen and (max-width: 1056px) {

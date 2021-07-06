@@ -31,15 +31,6 @@
   margin-right: none !important;
 }
 
-/* .footer {
-  box-shadow: 0px 5px 10px 0px rgba(153, 153, 153, 0.3) !important;
-  min-height: 75px;
-  max-height: 80px !important;
-  border-radius: 0 !important;
-  background-color: #fff !important;
-  border-top: rgb(0, 0, 0, 0.125 ) 0.2px solid !important;
-} */
-
 .sidebar-footer {
   /* position: absolute; */
   height: 55px;

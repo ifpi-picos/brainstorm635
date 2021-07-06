@@ -11,6 +11,7 @@ import '@fortawesome/fontawesome-free/css/all.css'
 import '@fortawesome/fontawesome-free/js/all.js'
 import FirebaseApp from './firebase'
 
+import './assets/css/main.scss'
 Vue.use(Vuex)
 Vue.use(BootstrapVue)
 Vue.use(FirebaseApp)

@@ -43,29 +43,26 @@
           </b-card>
         </b-col>
       </b-row>
-      <b-container align-v="center">
-        <b-row align-v="center" v-for="(round, index) of oldIdeas" :key="index">
-          <b-col
-              v-for="(idea, ind) in round[`round${index + 1}`]" :key="ind"
-              class="mb-4 pl-1 pr-1"
-              md="4"
-            >
-              <div class="postit">
-                <h5 class="text-center pt-1 pb-3">
-                  <b>idea #{{ setNumberIdea(idea[`idea${ind + 1}`].id) + 1 }}</b>
-                </h5>
-                <b-card-text>
-                  <p style="font-size: 17.5px; text-align: justify;">
-                    {{ idea[`idea${ind + 1}`].description }}
-                  </p>
-                  <span class="ideaTagging" v-if="idea[`idea${ind + 1}`].idContinueIdea !== ''">
-                    Continue Idea #{{ setNumberIdea(idea[`idea${ind + 1}`].idContinueIdea) + 1 }}
-                  </span>
-                </b-card-text>
-              </div>
-            </b-col>
-        </b-row>
-      </b-container>
+      <b-row align-v="center" v-for="(round, index) of oldIdeas" :key="index">
+        <b-col
+          v-for="(idea, ind) in round[`round${index + 1}`]" :key="ind"
+          class="mb-4 pl-1 pr-1"
+          md="4">
+          <div class="postit">
+            <h5 class="text-center pt-1 pb-3">
+              <b>idea #{{ setNumberIdea(idea[`idea${ind + 1}`].id) + 1 }}</b>
+            </h5>
+            <b-card-text>
+              <p style="font-size: 17.5px; text-align: justify;">
+                {{ idea[`idea${ind + 1}`].description }}
+              </p>
+              <span class="ideaTagging" v-if="idea[`idea${ind + 1}`].idContinueIdea !== ''">
+                Continue Idea #{{ setNumberIdea(idea[`idea${ind + 1}`].idContinueIdea) + 1 }}
+              </span>
+            </b-card-text>
+          </div>
+        </b-col>
+      </b-row>
       <b-row align-v="center">
         <b-col v-for="(idea, value, index) in newIdeas" :key="index"
           class="align-items-center justify-content-center ml-auto mr-auto mb-2 h-100">
@@ -435,8 +432,8 @@ export default {
           this.loading = true
           const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
           database.update({ running: false })
-          this.loading = false
         }
+        this.loading = false
       })
     },
 
@@ -559,7 +556,7 @@ export default {
 }
 </script>
 
-<style lang="css" scoped>
+<style lang="scss" scoped>
 
 .buttonPauseNext:hover {
   color: #fff;
@@ -571,30 +568,10 @@ export default {
   min-width: 200px !important;
   border: none !important;
   flex-wrap: wrap;
-  /* margin-left: 1rem; */
 }
 
 .entradaTexto:focus {
-  /* box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25) */
   box-shadow: none !important;
-}
-
-.entradaTexto::-webkit-scrollbar {
-  width: 4px;
-}
-
-.entradaTexto::-webkit-scrollbar-track {
-  background: #cecece;
-  border-radius: 3px;
-}
-
-.entradaTexto::-webkit-scrollbar-thumb {
-  background: #15b4cc;
-  border-radius: 3px;
-}
-
-.entradaTexto::-webkit-scrollbar-thumb:hover {
-  background: #17a2b8;
 }
 
 .cor {
@@ -615,7 +592,6 @@ export default {
 .corpoInfo {
   padding: 2px 0 !important;
   border-radius: 0.25rem !important;
-  /* border: solid 1px #ced4da; */
 }
 
 .idea-label {
@@ -623,8 +599,6 @@ export default {
 }
 
 .continueIdea {
- /*  height: 20% !important;
-  padding: 0 5px 0 5px !important; */
   font-size: 15px !important;
   float: right !important;
 }
@@ -646,50 +620,6 @@ export default {
   .round {
     margin-left: -0.1rem;
   }
-}
-
-.postit {
-  overflow: auto;
-  line-height: 1;
-  text-align: center;
-  width: 98%;
-  max-width: 98%;
-  margin: 0px;
-  min-height: 250px;
-  max-height: 250px;
-  padding: 1rem;
-  position: relative;
-  border: 1px solid #E8E8E8;
-  /* border-top: 60px solid #fdfd86; */
-  font-family: 'comfortaa';
-  font-size: 3em;
-  border-bottom-right-radius: 60px 6px;
-  display: inline-block;
-  background: #ADD8E6; /* Old browsers */
-  background: -moz-linear-gradient(-45deg, #b6dae6 81%, #b6dae6 82%, #b6dae6 82%, #e1f7ff 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, right bottom, color-stop(81%,#b6dae6), color-stop(82%,#b6dae6), color-stop(82%,#b6dae6), color-stop(100%,#e1f7ff)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(-45deg, #b6dae6 81%,#b6dae6 82%#b6dae6 82%,#e1f7ff 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(-45deg, hsl(195, 53%, 79%) 81%,#b6dae6 82%,#b6dae6 82%,#e1f7ff 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(-45deg, #b6dae6 81%,#b6dae6 82%,#b6dae6 82%,#e1f7ff 100%); /* IE10+ */
-  background: linear-gradient(135deg, #b6dae6 81%,#b6dae6 82%,#b6dae6 82%,#e1f7ff 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffff88', endColorstr='#e1f7ff',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-}
-
-.postit:after {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  right: -0px;
-  bottom: 20px;
-  width: 200px;
-  height: 25px;
-  background: rgba(0, 0, 0, 0.2);
-  box-shadow:2px 15px 5px rgba(0, 0, 0, 0.40);
-  -moz-transform: matrix(-1, -0.1, 0, 1, 0, 0);
-  -webkit-transform: matrix(-1, -0.1, 0, 1, 0, 0);
-  -o-transform: matrix(-1, -0.1, 0, 1, 0, 0);
-  -ms-transform: matrix(-1, -0.1, 0, 1, 0, 0);
-  transform: matrix(-1, -0.1, 0, 1, 0, 0);
 }
 
 .ideaTagging{
