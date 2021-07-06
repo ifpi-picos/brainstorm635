@@ -51,7 +51,7 @@
             <b-dropdown-item @click="logout()">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
         </div>
-        <b-nav-item-dropdown
+         <!-- <b-nav-item-dropdown
           text="Lang"
           right
           >
@@ -65,7 +65,6 @@
             >
             </b-img>
           </b-dropdown-item>
-        <!--
           <b-dropdown-item href="#">PT
             <b-img
               class="ml-1"
@@ -86,8 +85,7 @@
             >
             </b-img>
           </b-dropdown-item>
-         -->
-         </b-nav-item-dropdown>
+         </b-nav-item-dropdown>-->
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>
