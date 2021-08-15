@@ -108,7 +108,7 @@ html {
 /* btn-outline-success:not(:disabled):not(.disabled):active, .btn-outline-success:not(:disabled):not(.disabled).active, .show > .btn-outline-success.dropdown-toggle {
   background-color: #18d26e !important;
   color: #fff !important;
-  border-color: #18d26e !important; 
+  border-color: #18d26e !important;
 } */
 
 /* .btn-outline-success:hover, .btn-primary:hover {
@@ -151,7 +151,7 @@ html {
 .required::after {
   font-size: 1.1rem;
   content: "*";
-  font-weight: bold;/* 
+  font-weight: bold;/*
   // position: absolute; */
   display: inline-block;
   color: #ce242a;
@@ -241,7 +241,7 @@ html {
   font-size: 3em;
   border-bottom-right-radius: 60px 6px;
   display: inline-block;
-  background: #ADD8E6; /* Old browsers */
+  /* background: #ADD8E6;*/ /* Old browsers */
   background: -moz-linear-gradient(-45deg, #b6dae6 81%, #b6dae6 82%, #b6dae6 82%, #e1f7ff 100%); /* FF3.6+ */
   background: -webkit-gradient(linear, left top, right bottom, color-stop(81%,#b6dae6), color-stop(82%,#b6dae6), color-stop(82%,#b6dae6), color-stop(100%,#e1f7ff)); /* Chrome,Safari4+ */
   background: -webkit-linear-gradient(-45deg, #b6dae6 81%,#b6dae6 82%#b6dae6 82%,#e1f7ff 100%); /* Chrome10+,Safari5.1+ */
