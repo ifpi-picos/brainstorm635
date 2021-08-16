@@ -19,7 +19,7 @@
                   <b-form-group
                     class="text-left"
                     id="input-group-1"
-                    label="Theme description"
+                    label="Theme Description"
                     label-for="input-1"
                     label-class="required"
                   >
@@ -121,7 +121,7 @@
                   </b-form-group>
                 </b-col>
               </b-row>
-              <b-row class="m-0" align-h="center" no-gutters>
+              <b-row class="" align-h="center">
                 <b-col md="4">
                   <b-form-group
                     class="text-left"
@@ -154,20 +154,23 @@
                     </b-input-group>
                   </b-form-group>
                 </b-col>
-                <b-col md="5">
-                  <div class="load-wait-members">
-                    <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
-                    <span
-                      v-if="currentRound === 0"
-                      class="text-spinner text-flashes"
-                      >Waiting for members to start...
-                    </span>
-                    <span
-                      v-else
-                      class="text-spinner text-flashes"
-                      >Waiting for continue...
-                    </span>
-                  </div>
+                <b-col md="4">
+                  <b-spinner
+                    variant="info"
+                    label="Spinning"
+                    style="width: 1.5rem; height: 1.5rem;"
+                    type="grow"
+                  ></b-spinner>
+                  <span
+                    v-if="currentRound === 0"
+                    class="text-spinner text-flashes"
+                    >Waiting for members to start...
+                  </span>
+                  <span
+                    v-else
+                    class="text-spinner text-flashes"
+                    >Waiting for continue...
+                  </span>
                   <br /><br />
                   <span
                     v-if="isLeader"
@@ -219,6 +222,9 @@ export default {
   },
 
   mounted: function () {
+    /* EventBus.$on('updateList', () => {
+      this.getData()
+    }) */
     this.getData()
   },
 
@@ -360,9 +366,9 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="css">
 
-/* Style for inputs from brainstorm screen */
+/* Style for inputs from brainstorm scream */
 .copy-button {
   border: none !important;
   padding: 0 !important;
@@ -399,7 +405,8 @@ export default {
 /* Efects for spinner and text spinner */
 .text-spinner {
   margin-left: 7px;
-  font-family: 'comfortaa';
+  color: #17a2b8;
+   font-family: comfortaa;
   font-size: 16px;
 }
 
@@ -409,7 +416,7 @@ export default {
     font-size: 16.5px;
   }
   100% {
-    color: rgba(0, 0, 0, 0.8);
+    color: black;
   }
 }
 @-webkit-keyframes blink {
@@ -418,13 +425,13 @@ export default {
     font-size: 16.5px;
   }
   100% {
-    color: rgba(0, 0, 0, 0.8);
+    color: black;
   }
 }
 .text-flashes {
-  -webkit-animation: blink 1.5s linear infinite;
-  -moz-animation: blink 1.5s linear infinite;
-  animation: blink 1.5s linear infinite;
+  -webkit-animation: blink 1.3s linear infinite;
+  -moz-animation: blink 1.3s linear infinite;
+  animation: blink 1.3s linear infinite;
 }
 
 /* Changing the background color of input appends */
