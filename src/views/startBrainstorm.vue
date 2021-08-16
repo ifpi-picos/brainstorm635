@@ -1,9 +1,7 @@
 <template>
-  <div @beforeunload="
-    return ''
-  ">
-    <load v-if="loading"/>
-    <b-container v-else align-v="center" style="margin-bottom: 8%" >
+  <div @beforeunload="return ''">
+    <Loader v-if="loading"/>
+    <b-container v-else align-v="center" style="margin-bottom: 8%">
       <b-row class="align-items-center justify-content-center ml-auto mr-auto">
         <b-col class="pr-0 pl-0">
           <b-card no-body>
@@ -122,13 +120,13 @@
 
 <script>
 import Swal from 'sweetalert2'
-import load from '../components/loader'
+import Loader from '../components/loader'
 
 const eventRoundChanged = new Event('eventRoundChanged')
 
 export default {
   name: 'StartBrainstorm',
-  components: { load },
+  components: { Loader },
   data () {
     return {
       brainstormId: this.$route.params.id,
