@@ -3,7 +3,7 @@
     <Loader v-if="loading"> </Loader>
     <b-container v-if="!loading" fluid class="container-ideas">
       <b-col md="12">
-        <h5 class="page-tittle mb-3 mt-3">Ideas Report</h5>
+        <h4 class="page-tittle mb-3 mt-3">Ideas Report</h4>
       </b-col>
       <b-col xs="12" sm="12" md="12" class="text-left mb-3">
         <span>
@@ -17,7 +17,6 @@
         class="mb-4 text-center"
       >
         <b-col md="12" class="mb-2">
-          <!-- <h5 class="round">Round {{ i + 1 }}</h5> -->
         </b-col>
         <b-col md="12">
           <b-row>
@@ -164,14 +163,13 @@ span {
 }
 
 .round {
-  color: #138496;
+  color: #3BB5E0;
   font-weight: 700;
   margin: 0 !important;
-  font-family: 'comfortaa';
 }
 
 .date {
-  color: #138496;
+  color: #3BB5E0;
 }
 
 .text-date {

@@ -324,7 +324,7 @@ export default {
         text: 'You cant alread sent it to your friends!',
         icon: 'success',
         confirmButtonText: 'OK',
-        confirmButtonColor: '#17a2b8',
+        confirmButtonColor: '#3BB5E0',
         timer: 1200
       })
     },
@@ -361,13 +361,14 @@ export default {
 </script>
 
 <style lang="scss">
+$default-color: #3BB5E0;
 
 /* Style for inputs from brainstorm screen */
 .copy-button {
   border: none !important;
   padding: 0 !important;
   background-color: #fff !important;
-  color: #17a2b8 !important;
+  color: $default-color !important;
 }
 
 .copy-button:hover {
@@ -383,11 +384,9 @@ export default {
 
 .input-with-prepend {
   border-left: none;
-  /* background: #e9ecef !important; */
 }
 
 .input-with-prepend:focus, .input-code:focus {
-  /* background-color: #e9ecef; */
   box-shadow: none !important;
   border-color: #ced4da !important;
 }
@@ -399,13 +398,13 @@ export default {
 /* Efects for spinner and text spinner */
 .text-spinner {
   margin-left: 7px;
-  font-family: 'comfortaa';
+  font-family: 'comfortaa' !important;
   font-size: 16px;
 }
 
 @keyframes blink {
   0% {
-    color: #17a2b8;
+    color: $default-color;
     font-size: 16.5px;
   }
   100% {
@@ -414,7 +413,7 @@ export default {
 }
 @-webkit-keyframes blink {
   0% {
-    color: #17a2b8;
+    color: $default-color;
     font-size: 16.5px;
   }
   100% {
@@ -430,14 +429,13 @@ export default {
 /* Changing the background color of input appends */
 
 .color-icon {
-  color: #17a2b8 !important;
+  color: $default-color !important;
   background-color: #fff;
 }
 
 .photo-guests, .active-members {
   background-color: #fff !important;
-  color: #17a2b8 !important; /* #1384968 */
-  /*  opacity: 1.95 !important; */
+  color: $default-color !important;
   border: none !important;
 }
 
@@ -451,11 +449,12 @@ export default {
 
 .loading {
   font-size: 15.5px;
+  font-family: 'comfortaa' !important;
 }
 
 /* Change the color of watch in rounds time input */
 .btn .b-icon.bi, .nav-link .b-icon.bi, .dropdown-toggle .b-icon.bi, .dropdown-item .b-icon.bi, .input-group-text .b-icon.bi {
-  color: #17a2b8 !important;
+  color: $default-color !important;
 }
 
 .input-group-text {
