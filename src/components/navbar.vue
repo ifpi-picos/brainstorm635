@@ -10,10 +10,10 @@
         navbar-brand ml-1"
       >
         <b-img
-          class="ml-3 mt-4"
-          width="190"
-          height="20"
-          :src="require('../../public/img/brainstorm635.png')"
+          class="ml-2"
+          width="60"
+          fluid
+          :src="require('../assets/logo/static/logo-background-transparent.png')"
         />
       </b-link>
     </b-navbar-brand>
@@ -149,7 +149,7 @@ export default {
           confirmButtonText: 'Confirm exit',
           denyButtonText: 'Cancel',
           showCancelButton: true,
-          confirmButtonColor: '#17a2b8',
+          confirmButtonColor: '#3BB5E0',
           cancelButtonColor: '#dc3545'
         }).then((result) => {
           if (result.isConfirmed) { this.$router.push({ name: 'default' }) }
@@ -163,7 +163,7 @@ export default {
 <style lang="css">
 /* Barra lateral Azul da navbar e footer */
 .sidebar-nav {
-  border-left: 4px solid #17a2b8;
+  border-left: 4px solid #3BB5E0;
   height: 60px !important;
 }
 

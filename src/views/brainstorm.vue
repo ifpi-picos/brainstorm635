@@ -19,7 +19,7 @@
                   <b-form-group
                     class="text-left"
                     id="input-group-1"
-                    label="Theme Description"
+                    label="Theme description"
                     label-for="input-1"
                     label-class="required"
                   >
@@ -121,7 +121,7 @@
                   </b-form-group>
                 </b-col>
               </b-row>
-              <b-row class="" align-h="center">
+              <b-row class="m-0" align-h="center" no-gutters>
                 <b-col md="4">
                   <b-form-group
                     class="text-left"
@@ -154,23 +154,20 @@
                     </b-input-group>
                   </b-form-group>
                 </b-col>
-                <b-col md="4">
-                  <b-spinner
-                    variant="info"
-                    label="Spinning"
-                    style="width: 1.5rem; height: 1.5rem;"
-                    type="grow"
-                  ></b-spinner>
-                  <span
-                    v-if="currentRound === 0"
-                    class="text-spinner text-flashes"
-                    >Waiting for members to start...
-                  </span>
-                  <span
-                    v-else
-                    class="text-spinner text-flashes"
-                    >Waiting for continue...
-                  </span>
+                <b-col md="5">
+                  <div class="load-wait-members">
+                    <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                    <span
+                      v-if="currentRound === 0"
+                      class="text-spinner text-flashes"
+                      >Waiting for members to start...
+                    </span>
+                    <span
+                      v-else
+                      class="text-spinner text-flashes"
+                      >Waiting for continue...
+                    </span>
+                  </div>
                   <br /><br />
                   <span
                     v-if="isLeader"
@@ -222,9 +219,6 @@ export default {
   },
 
   mounted: function () {
-    /* EventBus.$on('updateList', () => {
-      this.getData()
-    }) */
     this.getData()
   },
 
@@ -330,7 +324,7 @@ export default {
         text: 'You cant alread sent it to your friends!',
         icon: 'success',
         confirmButtonText: 'OK',
-        confirmButtonColor: '#17a2b8',
+        confirmButtonColor: '#3BB5E0',
         timer: 1200
       })
     },
@@ -366,14 +360,15 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="scss">
+$default-color: #3BB5E0;
 
-/* Style for inputs from brainstorm scream */
+/* Style for inputs from brainstorm screen */
 .copy-button {
   border: none !important;
   padding: 0 !important;
   background-color: #fff !important;
-  color: #17a2b8 !important;
+  color: $default-color !important;
 }
 
 .copy-button:hover {
@@ -389,11 +384,9 @@ export default {
 
 .input-with-prepend {
   border-left: none;
-  /* background: #e9ecef !important; */
 }
 
 .input-with-prepend:focus, .input-code:focus {
-  /* background-color: #e9ecef; */
   box-shadow: none !important;
   border-color: #ced4da !important;
 }
@@ -405,46 +398,44 @@ export default {
 /* Efects for spinner and text spinner */
 .text-spinner {
   margin-left: 7px;
-  color: #17a2b8;
-   font-family: comfortaa;
+  font-family: 'comfortaa' !important;
   font-size: 16px;
 }
 
 @keyframes blink {
   0% {
-    color: #17a2b8;
+    color: $default-color;
     font-size: 16.5px;
   }
   100% {
-    color: black;
+    color: rgba(0, 0, 0, 0.8);
   }
 }
 @-webkit-keyframes blink {
   0% {
-    color: #17a2b8;
+    color: $default-color;
     font-size: 16.5px;
   }
   100% {
-    color: black;
+    color: rgba(0, 0, 0, 0.8);
   }
 }
 .text-flashes {
-  -webkit-animation: blink 1.3s linear infinite;
-  -moz-animation: blink 1.3s linear infinite;
-  animation: blink 1.3s linear infinite;
+  -webkit-animation: blink 1.5s linear infinite;
+  -moz-animation: blink 1.5s linear infinite;
+  animation: blink 1.5s linear infinite;
 }
 
 /* Changing the background color of input appends */
 
 .color-icon {
-  color: #17a2b8 !important;
+  color: $default-color !important;
   background-color: #fff;
 }
 
 .photo-guests, .active-members {
   background-color: #fff !important;
-  color: #17a2b8 !important; /* #1384968 */
-  /*  opacity: 1.95 !important; */
+  color: $default-color !important;
   border: none !important;
 }
 
@@ -458,11 +449,12 @@ export default {
 
 .loading {
   font-size: 15.5px;
+  font-family: 'comfortaa' !important;
 }
 
 /* Change the color of watch in rounds time input */
 .btn .b-icon.bi, .nav-link .b-icon.bi, .dropdown-toggle .b-icon.bi, .dropdown-item .b-icon.bi, .input-group-text .b-icon.bi {
-  color: #17a2b8 !important;
+  color: $default-color !important;
 }
 
 .input-group-text {

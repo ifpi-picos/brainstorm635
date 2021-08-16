@@ -16,6 +16,14 @@ $success: #18d26e;
 // $mariner: #405CD2;
 // $seance: #7623A2; */
 
+@import url('https://fonts.googleapis.com/css2?family=Encode+Sans+Expanded&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Encode+Sans+Expanded:wght@400;600&display=swap');
+
+
+$default-color: #3BB5E0;
+$default-text: #4E4D4D;
+$default-text-semibold: #1A1A1A;
+
 html {
   height: 100vh;
 }
@@ -25,14 +33,14 @@ html {
 }
 
  body {
-  /* background-color:#f0f2f5 */
-  /* background-color: #f7f7f7; */
-
+ /* background-color:#f0f2f5; */
+  /* background-color: #f7f7f7 */
   /* background-color: #fAfAfA  !important; */
   background-color: #fff;
-  font-size: 14px !important;
-  font-family: Arial, Helvetica, sans-serif;
-  /* height: 100vh !important; */
+  font-size: 15px !important;
+  font-family: 'Encode Sans Expanded', sans-serif !important;
+  color: $default-text !important;
+  letter-spacing: .5px;
 }
 
 /* Shadow para todos os cards */
@@ -42,9 +50,7 @@ html {
   /* box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 6px 0px; */
   /* box-shadow: 0px 5px 10px 0px rgba(153, 153, 153, 0.3) !important; */
   border-radius: 15px !important;
-  /* border: 0px #dee2e6 solid !important; */
   border: none !important;
-  font-family: Comfortaa !important;
 }
 
 .page-tittle::before {
@@ -60,11 +66,10 @@ html {
 
 /* The next 2 selectors are for underlined for h3 or title page */
 .page-tittle {
-  font-family: Comfortaa !important;
-  color: #111;
   text-transform: uppercase;
   text-align: center;
-  font-weight: 700;
+  font-weight: 600;
+  letter-spacing: 1px;
   position: relative;
   padding-bottom: 15px;
   padding-top: 15px;
@@ -76,7 +81,7 @@ html {
   display: block;
   width: 40px;
   height: 3px;
-  background: #17a2b8;
+  background: $default-color;
   bottom: 0;
   left: calc(50% - 20px);
 }
@@ -84,7 +89,6 @@ html {
 .btn {
   padding: 0.4rem 0.9rem !important;
   font-size: 17px !important;
-  font-family: Comfortaa !important;
 }
 
 /* Removing box shadow of buttons on click*/
@@ -96,6 +100,26 @@ html {
 .btn:hover {
   box-shadow: 0 1px 3px 0 rgba(60,64,67,0.302),
   0 4px 8px 3px rgba(60,64,67,0.149) !important;
+}
+
+// Changing outline-info and info buttons color
+.btn-outline-info {
+  color: $default-color !important;
+  border-color: $default-color !important;
+}
+
+.btn-outline-info:hover {
+  color: #fff !important;
+  background-color: $default-color !important;
+}
+
+.btn-info {
+  background-color: $default-color !important;
+  border-color: $default-color !important;
+}
+
+.btn-info:hover {
+  background-color: #36add8 !important;
 }
 
 /* The next 4 selectors are changes to success buttons */
@@ -148,6 +172,7 @@ html {
   position: relative;
   display: inline-block !important;
 }
+
 .required::after {
   font-size: 1.1rem;
   content: "*";
@@ -181,7 +206,7 @@ html {
   width: 38.38px !important;
   padding: 5.25px 7.5px;
   border-radius: 0.25rem 0 0 0.25rem !important;
-  color: #17a2b8 !important;
+  color: $default-color !important;
 }
 
 .icone-padd {
@@ -207,12 +232,12 @@ html {
 }
 
 .entradaTexto::-webkit-scrollbar-thumb, .postit::-webkit-scrollbar-thumb {
-  background: #15b4cc;
+  background: #36add8 ;
   border-radius: 3px;
 }
 
 .entradaTexto::-webkit-scrollbar-thumb:hover, .postit::-webkit-scrollbar-thumb:hover {
-  background: #17a2b8;
+  background: $default-color;
 }
 
 /* Css for Postits */
@@ -236,8 +261,6 @@ html {
   padding: 1rem;
   position: relative;
   border: 1px solid #E8E8E8;
-  /* border-top: 60px solid #fdfd86; */
-  font-family: 'comfortaa';
   font-size: 3em;
   border-bottom-right-radius: 60px 6px;
   display: inline-block;
@@ -266,4 +289,88 @@ html {
   -o-transform: matrix(-1, -0.1, 0, 1, 0, 0);
   -ms-transform: matrix(-1, -0.1, 0, 1, 0, 0);
   transform: matrix(-1, -0.1, 0, 1, 0, 0);
+}
+
+// Css for loader loader
+
+.loading {
+  font-weight: bold;
+}
+
+.load {
+  width: 100%;
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.load-wait-members {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.lds-ellipsis div {
+  position: absolute;
+  top: 33px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: $default-color;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+
+.lds-ellipsis div:nth-child(1) {
+  left: 8px;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(2) {
+  left: 8px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(3) {
+  left: 32px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(4) {
+  left: 56px;
+  animation: lds-ellipsis3 0.6s infinite;
+}
+
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(24px, 0);
+  }
 }
