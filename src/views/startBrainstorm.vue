@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @beforeunload="return ''">
     <Loader v-if="loading"/>
     <b-container v-else align-v="center" style="margin-bottom: 8%">
       <b-row class="align-items-center justify-content-center ml-auto mr-auto">
