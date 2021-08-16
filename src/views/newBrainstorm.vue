@@ -9,7 +9,7 @@
         <b-card class="text-center pr-5 pl-5 pb-5 new-brain-card">
           <b-row>
             <b-col>
-              <h4 class="page-tittle mb-5">Brainstorm</h4>
+              <h4 class="page-tittle mb-5">New Brainstorm</h4>
             </b-col>
           </b-row>
           <b-row class="text-center mt-4">
@@ -156,7 +156,7 @@ export default {
           'You are trying to access the Brainstorm, but it´s reached the number maximum of guests!',
         icon: 'error',
         confirmButtonText: 'OK',
-        confirmButtonColor: '#17a2b8',
+        confirmButtonColor: '#3BB5E0',
         timer: 2500
       })
     },
@@ -169,7 +169,7 @@ export default {
           'You are trying to access a non-existent Brainstorm, try another code!',
         icon: 'error',
         confirmButtonText: 'OK',
-        confirmButtonColor: '#17a2b8',
+        confirmButtonColor: '#3BB5E0',
         timer: 2500
       })
     }
@@ -185,7 +185,7 @@ export default {
 
 .input-for-code:focus {
   box-shadow: none !important;
-  border: 1px solid #17a2b8 !important;
+  border: 1px solid #3BB5E0 !important;
 }
 
 /* Media queries for responsive new brainstorm card */

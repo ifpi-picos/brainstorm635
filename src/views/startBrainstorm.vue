@@ -167,6 +167,15 @@ export default {
     }
   },
 
+  created () {
+    window.onbeforeunload = function () {
+      if (!localStorage.getItem('sair')) {
+        localStorage.setItem('sair', 1)
+        return false
+      }
+    }
+  },
+
   mounted () {
     this.getData()
     this.getOldIdeas()
@@ -451,7 +460,7 @@ export default {
         confirmButtonText: 'Confirm pause',
         denyButtonText: 'Cancel',
         showCancelButton: true,
-        confirmButtonColor: '#17a2b8',
+        confirmButtonColor: '#3BB5E0',
         cancelButtonColor: '#dc3545'
       }).then((result) => {
         if (result.isConfirmed) {
@@ -484,7 +493,7 @@ export default {
         confirmButtonText: this.confirmButtonText,
         denyButtonText: 'Cancel',
         showCancelButton: true,
-        confirmButtonColor: '#17a2b8',
+        confirmButtonColor: '#3BB5E0',
         cancelButtonColor: '#dc3545'
       }).then((result) => {
         if (result.isConfirmed && this.isLeader) {
@@ -611,7 +620,7 @@ export default {
 }
 
 .cartao {
-  border: solid 1px #17a2b8 !important;
+  border: solid 1px #3BB5E0 !important;
 }
 
 .corpoInfo {
@@ -630,7 +639,7 @@ export default {
 
 .continueIdea:hover {
   background-color: #fff !important;
-  color: #138496;
+  color: #3BB5E0;
   font-weight: 300;
 }
 
@@ -663,7 +672,13 @@ export default {
 }
 
 h5,
-span {
+span,
+.idea-label {
   font-family: 'comfortaa';
+}
+
+.idea-label {
+  font-weight: 600;
+  font-size: 20px;
 }
 </style>
