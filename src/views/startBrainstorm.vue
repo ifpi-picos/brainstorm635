@@ -48,7 +48,7 @@
           v-for="(idea, ind) in round[`round${index + 1}`]" :key="ind"
           class="mb-4 pl-1 pr-1"
           md="4">
-          <div class="">
+          <div class="postit" :style="returnColorPostIt(index + 1)">
             <h5 class="text-center pt-1 pb-3">
               <b>idea #{{ setNumberIdea(idea[`idea${ind + 1}`].id) + 1 }}</b>
             </h5>
