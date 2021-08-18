@@ -26,14 +26,14 @@ export default {
   margin-bottom: 60px;
 }
 
-@media only screen and (min-height: 700px) {
+@media only screen and (min-height: 598px) {
   .position-footer {
     position: fixed !important;
     bottom: 0 !important;
   }
 }
 
-@media only screen and (max-height: 699px) {
+@media only screen and (max-height: 799px) {
   .position-footer {
     position: relative !important;
     bottom: 0 !important;

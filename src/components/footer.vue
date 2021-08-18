@@ -18,7 +18,7 @@
   </b-container>
 </template>
 
-<style lang="css">
+<style lang="css" scoped>
 .span {
   font-size: 16px !important;
 }
@@ -45,6 +45,10 @@
   }
   .cols-footer {
     width: 50% !important;
+  }
+  img {
+    height: 3rem !important;
+    width: 12rem !important;
   }
 }
 </style>

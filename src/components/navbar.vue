@@ -10,7 +10,7 @@
         navbar-brand ml-1"
       >
         <b-img
-          class="ml-2"
+          class="ml-2 logo"
           width="60"
           fluid
           :src="require('../assets/logo/static/logo-background-transparent.png')"
@@ -213,6 +213,10 @@ span,
 @media only screen and (max-width: 576px) {
   .navbar {
     padding: 0 !important;
+  }
+  .logo {
+    height: 4rem !important;
+    width: 4rem !important;
   }
 }
 </style>
