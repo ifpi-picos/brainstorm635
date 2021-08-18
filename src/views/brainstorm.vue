@@ -366,12 +366,8 @@ export default {
 }
 </script>
 
-<<<<<<< HEAD
-<style lang="css">
-=======
 <style lang="scss">
 $default-color: #3BB5E0;
->>>>>>> 00eaea9 (Finish alterations of colors and logo.)
 
 /* Style for inputs from brainstorm scream */
 .copy-button {
@@ -408,12 +404,7 @@ $default-color: #3BB5E0;
 /* Efects for spinner and text spinner */
 .text-spinner {
   margin-left: 7px;
-<<<<<<< HEAD
-  color: #17a2b8;
-   font-family: comfortaa;
-=======
   font-family: 'comfortaa' !important;
->>>>>>> 00eaea9 (Finish alterations of colors and logo.)
   font-size: 16px;
 }
 
