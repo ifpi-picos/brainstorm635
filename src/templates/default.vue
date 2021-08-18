@@ -2,7 +2,7 @@
   <div class="default">
     <NavBar class="ixed-top"/>
     <router-view class="main-content"></router-view>
-    <Footer class="fixed-bottom" />
+    <Footer class="position-footer ixed-bottom" />
   </div>
 </template>
 <script>
@@ -24,6 +24,13 @@ export default {
   .main-content {
     margin-top: 60px;
     margin-bottom: 60px;
+  }
+
+  @media only screen and (min-height: 1124px) {
+    .position-footer {
+      position: fixed;
+      bottom: 0;
+    }
   }
 
 </style>
