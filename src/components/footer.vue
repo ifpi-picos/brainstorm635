@@ -4,7 +4,7 @@
       <b-col class="cols-footer" md="6" lg="6" sm="6" align-self="center">
         <span class="span">
           &copy; CopyLeft,
-          <b-img height="45"
+          <b-img class="logo-footer" height="45"
             :src="require('../assets/logo/static/brainstorm635.com-white.jpg')">
           </b-img>2020
         </span>
@@ -33,7 +33,6 @@
 }
 
 .sidebar-footer {
-  /* position: absolute; */
   height: 55px;
   border-left: 4px solid #3BB5E0;
 }
@@ -46,7 +45,7 @@
   .cols-footer {
     width: 50% !important;
   }
-  img {
+  .logo-footer {
     height: 3rem !important;
     width: 12rem !important;
   }
