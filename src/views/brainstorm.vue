@@ -155,22 +155,19 @@
                   </b-form-group>
                 </b-col>
                 <b-col md="4">
-                  <b-spinner
-                    variant="info"
-                    label="Spinning"
-                    style="width: 1.5rem; height: 1.5rem;"
-                    type="grow"
-                  ></b-spinner>
-                  <span
-                    v-if="currentRound === 0"
-                    class="text-spinner text-flashes"
-                    >Waiting for members to start...
-                  </span>
-                  <span
-                    v-else
-                    class="text-spinner text-flashes"
-                    >Waiting for continue...
-                  </span>
+                  <div class="load-wait-members">
+                    <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                    <span
+                      v-if="currentRound === 0"
+                      class="text-spinner text-flashes"
+                      >Waiting for members to start...
+                    </span>
+                    <span
+                      v-else
+                      class="text-spinner text-flashes"
+                      >Waiting for continue...
+                    </span>
+                  </div>
                   <br /><br />
                   <span
                     v-if="isLeader"
