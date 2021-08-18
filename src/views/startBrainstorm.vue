@@ -1,9 +1,7 @@
 <template>
-  <div @beforeunload="
-    return ''
-  ">
-    <load v-if="loading"/>
-    <b-container v-else align-v="center" style="margin-bottom: 8%" >
+  <div @beforeunload="return ''">
+    <Loader v-if="loading"/>
+    <b-container v-else align-v="center" style="margin-bottom: 8%">
       <b-row class="align-items-center justify-content-center ml-auto mr-auto">
         <b-col class="pr-0 pl-0">
           <b-card no-body>
@@ -122,13 +120,13 @@
 
 <script>
 import Swal from 'sweetalert2'
-import load from '../components/loader'
+import Loader from '../components/loader'
 
 const eventRoundChanged = new Event('eventRoundChanged')
 
 export default {
   name: 'StartBrainstorm',
-  components: { load },
+  components: { Loader },
   data () {
     return {
       brainstormId: this.$route.params.id,
@@ -166,6 +164,15 @@ export default {
       title: '',
       text: '',
       confirmButtonText: ''
+    }
+  },
+
+  created () {
+    window.onbeforeunload = function () {
+      if (!localStorage.getItem('sair')) {
+        localStorage.setItem('sair', 1)
+        return false
+      }
     }
   },
 
@@ -453,7 +460,7 @@ export default {
         confirmButtonText: 'Confirm pause',
         denyButtonText: 'Cancel',
         showCancelButton: true,
-        confirmButtonColor: '#17a2b8',
+        confirmButtonColor: '#3BB5E0',
         cancelButtonColor: '#dc3545'
       }).then((result) => {
         if (result.isConfirmed) {
@@ -486,7 +493,7 @@ export default {
         confirmButtonText: this.confirmButtonText,
         denyButtonText: 'Cancel',
         showCancelButton: true,
-        confirmButtonColor: '#17a2b8',
+        confirmButtonColor: '#3BB5E0',
         cancelButtonColor: '#dc3545'
       }).then((result) => {
         if (result.isConfirmed && this.isLeader) {
@@ -613,7 +620,7 @@ export default {
 }
 
 .cartao {
-  border: solid 1px #17a2b8 !important;
+  border: solid 1px #3BB5E0 !important;
 }
 
 .corpoInfo {
@@ -632,7 +639,7 @@ export default {
 
 .continueIdea:hover {
   background-color: #fff !important;
-  color: #138496;
+  color: #3BB5E0;
   font-weight: 300;
 }
 
@@ -665,7 +672,13 @@ export default {
 }
 
 h5,
-span {
+span,
+.idea-label {
   font-family: 'comfortaa';
+}
+
+.idea-label {
+  font-weight: 600;
+  font-size: 20px;
 }
 </style>
