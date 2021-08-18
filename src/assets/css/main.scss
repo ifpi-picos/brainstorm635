@@ -43,6 +43,15 @@ html {
   letter-spacing: .5px;
 }
 
+.form-control {
+  background-color: #fff !important;
+}
+
+.form-control:focus {
+  background-color: #fff !important;
+  border-color: #ced4da !important;
+}
+
 /* Shadow para todos os cards */
 .card {
   /* box-shadow: rgb(197 197 198) 6px 6px 12px, rgb(249 249 249) -12px -12px 24px -2px; */

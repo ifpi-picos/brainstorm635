@@ -1,6 +1,11 @@
 <template>
   <b-container fluid >
-    <b-row align-v="center" style="height: 100vh">
+    <b-row class="pt-4 pl-5">
+      <b-col>
+        <b-img fluid width="100" :src="require('../assets/logo/static/logo-background-white.jpg')"></b-img>
+      </b-col>
+    </b-row>
+    <b-row align-v="center" style="height:65vh">
       <b-col
         class="align-items-center justify-content-center ml-auto mr-auto"
         md="7"
@@ -21,7 +26,7 @@
             align-h="center"
             align-v="end"
           >
-            <b-col lg="3" md="3" sm="4" xs="3">
+            <b-col xl="4" lg="4" md="3" sm="4" xs="3">
               <!-- <router-link> -->
               <b-button
                 class="inicial-buttons"
@@ -31,7 +36,7 @@
                 About
               </b-button>
             </b-col>
-            <b-col lg="6" md="8" sm="7" xs="5" >
+            <b-col xl="5" lg="5" md="8" sm="7" xs="5" >
               <Login> </Login>
             </b-col>
           </b-row>

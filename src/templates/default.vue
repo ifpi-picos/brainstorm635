@@ -21,16 +21,30 @@ export default {
 </script>
 
 <style lang="css">
-  .main-content {
-    margin-top: 60px;
-    margin-bottom: 60px;
-  }
+.main-content {
+  margin-top: 60px;
+  margin-bottom: 60px;
+}
 
-  @media only screen and (min-height: 1124px) {
-    .position-footer {
-      position: fixed;
-      bottom: 0;
-    }
+@media only screen and (min-height: 700px) {
+  .position-footer {
+    position: fixed !important;
+    bottom: 0 !important;
   }
+}
+
+@media only screen and (max-height: 699px) {
+  .position-footer {
+    position: relative !important;
+    bottom: 0 !important;
+  }
+}
+
+/* @media only screen and (min-height: 1124px) {
+  .position-footer {
+    position: relative !important;
+    bottom: none !important;
+  }
+} */
 
 </style>

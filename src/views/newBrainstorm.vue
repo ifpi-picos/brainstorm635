@@ -185,7 +185,6 @@ export default {
 
 .input-for-code:focus {
   box-shadow: none !important;
-  border: 1px solid #3BB5E0 !important;
 }
 
 /* Media queries for responsive new brainstorm card */

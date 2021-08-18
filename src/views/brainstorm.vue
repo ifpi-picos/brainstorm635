@@ -23,7 +23,7 @@
                     label-for="input-1"
                     label-class="required"
                   >
-                    <b-input-group>
+                    <b-input-group class="border-on-focu">
                       <b-input-group-prepend
                         class="input-with-prepend">
                         <span class="input-group-text color-icon"
@@ -36,8 +36,7 @@
                         type="text"
                         :disabled="!isLeader"
                         @blur="saveDescription"
-                        class="input-with-prepend"
-                        autofocus
+                        class="input-with-prepend border-on-focus"
                         id="input-1"
                         v-model="description"
                         placeholder="Describe the brainstorm"
@@ -56,7 +55,7 @@
                       @hidden="saveRoundsTime()"
                       v-b-tooltip.hover.topright.v-info
                       title="Edit time"
-                      class="input-group-text"
+                      class="input-group-text border-on-focus"
                       id="rounds-time"
                       :disabled="!isLeader"
                       v-model="roundsTime"
@@ -82,7 +81,7 @@
                       >
                       </b-form-input>
                       <b-input-group-append
-                        class="input-with-prepend">
+                        class="">
                         <b-button
                           v-b-tooltip.hover.v-info
                           title="Copy Code"
@@ -363,7 +362,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" >
 $default-color: #3BB5E0;
 
 /* Style for inputs from brainstorm scream */
@@ -385,13 +384,32 @@ $default-color: #3BB5E0;
   box-shadow: none !important;
 }
 
+.border-on-focus:focus {
+  border: .5px solid $default-color !important;
+}
+
+.border-on-focus:hover {
+  border: .5px solid $default-color !important;
+  box-shadow: none !important;
+  border-radius: 0.25rem;
+}
+
+.input:-internal-autofill-selected {
+  appearance: none !important;
+  background-color: #fff !important;
+}
+
 .input-with-prepend {
   border-left: none;
 }
 
-.input-with-prepend:focus, .input-code:focus {
+.input-with-prepend:focus {
   box-shadow: none !important;
-  border-color: #ced4da !important;
+}
+
+.input-code:focus {
+  box-shadow: none !important;
+  border-color: none !important;
 }
 
 .input-code, .form-control:disabled {
