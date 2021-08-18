@@ -2,7 +2,7 @@
   <div class="default">
     <NavBar class="ixed-top"/>
     <router-view class="main-content"></router-view>
-    <Footer class="ixed-bottom" />
+    <Footer class="fixed-bottom" />
   </div>
 </template>
 <script>
