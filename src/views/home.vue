@@ -9,7 +9,10 @@
           <b-row>
             <b-col>
               <h4 class="page-tittle mb-5 mt-2">
-                Welcome to Brainstorm 635 online
+                Welcome to
+                <b-img height="55"
+                  :src="require('../assets/logo/static/brainstorm635.com-white.jpg')">
+                </b-img>online
               </h4>
             </b-col>
           </b-row>
