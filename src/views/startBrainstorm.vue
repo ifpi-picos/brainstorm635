@@ -1,7 +1,9 @@
 <template>
-  <div @beforeunload="return ''">
-    <Loader v-if="loading"/>
-    <b-container v-else align-v="center" style="margin-bottom: 8%">
+  <div @beforeunload="
+    return ''
+  ">
+    <load v-if="loading"/>
+    <b-container v-else align-v="center" style="margin-bottom: 8%" >
       <b-row class="align-items-center justify-content-center ml-auto mr-auto">
         <b-col class="pr-0 pl-0">
           <b-card no-body>
@@ -79,7 +81,10 @@
                   class="entradaTexto">
                 </b-form-textarea>
               </b-form-group>
-              <div class="cor"></div>
+              <div class="cor"
+                v-if="listGuests.length > 0"
+                :style="returnColor">
+              </div>
               <label :for="`continueIdea${index + 1}`" class="d-inline mr-2">Continue</label>
               <select :name="`continueIdea${index + 1}`" :id="`continueIdea${index + 1}`" @change="setContinueIdea(index + 1)">
                 <option value="---">---</option>
@@ -117,13 +122,13 @@
 
 <script>
 import Swal from 'sweetalert2'
-import Loader from '../components/loader'
+import load from '../components/loader'
 
 const eventRoundChanged = new Event('eventRoundChanged')
 
 export default {
   name: 'StartBrainstorm',
-  components: { Loader },
+  components: { load },
   data () {
     return {
       brainstormId: this.$route.params.id,
@@ -161,15 +166,6 @@ export default {
       title: '',
       text: '',
       confirmButtonText: ''
-    }
-  },
-
-  created () {
-    window.onbeforeunload = function () {
-      if (!localStorage.getItem('sair')) {
-        localStorage.setItem('sair', 1)
-        return false
-      }
     }
   },
 
@@ -211,12 +207,31 @@ export default {
       let text = this.round
       text = 'Round: ' + text[5]
       return text
+    },
+
+    returnColor () {
+      return `background: ${this
+        .$store
+        .getters
+        .getColor(this.$firebase.auth().currentUser.uid, this.listGuests)
+      }`
     }
   },
 
   methods: {
-    closeIt () {
-      return 'Any string value here forces a dialog box to \n' + 'appear before closing the window.'
+    returnColorPostIt (roundIdea) {
+      return `
+        background: ${this
+          .$store
+          .getters
+          .getColorGuest(
+            this.$route.params.round,
+            this.$firebase.auth().currentUser.uid,
+            this.listGuests,
+            roundIdea
+          )
+        }
+      `
     },
 
     getHourOfStartRound () {
@@ -438,7 +453,7 @@ export default {
         confirmButtonText: 'Confirm pause',
         denyButtonText: 'Cancel',
         showCancelButton: true,
-        confirmButtonColor: '#3BB5E0',
+        confirmButtonColor: '#17a2b8',
         cancelButtonColor: '#dc3545'
       }).then((result) => {
         if (result.isConfirmed) {
@@ -471,7 +486,7 @@ export default {
         confirmButtonText: this.confirmButtonText,
         denyButtonText: 'Cancel',
         showCancelButton: true,
-        confirmButtonColor: '#3BB5E0',
+        confirmButtonColor: '#17a2b8',
         cancelButtonColor: '#dc3545'
       }).then((result) => {
         if (result.isConfirmed && this.isLeader) {
@@ -595,11 +610,10 @@ export default {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background:#3BB5E0;
 }
 
 .cartao {
-  border: solid 1px #3BB5E0 !important;
+  border: solid 1px #17a2b8 !important;
 }
 
 .corpoInfo {
@@ -618,7 +632,7 @@ export default {
 
 .continueIdea:hover {
   background-color: #fff !important;
-  color: #3BB5E0;
+  color: #138496;
   font-weight: 300;
 }
 
@@ -651,13 +665,7 @@ export default {
 }
 
 h5,
-span,
-.idea-label {
+span {
   font-family: 'comfortaa';
-}
-
-.idea-label {
-  font-weight: 600;
-  font-size: 20px;
 }
 </style>
