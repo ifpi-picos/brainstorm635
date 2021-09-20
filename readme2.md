@@ -24,10 +24,12 @@ The project is still under development and future updates will focus on the foll
 ## 💻 Prerequisites
 
 Before to start, make sure you meet the following requirements:
+
 <!---Estes são apenas requisitos de exemplo. Adicionar, duplicar ou remover conforme necessário--->
-* You have installed the latest version of [`NodeJS`](https://nodejs.org/)
-* You have a browser `Google Chrome / Safari / Firefox`.
-* You read [`Project Documentation`](#☕-usando-the-brainstorm635).
+
+- You have installed the latest version of [`NodeJS`](https://nodejs.org/)
+- You have a browser `Google Chrome / Safari / Firefox`.
+- You read [`Project Documentation`](#☕-usando-the-brainstorm635).
 
 ## 🚀 Installing Brainstorm635
 
@@ -36,6 +38,7 @@ To install the Brainstorm635, folow these steps:
 ```
 npm install
 ```
+
 ```
 npm run serve
 ```
@@ -51,7 +54,9 @@ Para usar <nome_do_projeto>, siga estas etapas:
 Adicione comandos de execução e exemplos que você acha que os usuários acharão úteis. Fornece uma referência de opções para pontos de bônus! -->
 
 ## 📫 Contributing for <br /> <img style="border-radius: 0.5rem;" width="400px" height="auto" src="./src/assets/logo/static/brainstorm635.com-white.jpg" />
+
 <!---Se o seu README for longo ou se você tiver algum processo ou etapas específicas que deseja que os contribuidores sigam, considere a criação de um arquivo CONTRIBUTING.md separado--->
+
 To contribute with the Brainstorm635, folow these steps:
 
 1. Fork these repository.
@@ -70,14 +75,6 @@ To contribute with the Brainstorm635, folow these steps:
   <tr>
     <td align="center">
       <a href="#">
-        <img style="border-radius: 0.5rem;" src="https://media-exp1.licdn.com/dms/image/C5603AQHlmNnHBNrBlw/profile-displayphoto-shrink_800_800/0/1579186239728?e=1637193600&v=beta&t=lY7C6pKDxrNs9gs9DF5iceSIcUXdQBnvNUthm1CUUls" width="100px;" alt="Foto do Edmarques Lima"/><br>
-        <sub>
-          <b>Edmarques Lima</b>
-        </sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="#">
         <img style="border-radius: 0.5rem;" src="https://avatars.githubusercontent.com/u/39920015?v=4" width="100px;" alt="Foto do Rafael Ramos"/><br>
         <sub>
           <b>Rafael Ramos</b>
@@ -92,9 +89,16 @@ To contribute with the Brainstorm635, folow these steps:
         </sub>
       </a>
     </td>
+    <td align="center">
+      <a href="#">
+        <img style="border-radius: 0.5rem;" src="https://media-exp1.licdn.com/dms/image/C5603AQHlmNnHBNrBlw/profile-displayphoto-shrink_800_800/0/1579186239728?e=1637193600&v=beta&t=lY7C6pKDxrNs9gs9DF5iceSIcUXdQBnvNUthm1CUUls" width="100px;" alt="Foto do Edmarques Lima"/><br>
+        <sub>
+          <b>Edmarques Lima</b>
+        </sub>
+      </a>
+    </td>
   </tr>
 </table>
-
 
 <!-- ## 😄 Seja um dos contribuidores<br>
 
