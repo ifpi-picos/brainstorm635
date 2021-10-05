@@ -233,10 +233,8 @@ export default {
         background: ${this
           .$store
           .getters
-          .getColorGuest(
-            this.$route.params.round,
-            this.$firebase.auth().currentUser.uid,
-            this.listGuests,
+          .getColorPostit(
+            this.indexSheet,
             roundIdea
           )
         }

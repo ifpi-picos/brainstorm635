@@ -15,29 +15,20 @@ export default new Vuex.Store({
     ]
   },
 
-  mutations: {
-    SET_GUESTS (state, payload) {
-      state.guests = payload
-    }
-  },
-
   getters: {
     getColor: (state) => (userId, guests) => {
       const colorIndex = guests.findIndex((user) => user.uid === userId)
       return state.colors[colorIndex]
     },
 
-    getColorGuest: (state) => (round, userId, guests, roundIdea) => {
-      const currentRound = Number(round[5])
-      const userIndex = guests.findIndex((user) => user.uid === userId)
-      let colorIndex = userIndex - currentRound + (roundIdea)
+    getColorPostit: (state) => (indexSheet, roundIdea, listGuestsLength) => {
+      let indexColor = (indexSheet - 1) + (roundIdea - 1)
 
-      if (colorIndex < 0) {
-        colorIndex = guests.length + colorIndex
+      if (indexColor > listGuestsLength - 1) {
+        indexColor = indexColor - listGuestsLength - 1
       }
 
-      console.log(colorIndex)
-      return state.colors[colorIndex]
+      return state.colors[indexColor]
     }
   }
 })
