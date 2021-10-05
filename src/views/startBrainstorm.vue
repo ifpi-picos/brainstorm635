@@ -235,7 +235,8 @@ export default {
           .getters
           .getColorPostit(
             this.indexSheet,
-            roundIdea
+            roundIdea,
+            this.listGuests
           )
         }
       `
