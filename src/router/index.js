@@ -14,6 +14,8 @@ Vue.use(VueRouter)
 Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 
+const publicRoutes = ['/privacy-policy', '/home']
+
 const routes = [
   {
     path: '/',
@@ -47,7 +49,11 @@ const routes = [
       }
     ]
   },
-
+  {
+    path: '/privacy-policy',
+    name: 'privacy-policy',
+    component: () => import('@/views/privacyPolicy.vue')
+  },
   {
     path: '*',
     name: '404',
@@ -84,7 +90,7 @@ router.beforeEach((to, from, next) => {
         }
         next()
       } else {
-        if (to.path !== HOME) {
+        if (!publicRoutes.includes(to.path)) {
           next({ path: HOME })
         }
         next()
