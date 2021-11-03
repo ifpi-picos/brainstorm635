@@ -8,7 +8,7 @@ export default new Vuex.Store({
     colors: [
       '#ADD8E6',
       '#83CF50',
-      '#83CF50',
+      '#fbdf59',
       '#E67EB2',
       '#ED893B',
       '#3BB5E0'
