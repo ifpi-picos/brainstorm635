@@ -63,11 +63,6 @@ export default {
     }
   },
 
-  mounted () {
-    const currentUser = this.$firebase.auth().currentUser
-    console.log(currentUser.photoURL)
-  },
-
   methods: {
 
     // This function create a new brainstorm
