@@ -2,7 +2,7 @@
   <b-container fluid >
     <b-row class="pt-4 pl-5">
       <b-col>
-        <b-img fluid width="100" :src="require('../assets/logo/static/logo-background-white.jpg')"></b-img>
+        <b-img fluid width="100" :src="require('../../public/img/logo/logo-background-white.jpg')"></b-img>
       </b-col>
     </b-row>
     <b-row align-v="center" style="height:65vh">
@@ -16,7 +16,7 @@
               <h4 class="page-tittle mb-5 mt-2">
                 Welcome to
                 <b-img height="55"
-                  :src="require('../assets/logo/static/brainstorm635.com-white.jpg')">
+                  :src="require('../../public/img/logo/brainstorm635.com-white.jpg')">
                 </b-img>online
               </h4>
             </b-col>
