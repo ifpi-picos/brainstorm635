@@ -13,7 +13,7 @@
           class="ml-2 logo"
           width="60"
           fluid
-          :src="require('../assets/logo/static/logo-background-transparent.png')"
+          :src="require('../../public/img/logo/logo-background-transparent.png')"
         />
       </b-link>
     </b-navbar-brand>

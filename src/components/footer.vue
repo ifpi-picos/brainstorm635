@@ -5,7 +5,7 @@
         <span class="span">
           &copy; CopyLeft,
           <b-img class="logo-footer" height="45"
-            :src="require('../assets/logo/static/brainstorm635.com-white.jpg')">
+            :src="require('../../public/img/logo/brainstorm635.com-white.jpg')">
           </b-img>2020
         </span>
       </b-col>
