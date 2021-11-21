@@ -26,7 +26,7 @@
               v-for="(idea, index) in ideasToPrint"
               :key="index"
             >
-              <div class="postit">
+              <div class="postit" :style="`background: ${idea.color}`">
                 <h5 class="text-center pt-1 pb-3">
                   <b> Idea #{{ index + 1 }} </b>
                 </h5>

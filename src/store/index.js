@@ -19,16 +19,6 @@ export default new Vuex.Store({
     getColor: (state) => (userId, guests) => {
       const colorIndex = guests.findIndex((user) => user.uid === userId)
       return state.colors[colorIndex]
-    },
-
-    getColorPostit: (state) => (indexSheet, roundIdea, listGuestsLength) => {
-      let indexColor = (indexSheet - 1) + (roundIdea - 1)
-
-      if (indexColor > listGuestsLength - 1) {
-        indexColor = indexColor - listGuestsLength - 1
-      }
-
-      return state.colors[indexColor]
     }
   }
 })

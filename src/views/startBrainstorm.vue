@@ -50,7 +50,7 @@
           v-for="(idea, ind) in round[`round${index + 1}`]" :key="ind"
           class="mb-4 pl-1 pr-1"
           md="4">
-          <div class="postit" :style="returnColorPostIt(index + 1)">
+          <div class="postit" :style="`background: ${idea[`idea${ind + 1}`].color}`">
             <h5 class="text-center pt-1 pb-3">
               <b>idea #{{ setNumberIdea(idea[`idea${ind + 1}`].id) + 1 }}</b>
             </h5>
@@ -123,6 +123,7 @@
 <script>
 import Swal from 'sweetalert2'
 import Loader from '../components/loader'
+import { mapGetters } from 'vuex'
 
 const eventRoundChanged = new Event('eventRoundChanged')
 
@@ -218,30 +219,16 @@ export default {
       return text
     },
 
+    ...mapGetters([
+      'getColor'
+    ]),
+
     returnColor () {
-      return `background: ${this
-        .$store
-        .getters
-        .getColor(this.$firebase.auth().currentUser.uid, this.listGuests)
-      }`
+      return `background: ${this.getColor(this.$firebase.auth().currentUser.uid, this.listGuests)}`
     }
   },
 
   methods: {
-    returnColorPostIt (roundIdea) {
-      return `
-        background: ${this
-          .$store
-          .getters
-          .getColorPostit(
-            this.indexSheet,
-            roundIdea,
-            this.listGuests
-          )
-        }
-      `
-    },
-
     getHourOfStartRound () {
       const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
       database.get().then(doc => {
@@ -557,6 +544,7 @@ export default {
       for (const campo in this.newIdeas) {
         if (Object.prototype.hasOwnProperty.call(this.newIdeas[campo], 'id')) {
           this.newIdeas[campo].id = await this.codeGenerator(8)
+          this.newIdeas[campo].color = this.getColor(this.$firebase.auth().currentUser.uid, this.listGuests)
         }
         if (!this.newIdeas[campo].description) { delete this.newIdeas[campo] }
       }
