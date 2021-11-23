@@ -1,45 +1,111 @@
-# Visão Geral
+# Brainstorm635
 
-A aplicação consiste em uma forma virtual e simples, de realizar a técnica de geração de ideias Brainstorming 635, como a aplicação é feita em meio digital possibilita que o método seja feito por pessoas que não estão próximas quebrando assim a barreira espaço físico, o participante inicial que criará o brainstorming gera um convite e envia aos demais participantes ao final do processo a aplicação gera um arquivo de texto disponível para download pelos participantes.
+<!---Esses são exemplos. Veja https://shields.io para outras pessoas ou para personalizar este conjunto de escudos. Você pode querer incluir dependências, status do projeto e informações de licença aqui--->
 
-## URL para a aplicação: http://app-brainstorming.web.app/
+![GitHub repo size](https://img.shields.io/github/repo-size/iuricode/README-template?style=for-the-badge)
+![GitHub language count](https://img.shields.io/github/languages/count/iuricode/README-template?style=for-the-badge)
+![GitHub forks](https://img.shields.io/github/forks/iuricode/README-template?style=for-the-badge)
+![Bitbucket open issues](https://img.shields.io/bitbucket/issues/iuricode/README-template?style=for-the-badge)
+![Bitbucket open pull requests](https://img.shields.io/bitbucket/pr-raw/iuricode/README-template?style=for-the-badge)
 
+<img src="public/logo-background-transparent.png" width="200px" height="200px" alt="exemplo imagem">
 
-## Project link
-```
-https://app-brainstorming.web.app/
-```
+> Brainstorm635 is a simple and straightforward way to generate creativity.
 
-## Project setup
+### Ajusts and improvements
+
+The project is still under development and future updates will focus on the following tasks:
+
+- [ ] - Dash of ideas from user
+- [ ] - Color unique for postits user
+- [ ] - Refactory code
+- [ ] - Float menu in round
+
+## 💻 Prerequisites
+
+Before to start, make sure you meet the following requirements:
+
+<!---Estes são apenas requisitos de exemplo. Adicionar, duplicar ou remover conforme necessário--->
+
+- You have installed the latest version of [`NodeJS`](https://nodejs.org/)
+- You have a browser `Google Chrome / Safari / Firefox`.
+- You read [`Project Documentation`](#☕-usando-the-brainstorm635).
+
+## 🚀 Installing Brainstorm635
+
+To install the Brainstorm635, folow these steps:
+
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+<!-- ## ☕ Using the Brainstorm635
+
+Para usar <nome_do_projeto>, siga estas etapas:
+
 ```
-npm run build
+<exemplo_de_uso>
 ```
 
-### Run your unit tests
-```
-npm run test:unit
-```
+Adicione comandos de execução e exemplos que você acha que os usuários acharão úteis. Fornece uma referência de opções para pontos de bônus! -->
 
-### Run your end-to-end tests
-```
-npm run test:e2e
-```
+## 📫 Contributing for <br /> <img style="border-radius: 0.5rem;" width="400px" height="auto" src="./src/assets/logo/static/brainstorm635.com-white.jpg" />
 
-### Lints and fixes files
-```
-npm run lint
-```
+<!---Se o seu README for longo ou se você tiver algum processo ou etapas específicas que deseja que os contribuidores sigam, considere a criação de um arquivo CONTRIBUTING.md separado--->
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+To contribute with the Brainstorm635, folow these steps:
 
+1. Fork these repository.
+2. Create a branch: `git checkout -b <branch_name>`.
+3. Do your changes and confirm it: `git commit -m '<menssage_commit>'`
+4. Send to the original branch: `git push origin <project_name> / <local>`
+5. Create a pull request.
+
+<!-- Como alternativa, consulte a documentação do GitHub em [como criar uma solicitação pull](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request). -->
+
+## 🤝 Squad
+
+<!-- Agradecemos às seguintes pessoas que contribuíram para este projeto: -->
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="#">
+        <img style="border-radius: 0.5rem;" src="https://avatars.githubusercontent.com/u/39920015?v=4" width="100px;" alt="Foto do Rafael Ramos"/><br>
+        <sub>
+          <b>Rafael Ramos</b>
+        </sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="#">
+        <img style="border-radius: 0.5rem;" src="https://media-exp1.licdn.com/dms/image/C4D03AQGlhxLlUfOkPw/profile-displayphoto-shrink_200_200/0/1516954023958?e=1643241600&v=beta&t=fP7wsol9Jd_75hY5JDdXHuxRRsX24Sypt7qNroNBJRw" width="100px;" alt="Foto do Jáder Abreu"/><br>
+        <sub>
+          <b>Jáder Abreu</b>
+        </sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="#">
+        <img style="border-radius: 0.5rem;" src="https://avatars.githubusercontent.com/u/52663280?s=400&u=26afb872dc7a6c4294ed1276333f46d43882d5d0&v=4" width="100px;" alt="Foto do Edmarques Lima"/><br>
+        <sub>
+          <b>Edmarques Lima</b>
+        </sub>
+      </a>
+    </td>
+  </tr>
+</table>
+
+<!-- ## 😄 Seja um dos contribuidores<br>
+
+Quer fazer parte desse projeto? Clique [AQUI](CONTRIBUTING.md) e leia como contribuir. -->
+
+## 📝 Licence
+
+This project is under license. Read the file [LICENCE](OFL.txt) for more details.
+
+[⬆ Go to back](#brainstorm635)<br>
