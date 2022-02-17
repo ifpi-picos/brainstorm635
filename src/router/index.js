@@ -1,18 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import { BootstrapVue } from 'bootstrap-vue'
-import defaultTemplate from '@/templates/default.vue'
-
 import firebase from 'firebase/app'
 
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
+import defaultTemplate from '@/templates/default.vue'
 
 Vue.config.productionTip = false
+
 Vue.use(VueRouter)
-// Install BootstrapVue
-Vue.use(BootstrapVue)
-// Optionally install the BootstrapVue icon components plugin
 
 const publicRoutes = ['/privacy-policy', '/home']
 

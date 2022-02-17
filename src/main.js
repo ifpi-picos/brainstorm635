@@ -1,7 +1,6 @@
 
 import Vue from 'vue'
 import BootstrapVue from 'bootstrap-vue'
-import Vuelidate from 'vuelidate'
 import store from './store'
 
 import App from './App.vue'
@@ -13,9 +12,9 @@ import 'es6-promise/auto'
 import FirebaseApp from './firebase'
 
 import './assets/css/main.scss'
+
 Vue.use(BootstrapVue)
 Vue.use(FirebaseApp)
-Vue.use(Vuelidate)
 Vue.config.productionTip = false
 
 /* Vue.use(VueClipboards) */
