@@ -119,7 +119,7 @@ export default {
         brainstorm
           .get()
           .then(async doc => {
-            if (doc.data().listGuests.length < 6) {
+            if (doc.data().listGuests.length < 12) {
               const userGuest = {}
               userGuest.uid = this.$firebase.auth().currentUser.uid
               userGuest.displayName = this.$firebase.auth().currentUser.displayName
